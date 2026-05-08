@@ -8,12 +8,24 @@
   "projects": {
     "crypto-trade": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": true,
+          "displayBlock": true,
+          "changeDetection": "OnPush",
+          "skipTests": true,
+          "inlineTemplate": false,
+          "inlineStyle": false,
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+
         "build": {
+
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
@@ -60,6 +72,7 @@
           },
           "defaultConfiguration": "production"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
