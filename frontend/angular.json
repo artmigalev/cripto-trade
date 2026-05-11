@@ -2,32 +2,40 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "pnpm"
+    "packageManager": "pnpm",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
+
     "crypto-trade": {
+
       "projectType": "application",
       "schematics": {
+
         "@schematics/angular:component": {
+          "path": "src/app/components",
           "standalone": true,
           "displayBlock": true,
           "changeDetection": "OnPush",
           "skipTests": true,
           "inlineTemplate": false,
           "inlineStyle": false,
-          "style": "scss"
+          "style": "scss",
+          "prefix": "app",
+          "addTypeToClassName": true,
+          "type": "component"
         }
       },
+
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
-
         "build": {
-
           "builder": "@angular/build:application",
           "options": {
+            "polyfills": ["zone.js"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -36,9 +44,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/material-theme.scss", "src/styles.css", "src/app/app.scss"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
@@ -72,7 +78,6 @@
           },
           "defaultConfiguration": "production"
         },
-
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
@@ -87,6 +92,12 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
