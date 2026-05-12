@@ -1,3 +1,5 @@
 {
-  "prettier.experimentalTernaries": true
+  "prettier.experimentalTernaries": true,
+
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
 }
