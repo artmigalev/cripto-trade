@@ -7,10 +7,11 @@
     "types": [
       "node"
     ],
-    "baseUrl": "./src/app/",
+    "baseUrl": "./src/",
     "paths": {
       "@/*": ["./*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["app/components/*"],
+      "@enums/*": ["enums/*"],
     },
   },
   "include": [

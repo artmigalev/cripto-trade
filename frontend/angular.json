@@ -25,6 +25,11 @@
           "prefix": "app",
           "addTypeToClassName": true,
           "type": "component"
+        },
+        "@schematics/angular:enum": {
+          "path": "src/enums",
+          "type": "enum"
+
         }
       },
 
