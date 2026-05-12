@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NavLink } from '../../../enums/nav-link.enum';
 import {MatListItem, MatListModule} from '@angular/material/list';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 
-type NavItem = {
+interface NavItem {
   title: string,
   link: string
 }
+
 type NavListType = NavItem[]
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatListModule,RouterLink,MatListItem ],
+  imports: [MatListModule, RouterLink, MatListItem, RouterLinkActive],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

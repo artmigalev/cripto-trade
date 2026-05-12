@@ -7,12 +7,9 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-
     "crypto-trade": {
-
       "projectType": "application",
       "schematics": {
-
         "@schematics/angular:component": {
           "path": "src/app/components",
           "standalone": true,
@@ -26,10 +23,15 @@
           "addTypeToClassName": true,
           "type": "component"
         },
+        "@schematics/angular:service": {
+          "path": "src/app/services",
+          "type": "service",
+          "skipTests": true
+
+        },
         "@schematics/angular:enum": {
           "path": "src/enums",
           "type": "enum"
-
         }
       },
 
@@ -49,7 +51,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css", "src/app/app.scss"],
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css",
+              "src/app/app.scss"
+            ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {

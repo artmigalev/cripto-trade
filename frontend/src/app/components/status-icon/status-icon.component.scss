@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+.status-connected{
+  color: var(--mat-sys-primary-container);
+}
+.status-disconnected{
+  // color: white;
+  color: var(--mat-sys-on-surface);
+}
+.status-container{
+  padding: var(--padding);
+}
