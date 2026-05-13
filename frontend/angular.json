@@ -40,6 +40,12 @@
         "@schematics/angular:enum": {
           "path": "src/enums",
           "type": "enum"
+        },
+        "@schematics/angular:directive": {
+          "path": "src/app/directives",
+          "type": "directive",
+          "skipTests": true,
+          "standalone": true
         }
       },
 

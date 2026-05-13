@@ -16,13 +16,13 @@ export class DashboardPageComponent {
     {
       symbol: 'BTC',
       price: 50000,
-      change24h: 0.5,
+      change24h: -1,
       volume: 500,
     },
     {
       symbol: 'USDT',
       price: 500,
-      change24h: 0.5,
+      change24h: -1.5,
       volume: 500,
     },
     {

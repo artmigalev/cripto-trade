@@ -2,7 +2,7 @@
   <h3 class="title">{{ symbol() }}</h3>
   <ul class="flex-nowrap flex flex-col">
     <li>Price: {{ price() | converter: symbol() }}</li>
-    <li>Change 24h: {{ change24h() }}</li>
+    <li [appHighlight]="change24h()">Change 24h: {{ change24h() }}</li>
     <li>Volume: {{ volume() }}</li>
   </ul>
 </div>

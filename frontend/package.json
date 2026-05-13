@@ -9,8 +9,16 @@
     "test": "ng test",
     "serve:ssr:crypto-trade": "node dist/crypto-trade/server/server.mjs",
     "lint": "ng lint",
-    "fix": "eslint --fix",
-    "format": "prettier --write ."
+    "fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write .",
+    "*.{js,ts,md,html,css}": [
+      "eslint --fix",
+      "eslint"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -40,6 +48,7 @@
     "@types/node": "^20.17.19",
     "angular-eslint": "21.3.1",
     "eslint": "^10.0.3",
+    "husky": "^9.1.7",
     "jsdom": "^28.0.0",
     "postcss": "^8.5.3",
     "prettier": "^3.8.1",

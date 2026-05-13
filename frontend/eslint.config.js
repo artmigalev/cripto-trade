@@ -46,6 +46,14 @@ module.exports = defineConfig([
         },
       ],
     },
+    ignores: [
+      "**/*.spec.ts",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/server/**",
+      ".angular/**",
+      ".vscode/**",
+    ],
   },
   {
     files: ["**/*.html"],
@@ -54,5 +62,13 @@ module.exports = defineConfig([
       angular.configs.templateAccessibility,
     ],
     rules: {},
+    ignores: [
+      "**/*.spec.ts",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/server/**",
+      ".angular/**",
+      ".vscode/**",
+    ],
   },
 ]);
