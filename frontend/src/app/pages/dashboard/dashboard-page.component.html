@@ -1,0 +1,15 @@
+<section>
+  <h1>Dashboard</h1>
+  <ul class="card-list">
+    @for (item of cards; track $index) {
+      <li>
+        <app-market-card
+          [symbol]="item.symbol"
+          [price]="item.price"
+          [change24h]="item.change24h"
+          [volume]="item.volume"
+        ></app-market-card>
+      </li>
+    }
+  </ul>
+</section>

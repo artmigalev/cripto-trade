@@ -3,5 +3,5 @@ export enum NavLink {
   MARKETS = 'Markets',
   TRADE = 'Trade',
   PORTFOLIO = 'Portfolio',
-  ABOUT_US = 'About Us'
+  ABOUT_US = 'About Us',
 }

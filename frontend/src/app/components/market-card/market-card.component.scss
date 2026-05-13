@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+.card {
+  width: 100%;
+  max-width: 250px;
+  height: 250px;
+  padding: var(--padding);
+  height: max-content;
+  background-color: var(--mat-sys-surface);
+  border-radius: var(--mat-sys-corner-extra-small);
+  font: var(--mat-sys-body-large);
+
+  .title {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+  }
+}

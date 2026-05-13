@@ -27,7 +27,15 @@
           "path": "src/app/services",
           "type": "service",
           "skipTests": true
-
+        },
+        "@schematics/angular:pipe": {
+          "path": "src/app/pipes",
+          "typeSeparator": ".",
+          "skipTests": true
+        },
+        "@schematics/angular:interface": {
+          "path": "src/app/interfaces",
+          "type": "interface"
         },
         "@schematics/angular:enum": {
           "path": "src/enums",

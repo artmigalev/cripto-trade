@@ -4,13 +4,9 @@ import { computed, Injectable, Signal, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
-
-  private status = signal(true)
-
+  private status = signal(true);
 
   getStatus(): Signal<boolean> {
-    return computed(() => this.status())
+    return computed(() => this.status());
   }
-
-
 }

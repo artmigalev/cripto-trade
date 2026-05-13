@@ -9,10 +9,10 @@
     "test": "ng test",
     "serve:ssr:crypto-trade": "node dist/crypto-trade/server/server.mjs",
     "lint": "ng lint",
-    "fix": "eslint --fix"
+    "fix": "eslint --fix",
+    "format": "prettier --write ."
   },
   "private": true,
-  "packageManager": "npm@10.9.2",
   "dependencies": {
     "@angular/cdk": "^21.2.10",
     "@angular/common": "^21.2.0",

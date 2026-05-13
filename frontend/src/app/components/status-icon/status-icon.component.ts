@@ -8,5 +8,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusIconComponent {
-  status = input<boolean>()
+  status = input<boolean>();
 }
