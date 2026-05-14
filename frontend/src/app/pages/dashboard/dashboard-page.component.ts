@@ -1,47 +1,30 @@
-import { MarketCard } from '@/app/interfaces/market-card.interface';
+import { MarketService } from '@/app/services/market.service';
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { MarketCardComponent } from '@components/market-card/market-card.component';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MarketCardComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DecimalPipe],
+  imports: [MarketCardComponent],
 })
-export class DashboardPageComponent {
-  cards: MarketCard[] = [
-    {
-      symbol: 'BTC',
-      price: 50000,
-      change24h: -1,
-      volume: 500,
-    },
-    {
-      symbol: 'USDT',
-      price: 500,
-      change24h: -1.5,
-      volume: 500,
-    },
-    {
-      symbol: 'BTC',
-      price: 125005,
-      change24h: 0.5,
-      volume: 500,
-    },
-    {
-      symbol: 'BTC',
-      price: 5005,
-      change24h: 0.5,
-      volume: 500,
-    },
-    {
-      symbol: 'USDT',
-      price: 53500,
-      change24h: 0.5,
-      volume: 500,
-    },
-  ];
+export class DashboardPageComponent implements OnInit {
+  private markedService = inject(MarketService);
+
+  tickers = computed(() => this.markedService.market().tickedData);
+
+  ngOnInit(): void {
+    void this.markedService.loadedData().catch((error) => {
+      console.error('Failed to load market data', error);
+    });
+  }
 }

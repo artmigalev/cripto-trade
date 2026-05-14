@@ -2,6 +2,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ConverterPipe } from '../../pipes/converter.pipe';
 import { HighlightDirective } from '@/app/directives/highlight.directive';
+import { Ticker } from '@/app/services/market.service';
 @Component({
   selector: 'app-market-card',
   standalone: true,
@@ -11,8 +12,5 @@ import { HighlightDirective } from '@/app/directives/highlight.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketCardComponent {
-  symbol = input.required<string>();
-  price = input(0);
-  change24h = input(0);
-  volume = input(0);
+  ticker = input<Ticker>();
 }

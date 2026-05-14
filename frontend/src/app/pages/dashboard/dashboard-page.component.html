@@ -1,15 +1,15 @@
-<section>
+<section class="dashboard">
   <h1>Dashboard</h1>
-  <ul class="card-list">
-    @for (item of cards; track $index) {
-      <li>
-        <app-market-card
-          [symbol]="item.symbol"
-          [price]="item.price"
-          [change24h]="item.change24h"
-          [volume]="item.volume"
-        ></app-market-card>
-      </li>
-    }
-  </ul>
+
+  @if (tickers().length === 0) {
+    <h2>Tickers not found</h2>
+  } @else {
+    <ul class="card-list">
+      @for (ticker of tickers(); track ticker.symbol) {
+        <li class="list-item">
+          <app-market-card [ticker]="ticker" />
+        </li>
+      }
+    </ul>
+  }
 </section>

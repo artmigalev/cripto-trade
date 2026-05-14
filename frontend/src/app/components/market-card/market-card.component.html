@@ -1,8 +1,21 @@
-<div class="card">
-  <h3 class="title">{{ symbol() }}</h3>
+@if (ticker()) {
+  <h3 class="title">{{ ticker()?.symbol }}</h3>
   <ul class="flex-nowrap flex flex-col">
-    <li>Price: {{ price() | converter: symbol() }}</li>
-    <li [appHighlight]="change24h()">Change 24h: {{ change24h() }}</li>
-    <li>Volume: {{ volume() }}</li>
+    <li class="flex flex-row gap-2">
+      <span>Price</span>
+      <span>{{
+        ticker()?.priceChange! | converter: ticker()?.symbol || ""
+      }}</span>
+    </li>
+    <li class="flex flex-row gap-2">
+      <span>Change 24h:</span>
+      <span [appHighlight]="ticker()?.priceChangePercent || 0">{{
+        ticker()?.priceChangePercent
+      }}</span>
+    </li>
+    <li class="flex flex-row gap-2">
+      <span>Volume</span>
+      <span>{{ ticker()?.volume! | converter: ticker()?.symbol || "" }}</span>
+    </li>
   </ul>
-</div>
+}

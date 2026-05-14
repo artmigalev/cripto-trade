@@ -9,5 +9,4 @@ import { Directive, input } from '@angular/core';
 export class HighlightDirective {
   readonly defaultColor = 'green';
   readonly change = input<number>(0, { alias: 'appHighlight' });
-
 }
