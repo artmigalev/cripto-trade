@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { ApiService } from './api.service';
+import { ApiService, Ticker24hrResponse } from './api.service';
 
 export interface Ticker {
   symbol: string;
@@ -26,16 +26,36 @@ export class MarketService {
     const response = await this.serviceApi.getTicker24hr();
     const data = Array.isArray(response) ? response : [response];
 
-    const ticketsData = data.map((ticker) => ({
-      symbol: ticker.symbol,
-      priceChange: parseFloat(ticker.priceChange),
-      priceChangePercent: parseFloat(ticker.priceChangePercent),
-      volume: parseFloat(ticker.volume),
+    const topTickets = this.getTopTicked(data, ['USDT', 'BTC']);
+
+    const ticketsData = topTickets.map((ticker) => ({
+      symbol: ticker['symbol'] as string,
+      priceChange: parseFloat(ticker['priceChange'] as string),
+      priceChangePercent: parseFloat(ticker['priceChangePercent'] as string),
+      volume: parseFloat(ticker['volume'] as string),
     }));
 
     this._market.update((prev) => ({
       ...prev,
       tickedData: ticketsData,
     }));
+  }
+  getTopTicked(tickets: Ticker24hrResponse[], query: string[]) {
+    return tickets
+      .filter((ticket) => {
+        const { symbol } = ticket;
+        for (const querySymbol in query) {
+          if (typeof symbol === 'string' && symbol.endsWith(querySymbol)) {
+            return ticket;
+          }
+        }
+        return null;
+      })
+      .sort(
+        (a, b) =>
+          parseFloat(b['quoteVolume'] as string) -
+          parseFloat(a['quoteVolume'] as string),
+      )
+      .slice(0, 5);
   }
 }

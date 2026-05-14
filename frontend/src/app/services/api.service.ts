@@ -2,12 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-export interface Ticker24hrResponse {
-  symbol: string;
-  priceChange: string;
-  priceChangePercent: string;
-  volume: string;
-}
+export type Ticker24hrResponse = Record<string, string | number>;
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +23,7 @@ export class ApiService {
     return firstValueFrom(
       this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(
         this.baseUrl + '/v3/ticker/24hr',
+        {},
       ),
     );
   };
