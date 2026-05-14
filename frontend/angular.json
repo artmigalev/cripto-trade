@@ -54,8 +54,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular/build:application",
+          "builder": "@ngx-env/builder:application",
           "options": {
+            "outputPath": {
+              "base": "dist/crypto-trade"
+            },
             "polyfills": ["zone.js"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -72,9 +75,7 @@
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
-            "security": {
-              "allowedHosts": []
-            },
+            "security": {},
             "ssr": {
               "entry": "src/server.ts"
             }
@@ -104,7 +105,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          "builder": "@ngx-env/builder:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "crypto-trade:build:production"
