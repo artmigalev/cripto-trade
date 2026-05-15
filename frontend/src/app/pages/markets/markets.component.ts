@@ -1,4 +1,5 @@
 import { MarketService } from '@/app/services/market.service';
+import { FavoriteSymbol } from '@/enums/keys.enum';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -25,10 +26,17 @@ interface MarketTable {
 })
 export default class MarketsComponent {
   private marketService = inject(MarketService);
+
+  favoriteSymbols = [
+    FavoriteSymbol.BTC,
+    FavoriteSymbol.ETH,
+    FavoriteSymbol.USDT,
+    "ALL"
+  ];
+
   searchValue = signal<string>('');
   activeTab = signal<string>('all'); //USDT, BTC, ETH
   allMarket = this.marketService.market().tickedData;
-
 
   displayedColumns: string[] = ['symbol', 'price', 'change24h', 'volume'];
 

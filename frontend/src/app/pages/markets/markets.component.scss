@@ -1,8 +1,34 @@
+@use '@angular/material' as mat;
+
 :host {
   display: block;
+  height: 100%;
 }
+
+
+.tab-group {
+  background-color: var(--mat-sys-background);
+  border-radius: var(--mat-sys-corner-medium);
+  height: 100%;
+  // border: 1px solid var(--mat-sys-on-secondary-fixed-variant);
+  .tab{
+    color: var(--mat-sys-secondary-container);
+  }
+}
+
+  .market-table{
+    border-radius: var(--mat-sys-corner-medium);
+    background-color: var(--mat-sys);
+    box-shadow: var(--mat-sys-corner-extra-large);
+
+  }
 .column-title {
   font-weight: bold;
   color: var(--mat-sys-primary);
-  
+  background-color: var(--mat-sys-surface-variant)
+
+
+}
+.rows-text{
+  color: var(--mat-sys-on-secondary-fixed-variant);
 }
