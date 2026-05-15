@@ -1,8 +1,8 @@
 // import { MarketCard } from '@/app/interfaces/market-card.interface';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { ConverterPipe } from '../../pipes/converter.pipe';
 import { HighlightDirective } from '@/app/directives/highlight.directive';
-import { Ticker } from '@/app/services/market.service';
+import { MarketService, Ticker } from '@/app/services/market.service';
 @Component({
   selector: 'app-market-card',
   standalone: true,
@@ -12,5 +12,14 @@ import { Ticker } from '@/app/services/market.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketCardComponent {
+  marketService = inject(MarketService);
+
   ticker = input<Ticker>();
+
+
+  toggle() {
+      this.marketService.toggleFavorite(this.ticker()?.symbol as string)
+    }
+
+
 }

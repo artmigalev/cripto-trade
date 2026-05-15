@@ -5,6 +5,7 @@
     "packageManager": "pnpm",
     "schematicCollections": ["angular-eslint"]
   },
+
   "newProjectRoot": "projects",
   "projects": {
     "crypto-trade": {
@@ -22,6 +23,10 @@
           "prefix": "app",
           "addTypeToClassName": true,
           "type": "component"
+        },
+        "@schematics/angular:guard": {
+          "path": "src/app/guards"
+
         },
         "@schematics/angular:service": {
           "path": "src/app/services",
@@ -59,6 +64,7 @@
             "outputPath": {
               "base": "dist/crypto-trade"
             },
+            "index": "src/index.html",
             "polyfills": ["zone.js"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
@@ -73,12 +79,7 @@
               "src/styles.css",
               "src/app/app.scss"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "security": {},
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "security": {}
           },
           "configurations": {
             "production": {

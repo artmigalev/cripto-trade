@@ -17,7 +17,7 @@ import { MarketCardComponent } from '@components/market-card/market-card.compone
   providers: [DecimalPipe],
   imports: [MarketCardComponent],
 })
-export class DashboardPageComponent implements OnInit {
+export default class DashboardPageComponent implements OnInit {
   private markedService = inject(MarketService);
 
   tickers = computed(() => this.markedService.market().tickedData);

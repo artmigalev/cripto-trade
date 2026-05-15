@@ -19,10 +19,10 @@ type NavListType = NavItem[];
 })
 export class NavigationComponent {
   navList: NavListType = [
-    { title: NavLink.DASHBOARD, link: '/dashboard' },
-    { title: NavLink.MARKETS, link: '/markets' },
-    { title: NavLink.TRADE, link: '/trade' },
-    { title: NavLink.PORTFOLIO, link: '/portfolio' },
-    { title: NavLink.ABOUT_US, link: '/about-us' },
+    { title: NavLink.DASHBOARD, link: 'dashboard' },
+    { title: NavLink.MARKETS, link: 'markets' },
+    { title: NavLink.TRADE, link: 'trade' },
+    { title: NavLink.PORTFOLIO, link: 'portfolio' },
+    { title: NavLink.ABOUT_US, link: 'about-us' },
   ];
 }

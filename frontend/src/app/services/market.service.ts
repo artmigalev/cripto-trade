@@ -1,15 +1,17 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ApiService, Ticker24hrResponse } from './api.service';
+import { Key } from '@/enums/keys.enum';
 
 export interface Ticker {
   symbol: string;
-  priceChange: number;
-  priceChangePercent: number;
+  price: number;
+  change24h: number;
   volume: number;
 }
 
 interface Market {
   tickedData: Ticker[];
+  watchList: string[];
 }
 
 @Injectable({
@@ -17,10 +19,41 @@ interface Market {
 })
 export class MarketService {
   serviceApi = inject(ApiService);
-  readonly _market = signal<Market>({
+  private readonly _market = signal<Market>({
     tickedData: [],
+    watchList: this.loadWatchList(),
   });
   market = this._market.asReadonly();
+
+  watchListCount = computed(() => this._market().watchList.length);
+
+  constructor() {
+    effect(() => {
+      localStorage.setItem(
+        Key.CRYPTO_WATCHLIST,
+        JSON.stringify(this._market().tickedData),
+      );
+    });
+  }
+
+  toggleFavorite(symbol: string) {
+    const current = this._market().watchList;
+    if (current.includes(symbol)) {
+      this._market.update((prev) => ({
+        ...prev,
+        watchList: prev.watchList.filter((item) => item !== symbol),
+      }));
+    } else {
+      this._market.update((prev) => ({
+        ...prev,
+        watchList: [...prev.watchList, symbol],
+      }));
+    }
+  }
+
+  isFavorite(symbol: string) {
+    return this._market().watchList.includes(symbol);
+  }
 
   async loadedData() {
     const response = await this.serviceApi.getTicker24hr();
@@ -30,8 +63,8 @@ export class MarketService {
 
     const ticketsData = topTickets.map((ticker) => ({
       symbol: ticker['symbol'] as string,
-      priceChange: parseFloat(ticker['priceChange'] as string),
-      priceChangePercent: parseFloat(ticker['priceChangePercent'] as string),
+      price: parseFloat(ticker['priceChange'] as string),
+      change24h: parseFloat(ticker['priceChangePercent'] as string),
       volume: parseFloat(ticker['volume'] as string),
     }));
 
@@ -57,5 +90,10 @@ export class MarketService {
           parseFloat(a['quoteVolume'] as string),
       )
       .slice(0, 5);
+  }
+
+  loadWatchList() {
+    const saved = localStorage.getItem(Key.CRYPTO_WATCHLIST);
+    return saved ? JSON.parse(saved) : ['BTCUSDT', 'ETHUSDT', 'BNBUSDT'];
   }
 }

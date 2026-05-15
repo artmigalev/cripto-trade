@@ -20,5 +20,4 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   apiService = inject(ApiService);
-  isApiConfigured = this.apiService.getStatus();
 }
