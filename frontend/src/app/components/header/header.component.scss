@@ -4,6 +4,9 @@
 }
 header {
   width: 100%;
+  a {
+    color: var(--mat-sys-primary);
+  }
 }
 
 .logo {

@@ -1,6 +1,6 @@
 <mat-tab-group class="tab-group">
   @for (symbol of favoriteSymbols; track symbol) {
-    <mat-tab label="{{symbol}}" class="tab">
+    <mat-tab label="{{ symbol }}" class="tab">
       <table
         mat-table
         [dataSource]="allMarket"
@@ -18,7 +18,11 @@
         }
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="row-table"
+        ></tr>
       </table>
     </mat-tab>
   }

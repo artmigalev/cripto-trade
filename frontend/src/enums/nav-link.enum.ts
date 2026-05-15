@@ -5,7 +5,7 @@ export enum NavLink {
   PORTFOLIO = 'Portfolio',
   ABOUT_US = 'About Us',
 }
-export enum RouterLinks  {
+export enum RouterLinks {
   DASHBOARD = 'dashboard',
   MARKETS = 'markets',
   TRADE = 'trade',

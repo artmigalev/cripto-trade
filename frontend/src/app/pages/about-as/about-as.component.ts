@@ -7,4 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './about-as.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export  default class AboutAsComponent {}
+export default class AboutAsComponent {}

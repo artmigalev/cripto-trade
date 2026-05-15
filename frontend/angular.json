@@ -26,7 +26,6 @@
         },
         "@schematics/angular:guard": {
           "path": "src/app/guards"
-
         },
         "@schematics/angular:service": {
           "path": "src/app/services",

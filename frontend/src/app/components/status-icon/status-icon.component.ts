@@ -1,5 +1,10 @@
 import { AuthService } from '@/app/services/auth.service';
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 
 @Component({
   selector: 'app-status-icon',
@@ -9,7 +14,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusIconComponent {
-  authService = inject(AuthService)
+  authService = inject(AuthService);
 
-  status =computed( ()=> this.authService.isApiConfigured())
+  status = computed(() => this.authService.isApiConfigured());
 }

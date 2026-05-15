@@ -10,12 +10,12 @@ import {
 import { MatTableModule } from '@angular/material/table';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 
-interface MarketTable {
-  pair: string;
-  price: string;
-  '24hChange': string;
-  '24hVolume': string;
-}
+// interface MarketTable {
+//   pair: string;
+//   price: string;
+//   '24hChange': string;
+//   '24hVolume': string;
+// }
 
 @Component({
   selector: 'app-markets',
@@ -31,7 +31,7 @@ export default class MarketsComponent {
     FavoriteSymbol.BTC,
     FavoriteSymbol.ETH,
     FavoriteSymbol.USDT,
-    "ALL"
+    'ALL',
   ];
 
   searchValue = signal<string>('');
@@ -41,7 +41,7 @@ export default class MarketsComponent {
   displayedColumns: string[] = ['symbol', 'price', 'change24h', 'volume'];
 
   filterMarkets = computed(() => {
-    let markets = this.allMarket;
+    const markets = this.allMarket;
     const query = this.searchValue().toLowerCase();
     const tab = this.activeTab().toLowerCase();
 

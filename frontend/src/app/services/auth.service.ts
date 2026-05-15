@@ -7,12 +7,11 @@ export class AuthService {
   private _isApiConfigured = signal<boolean>(true);
   isApiConfigured = this._isApiConfigured.asReadonly();
 
-
-  checkKeys() : void {
+  checkKeys(): void {
     const keys = localStorage.getItem('binance_keys');
     this._isApiConfigured.set(!!keys);
   }
-  setKeysConfigured(status:boolean): void {
+  setKeysConfigured(status: boolean): void {
     this._isApiConfigured.set(status);
   }
 }

@@ -3,9 +3,7 @@
   <ul class="flex-nowrap flex flex-col">
     <li class="flex flex-row gap-2">
       <span class="key">Price</span>
-      <span>{{
-        ticker()?.price! | converter: ticker()?.symbol || ""
-      }}</span>
+      <span>{{ ticker()?.price! | converter: ticker()?.symbol || "" }}</span>
     </li>
     <li class="flex flex-row gap-2">
       <span class="key">Change 24h:</span>
