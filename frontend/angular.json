@@ -73,11 +73,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/material-theme.scss",
-              "src/styles.css",
-              "src/app/app.scss"
-            ],
+            "styles": ["src/material-theme.scss", "src/styles.css", "src/app/app.scss"],
             "security": {}
           },
           "configurations": {
@@ -106,6 +102,9 @@
         },
         "serve": {
           "builder": "@ngx-env/builder:dev-server",
+          "options": {
+            "proxyConfig": "proxy.config.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "crypto-trade:build:production"

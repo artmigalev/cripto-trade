@@ -10,7 +10,7 @@ export interface Ticker {
 }
 
 interface Market {
-  tickedData: Ticker[];
+  tickers: Ticker[];
   watchList: string[];
 }
 
@@ -20,7 +20,7 @@ interface Market {
 export class MarketService {
   serviceApi = inject(ApiService);
   private readonly _market = signal<Market>({
-    tickedData: [],
+    tickers: [],
     watchList: this.loadWatchList(),
   });
   market = this._market.asReadonly();
@@ -29,22 +29,19 @@ export class MarketService {
 
   constructor() {
     effect(() => {
-      localStorage.setItem(
-        Key.CRYPTO_WATCHLIST,
-        JSON.stringify(this._market().tickedData),
-      );
+      localStorage.setItem(Key.CRYPTO_WATCHLIST, JSON.stringify(this._market().watchList));
     });
   }
 
   toggleFavorite(symbol: string) {
     const current = this._market().watchList;
     if (current.includes(symbol)) {
-      this._market.update((prev) => ({
+      this._market.update(prev => ({
         ...prev,
-        watchList: prev.watchList.filter((item) => item !== symbol),
+        watchList: prev.watchList.filter(item => item !== symbol),
       }));
     } else {
-      this._market.update((prev) => ({
+      this._market.update(prev => ({
         ...prev,
         watchList: [...prev.watchList, symbol],
       }));
@@ -59,25 +56,25 @@ export class MarketService {
     const response = await this.serviceApi.getTicker24hr();
     const data = Array.isArray(response) ? response : [response];
 
-    const topTickets = this.getTopTicked(data, ['USDT', 'BTC']);
+    const topTickets = this.getTopTickers(data, ['USDT', 'BTC']);
 
-    const ticketsData = topTickets.map((ticker) => ({
+    const ticketsData = topTickets.map(ticker => ({
       symbol: ticker['symbol'] as string,
       price: parseFloat(ticker['priceChange'] as string),
       change24h: parseFloat(ticker['priceChangePercent'] as string),
       volume: parseFloat(ticker['volume'] as string),
     }));
 
-    this._market.update((prev) => ({
+    this._market.update(prev => ({
       ...prev,
-      tickedData: ticketsData,
+      tickers: ticketsData,
     }));
   }
-  getTopTicked(tickets: Ticker24hrResponse[], query: string[]) {
+  getTopTickers(tickets: Ticker24hrResponse[], query: string[]) {
     return tickets
-      .filter((ticket) => {
+      .filter(ticket => {
         const { symbol } = ticket;
-        for (const querySymbol in query) {
+        for (const querySymbol of query) {
           if (typeof symbol === 'string' && symbol.endsWith(querySymbol)) {
             return ticket;
           }
@@ -85,11 +82,25 @@ export class MarketService {
         return null;
       })
       .sort(
-        (a, b) =>
-          parseFloat(b['quoteVolume'] as string) -
-          parseFloat(a['quoteVolume'] as string),
-      )
-      .slice(0, 5);
+        (a, b) => parseFloat(b['quoteVolume'] as string) - parseFloat(a['quoteVolume'] as string)
+      );
+  }
+
+  sortByQuery(query: string[]) {
+    const result: Record<string, Ticker[]> = {};
+    const allTickers = this._market().tickers;
+
+    for (const symbol of query) {
+      const tickers = allTickers.filter(ticker => ticker.symbol.endsWith(symbol));
+
+      if (symbol === 'ALL') {
+        result[symbol] = allTickers;
+      } else {
+        result[symbol] = tickers;
+      }
+    }
+
+    return result;
   }
 
   loadWatchList() {

@@ -1,5 +1,5 @@
 export enum Key {
-  'CRYPTO_WATCHLIST' = 'crypto-watchlist,',
+  'CRYPTO_WATCHLIST' = 'crypto-watchlist',
 }
 export enum FavoriteSymbol {
   'USDT' = 'USDT',

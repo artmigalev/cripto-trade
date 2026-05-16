@@ -1,12 +1,6 @@
 import { MarketService } from '@/app/services/market.service';
 import { FavoriteSymbol } from '@/enums/keys.enum';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 
@@ -27,31 +21,31 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 export default class MarketsComponent {
   private marketService = inject(MarketService);
 
-  favoriteSymbols = [
-    FavoriteSymbol.BTC,
-    FavoriteSymbol.ETH,
-    FavoriteSymbol.USDT,
-    'ALL',
-  ];
+  favoriteSymbols = [FavoriteSymbol.BTC, FavoriteSymbol.ETH, FavoriteSymbol.USDT, 'ALL'];
 
   searchValue = signal<string>('');
   activeTab = signal<string>('all'); //USDT, BTC, ETH
-  allMarket = this.marketService.market().tickedData;
+  allMarket = computed(() => this.marketService.market().tickers);
 
   displayedColumns: string[] = ['symbol', 'price', 'change24h', 'volume'];
 
+  sortedTickers = computed(() => this.marketService.sortByQuery(this.favoriteSymbols));
+
   filterMarkets = computed(() => {
-    const markets = this.allMarket;
+    const markets = this.allMarket();
     const query = this.searchValue().toLowerCase();
     const tab = this.activeTab().toLowerCase();
 
     if (query) {
-      markets.filter((marker) => marker.symbol.toLowerCase().includes(query));
+      markets.filter(marker => marker.symbol.toLowerCase().includes(query));
     }
 
     if (tab !== 'all') {
-      markets.filter((ticket) => ticket.symbol.endsWith(tab));
+      markets.filter(ticket => ticket.symbol.endsWith(tab));
     }
     return markets;
   });
+  constructor() {
+    console.log(this.sortedTickers);
+  }
 }

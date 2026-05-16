@@ -8,12 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    NavigationComponent,
-    SearchBarComponent,
-    StatusIconComponent,
-    RouterLink,
-  ],
+  imports: [NavigationComponent, SearchBarComponent, StatusIconComponent, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
