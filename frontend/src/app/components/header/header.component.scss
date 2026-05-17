@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  width: 100%;
+}
+header {
+  width: 100%;
+  a {
+    color: var(--mat-sys-primary);
+  }
+}
+
+.logo {
+  max-width: 50px;
+}
