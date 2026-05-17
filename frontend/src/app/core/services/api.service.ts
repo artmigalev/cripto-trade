@@ -35,7 +35,7 @@ export class ApiService {
     }
 
     return firstValueFrom(
-      this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>('/api/v3/ticker/24hr')
+      this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(`/api/v3/ticker/24hr`)
     );
   };
 }
