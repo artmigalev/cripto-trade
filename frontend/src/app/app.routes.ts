@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { canActivateFnGuard } from './guards/can-activate-fn-guard';
+import { canActivateFnGuard } from '@guards/can-activate-fn-guard';
 
 export const routes: Routes = [
   {
@@ -9,39 +9,38 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard-page.component'),
+    loadComponent: () => import('./features/dashboard/dashboard-page.component'),
   },
   {
     path: 'markets',
-    loadComponent: () => import('./pages/markets/markets.component'),
+    loadComponent: () => import('./features/markets/markets.component'),
   },
-  {
-    path: 'trade/:symbol',
-    loadComponent: () => import('./pages/trade/trade.component'),
-    canActivate: [canActivateFnGuard],
-  },
-
   {
     path: 'trade',
     redirectTo: 'trade/BTCUSDT',
     pathMatch: 'full',
   },
+  {
+    path: 'trade/:symbol',
+    loadComponent: () => import('./features/trade/trade.component'),
+    canActivate: [canActivateFnGuard],
+  },
 
   {
     path: 'portfolio',
-    loadComponent: () => import('./pages/portfolio/portfolio.component'),
+    loadComponent: () => import('./features/portfolio/portfolio.component'),
     canActivate: [canActivateFnGuard],
   },
   {
     path: 'about-us',
-    loadComponent: () => import('./pages/about-as/about-as.component'),
+    loadComponent: () => import('./features/about-as/about-as.component'),
   },
   {
     path: 'settings',
-    loadComponent: () => import('./pages/settings/settings.component'),
+    loadComponent: () => import('./features/settings/settings.component'),
   },
   {
     path: '**',
-    loadComponent: () => import('./pages/not-found/not-found.component'),
+    loadComponent: () => import('./features/not-found/not-found.component'),
   },
 ];

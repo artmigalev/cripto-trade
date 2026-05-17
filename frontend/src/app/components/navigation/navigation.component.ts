@@ -4,7 +4,7 @@ import { MatListItem, MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 interface NavItem {
-  title: string;
+  title: NavLink;
   link: string;
 }
 
@@ -18,11 +18,8 @@ type NavListType = NavItem[];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-  navList: NavListType = [
-    { title: NavLink.DASHBOARD, link: 'dashboard' },
-    { title: NavLink.MARKETS, link: 'markets' },
-    { title: NavLink.TRADE, link: 'trade' },
-    { title: NavLink.PORTFOLIO, link: 'portfolio' },
-    { title: NavLink.ABOUT_US, link: 'about-us' },
-  ];
+  navList: NavListType = Object.values(NavLink).map(value => ({
+    title: value,
+    link: value.toLowerCase().replaceAll(' ', '-'),
+  }));
 }

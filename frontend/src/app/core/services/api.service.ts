@@ -11,8 +11,6 @@ export class ApiService {
   private http = inject(HttpClient);
   private status = signal(true);
 
-  private readonly baseUrl = 'https://testnet.binance.vision';
-
   getStatus(): Signal<boolean> {
     return computed(() => this.status());
   }
@@ -24,11 +22,15 @@ export class ApiService {
       if (Array.isArray(query)) {
         const parseToJson = JSON.stringify(query);
 
-        this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(
-          `/api/v3/ticker/24hr?symbol=${parseToJson}`
+        return firstValueFrom(
+          this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(
+            `/api/v3/ticker/24hr?symbol=${parseToJson}`
+          )
         );
       } else {
-        this.http.get<Ticker24hrResponse>(`/api/v3/ticker/24hr?symbol=${query}`);
+        return firstValueFrom(
+          this.http.get<Ticker24hrResponse>(`/api/v3/ticker/24hr?symbol=${query}`)
+        );
       }
     }
 

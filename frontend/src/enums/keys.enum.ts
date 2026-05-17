@@ -6,3 +6,9 @@ export enum FavoriteSymbol {
   'BTC' = 'BTC',
   'ETH' = 'ETH',
 }
+export enum TickedKeys {
+  'SYMBOL' = 'symbol',
+  'PRICE' = 'price',
+  'CHANGE24H' = 'change24h',
+  'VOLUME' = 'volume',
+}

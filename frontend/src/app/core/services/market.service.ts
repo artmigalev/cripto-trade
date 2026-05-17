@@ -1,13 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ApiService, Ticker24hrResponse } from './api.service';
-import { Key } from '@/enums/keys.enum';
-
-export interface Ticker {
-  symbol: string;
-  price: number;
-  change24h: number;
-  volume: number;
-}
+import { ApiService, Ticker24hrResponse } from '@services/api.service';
+import { Key } from '@enums/keys.enum';
+import { Ticker } from '@/app/interfaces/ticker.interfaсe';
 
 interface Market {
   tickers: Ticker[];
@@ -18,7 +12,7 @@ interface Market {
   providedIn: 'root',
 })
 export class MarketService {
-  serviceApi = inject(ApiService);
+  private serviceApi = inject(ApiService);
   private readonly _market = signal<Market>({
     tickers: [],
     watchList: this.loadWatchList(),
@@ -74,12 +68,8 @@ export class MarketService {
     return tickets
       .filter(ticket => {
         const { symbol } = ticket;
-        for (const querySymbol of query) {
-          if (typeof symbol === 'string' && symbol.endsWith(querySymbol)) {
-            return ticket;
-          }
-        }
-        return null;
+
+        return query.some(querySymbol => String(symbol).endsWith(querySymbol));
       })
       .sort(
         (a, b) => parseFloat(b['quoteVolume'] as string) - parseFloat(a['quoteVolume'] as string)

@@ -25,15 +25,15 @@
           "type": "component"
         },
         "@schematics/angular:guard": {
-          "path": "src/app/guards"
+          "path": "src/app/shared/guards"
         },
         "@schematics/angular:service": {
-          "path": "src/app/services",
+          "path": "src/app/core/services",
           "type": "service",
           "skipTests": true
         },
         "@schematics/angular:pipe": {
-          "path": "src/app/pipes",
+          "path": "src/app/shared/pipes",
           "typeSeparator": ".",
           "skipTests": true
         },
@@ -46,7 +46,7 @@
           "type": "enum"
         },
         "@schematics/angular:directive": {
-          "path": "src/app/directives",
+          "path": "src/app/shared/directives",
           "type": "directive",
           "skipTests": true,
           "standalone": true

@@ -1,5 +1,4 @@
-import { MarketService } from '@/app/services/market.service';
-import { DecimalPipe } from '@angular/common';
+import { MarketService } from '@services/market.service';
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { MarketCardComponent } from '@components/market-card/market-card.component';
 
@@ -8,7 +7,6 @@ import { MarketCardComponent } from '@components/market-card/market-card.compone
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DecimalPipe],
   imports: [MarketCardComponent],
 })
 export default class DashboardPageComponent implements OnInit {
@@ -17,7 +15,7 @@ export default class DashboardPageComponent implements OnInit {
   tickers = computed(() => this.markedService.market().tickers);
 
   ngOnInit(): void {
-    void this.markedService.loadedData().catch(error => {
+    this.markedService.loadedData().catch(error => {
       console.error('Failed to load market data', error);
     });
   }

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
-import { MarketService } from '@/app/services/market.service';
+import { MarketService } from '@/app/core/services/market.service';
 
 @Component({
   selector: 'app-root',

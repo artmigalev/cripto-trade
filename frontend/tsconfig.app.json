@@ -10,7 +10,12 @@
       "@/*": ["./*"],
       "@components/*": ["app/components/*"],
       "@enums/*": ["enums/*"],
-      "@services/*": ["app/services/*"]
+      "@services/*": ["app/core/services/*"],
+      "@interfaces/*": ["app/interfaces/*"],
+      "@directives/*": ["app/shared/directives/*"],
+      "@pipes/*": ["app/shared/pipes/*"],
+      "@guards/*": ["app/shared/guards/*"],
+      "@features/*": ["app/features/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],

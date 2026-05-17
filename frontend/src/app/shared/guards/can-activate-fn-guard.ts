@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { RouterLinks } from '@/enums/nav-link.enum';
+import { AuthService } from '@services/auth.service';
+import { NavLink } from '@/enums/nav-link.enum';
 
 export const canActivateFnGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -10,5 +10,5 @@ export const canActivateFnGuard: CanActivateFn = () => {
   if (authService.isApiConfigured()) {
     return true;
   }
-  return router.parseUrl(`${RouterLinks.SETTINGS}`);
+  return router.parseUrl(`${NavLink.SETTINGS.toLowerCase()}`);
 };

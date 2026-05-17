@@ -1,8 +1,9 @@
-import { MarketService } from '@/app/services/market.service';
-import { FavoriteSymbol } from '@/enums/keys.enum';
+import { MarketService } from '@services/market.service';
+import { FavoriteSymbol, TickedKeys } from '@enums/keys.enum';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { DecimalPipe } from '@angular/common';
 
 // interface MarketTable {
 //   pair: string;
@@ -17,35 +18,32 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
   templateUrl: './markets.component.html',
   styleUrl: './markets.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DecimalPipe],
 })
 export default class MarketsComponent {
   private marketService = inject(MarketService);
 
-  favoriteSymbols = [FavoriteSymbol.BTC, FavoriteSymbol.ETH, FavoriteSymbol.USDT, 'ALL'];
+  favoriteSymbols = [...Object.values(FavoriteSymbol), 'ALL'];
 
-  searchValue = signal<string>('');
-  activeTab = signal<string>('all'); //USDT, BTC, ETH
+  private searchValue = signal<string>('');
+  private activeTab = signal<string>('all'); //USDT, BTC, ETH
   allMarket = computed(() => this.marketService.market().tickers);
 
-  displayedColumns: string[] = ['symbol', 'price', 'change24h', 'volume'];
+  displayedColumns: string[] = Object.values(TickedKeys);
 
   sortedTickers = computed(() => this.marketService.sortByQuery(this.favoriteSymbols));
 
   filterMarkets = computed(() => {
-    const markets = this.allMarket();
+    let markets = this.allMarket();
     const query = this.searchValue().toLowerCase();
     const tab = this.activeTab().toLowerCase();
-
     if (query) {
-      markets.filter(marker => marker.symbol.toLowerCase().includes(query));
+      markets = markets.filter(marker => marker.symbol.toLowerCase().includes(query));
     }
 
     if (tab !== 'all') {
-      markets.filter(ticket => ticket.symbol.endsWith(tab));
+      markets = markets.filter(ticket => ticket.symbol.endsWith(tab));
     }
     return markets;
   });
-  constructor() {
-    console.log(this.sortedTickers);
-  }
 }

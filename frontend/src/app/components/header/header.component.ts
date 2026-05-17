@@ -4,6 +4,7 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { ApiService } from '@services/api.service';
 import { StatusIconComponent } from '../status-icon/status-icon.component';
 import { RouterLink } from '@angular/router';
+import { NavLink } from '@/enums/nav-link.enum';
 
 @Component({
   selector: 'app-header',
@@ -15,4 +16,5 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   apiService = inject(ApiService);
+  homeLink = NavLink.DASHBOARD.toLowerCase();
 }
