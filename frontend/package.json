@@ -19,6 +19,7 @@
       "eslint"
     ]
   },
+  "packageManager": "pnpm@9.15.0",
   "private": true,
   "dependencies": {
     "@angular/cdk": "^21.2.10",
