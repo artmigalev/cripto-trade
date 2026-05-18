@@ -1,3 +1,4 @@
+import { API_CONFIG } from '@/app/core/services/tokens/api-config.tokens';
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
@@ -8,8 +9,9 @@ export type Ticker24hrResponse = Record<string, string | number>;
   providedIn: 'root',
 })
 export class ApiService {
-  private http = inject(HttpClient);
-  private status = signal(true);
+  private readonly http = inject(HttpClient);
+  private readonly config = inject(API_CONFIG);
+  private readonly status = signal(true);
 
   getStatus(): Signal<boolean> {
     return computed(() => this.status());
@@ -24,18 +26,20 @@ export class ApiService {
 
         return firstValueFrom(
           this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(
-            `/api/v3/ticker/24hr?symbol=${parseToJson}`
+            `${this.config.baseUrl}/v3/ticker/24hr?symbol=${parseToJson}`
           )
         );
       } else {
         return firstValueFrom(
-          this.http.get<Ticker24hrResponse>(`/api/v3/ticker/24hr?symbol=${query}`)
+          this.http.get<Ticker24hrResponse>(`${this.config.baseUrl}/v3/ticker/24hr?symbol=${query}`)
         );
       }
     }
 
     return firstValueFrom(
-      this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(`/api/v3/ticker/24hr`)
+      this.http.get<Ticker24hrResponse | Ticker24hrResponse[]>(
+        `${this.config.baseUrl}/v3/ticker/24hr`
+      )
     );
   };
 }
