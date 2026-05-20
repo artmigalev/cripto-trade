@@ -1,0 +1,52 @@
+<form [formGroup]="registerForm" (ngSubmit)="handleSubmit()" class="register-form">
+  <fieldset>
+    <legend>Email</legend>
+    <input type="email" formControlName="email" />
+
+    @if (email.invalid && (email.dirty || email.touched)) {
+      <div class="alert alert-danger">
+        @if (email.hasError('email')) {
+          <div>Email is invalid.</div>
+        }
+        @if (email.hasError('required')) {
+          <div>Email is required.</div>
+        }
+      </div>
+    }
+  </fieldset>
+  <fieldset>
+    <legend>Password</legend>
+    <input type="password" formControlName="password" />
+    @if (pswd.invalid && (pswd.dirty || pswd.touched)) {
+      <div class="alert alert-danger">
+        @if (pswd.hasError('required')) {
+          <div>Password is required.</div>
+        }
+        @if (pswd.hasError('minlength')) {
+          <div>Password must be at least 8 characters long.</div>
+        }
+      </div>
+    }
+  </fieldset>
+  <fieldset>
+    <legend>Password Confirm</legend>
+    <input type="password" formControlName="passwordConfirm" />
+    @if (pswdConfirm.invalid && (pswdConfirm.dirty || pswdConfirm.touched)) {
+      <div class="alert alert-danger">
+        @if (pswdConfirm.hasError('required')) {
+          <div>Password is required.</div>
+        }
+        @if (pswdConfirm.hasError('minlength')) {
+          <div>Password must be at least 8 characters long.</div>
+        }
+      </div>
+    }
+    @if (registerForm.hasError('notConfirm') && (pswdConfirm.dirty || pswdConfirm.touched)) {
+      <div class="alert alert-danger">Passwords do not match.</div>
+    }
+  </fieldset>
+
+  <button type="submit" [disabled]="registerForm.invalid">{{ btn_text }}</button>
+
+  <a class="link-reg-page" [routerLink]="[`/${login_link}`]">{{ login_link_text }}</a>
+</form>

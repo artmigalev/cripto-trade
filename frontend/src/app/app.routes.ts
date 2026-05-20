@@ -1,5 +1,6 @@
+import { authGuard } from '@/app/shared/guards/auth-guard';
+import { NavLink } from '@/enums/nav-link.enum';
 import { Routes } from '@angular/router';
-import { canActivateFnGuard } from '@guards/can-activate-fn-guard';
 
 export const routes: Routes = [
   {
@@ -23,17 +24,30 @@ export const routes: Routes = [
   {
     path: 'trade/:symbol',
     loadComponent: () => import('./features/trade/trade.component'),
-    canActivate: [canActivateFnGuard],
+    canActivate: [authGuard],
   },
 
   {
     path: 'portfolio',
     loadComponent: () => import('./features/portfolio/portfolio.component'),
-    canActivate: [canActivateFnGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'about-us',
     loadComponent: () => import('./features/about-as/about-as.component'),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./features/login-page/login-page.component'),
+    title: NavLink.LOGIN,
+
+    canActivate: [authGuard],
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./features/register-page/register-page.component'),
+    title: NavLink.REGISTER,
+    canActivate: [authGuard],
   },
   {
     path: 'settings',

@@ -5,6 +5,9 @@ export enum NavLink {
   PORTFOLIO = 'Portfolio',
   ABOUT_US = 'About Us',
   SETTINGS = 'Settings',
+  LOGIN = 'Login',
+  REGISTER = 'Register',
+  LOGOUT = 'Logout',
 }
 export enum RouterLinks {
   DASHBOARD = 'dashboard',
@@ -13,4 +16,7 @@ export enum RouterLinks {
   PORTFOLIO = 'portfolio',
   ABOUT_US = 'about-Us',
   SETTINGS = 'settings',
+  LOGIN = 'login',
+  REGISTER = 'register',
+  LOGOUT = 'logout',
 }
