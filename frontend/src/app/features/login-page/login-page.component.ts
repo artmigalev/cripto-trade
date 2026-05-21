@@ -14,9 +14,9 @@ export default class LoginPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  protected btn_text = NavLink.LOGIN;
-  protected register_link_text = NavLink.REGISTER;
-  protected register_link = RouterLinks.REGISTER;
+  protected btn_text = NavLink.Login;
+  protected register_link_text = NavLink.Login;
+  protected register_link = RouterLinks.Register;
 
   loginForm = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
@@ -29,6 +29,6 @@ export default class LoginPageComponent {
   handleSubmit() {
     if (this.loginForm.invalid) return;
 
-    this.router.navigate([NavLink.DASHBOARD]);
+    this.router.navigate([RouterLinks.Dashboard]);
   }
 }

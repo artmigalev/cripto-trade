@@ -35,6 +35,6 @@ export default class SettingsComponent {
     localStorage.setItem('binance_keys', JSON.stringify({ apiKey, secretKey }));
     this.authService.setKeysConfigured(true);
     this.form.reset();
-    this.router.navigate([RouterLinks.DASHBOARD]);
+    this.router.navigate([RouterLinks.Dashboard]);
   }
 }

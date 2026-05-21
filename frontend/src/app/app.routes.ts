@@ -39,14 +39,14 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./features/login-page/login-page.component'),
-    title: NavLink.LOGIN,
+    title: NavLink.Login,
 
     canActivate: [authGuard],
   },
   {
     path: 'register',
     loadComponent: () => import('./features/register-page/register-page.component'),
-    title: NavLink.REGISTER,
+    title: NavLink.Register,
     canActivate: [authGuard],
   },
   {

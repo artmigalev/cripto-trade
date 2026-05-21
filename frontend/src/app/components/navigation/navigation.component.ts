@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NavLink } from '../../../enums/nav-link.enum';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { NavLink, PrivateRoutes, PublicRoutes } from '@enums/nav-link.enum';
 import { MatListItem, MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 
 interface NavItem {
   title: NavLink;
   link: string;
 }
 
-type NavListType = NavItem[];
+// type NavListType = NavItem[];
 
 @Component({
   selector: 'app-navigation',
@@ -18,8 +19,10 @@ type NavListType = NavItem[];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-  navList: NavListType = Object.values(NavLink).map(value => ({
-    title: value,
-    link: value.toLowerCase().replaceAll(' ', '-'),
-  }));
+  private readonly authService = inject(AuthService);
+
+  isAuthenticated = computed(() => this.authService.isApiConfigured());
+  navList = Object.entries(this.isAuthenticated() ? PrivateRoutes : PublicRoutes).map(
+    ([title, link]) => ({ title, link }) as NavItem
+  );
 }

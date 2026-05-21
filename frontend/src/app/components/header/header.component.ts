@@ -16,5 +16,5 @@ import { NavLink } from '@/enums/nav-link.enum';
 })
 export class HeaderComponent {
   apiService = inject(ApiService);
-  homeLink = NavLink.DASHBOARD.toLowerCase();
+  homeLink = NavLink.Dashboard.toLowerCase();
 }

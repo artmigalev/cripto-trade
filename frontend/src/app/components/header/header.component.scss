@@ -4,6 +4,8 @@
 }
 header {
   width: 100%;
+  background-color: var(--mat-sys-surface-dim);
+  padding: var(--padding);
   a {
     color: var(--mat-sys-primary);
   }

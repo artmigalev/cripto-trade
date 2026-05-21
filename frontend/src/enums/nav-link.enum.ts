@@ -1,22 +1,44 @@
 export enum NavLink {
-  DASHBOARD = 'Dashboard',
-  MARKETS = 'Markets',
-  TRADE = 'Trade',
-  PORTFOLIO = 'Portfolio',
-  ABOUT_US = 'About Us',
-  SETTINGS = 'Settings',
-  LOGIN = 'Login',
-  REGISTER = 'Register',
-  LOGOUT = 'Logout',
+  Dashboard = 'Dashboard',
+  Markets = 'Markets',
+  Trades = 'Trade',
+  Portfolio = 'Portfolio',
+  About_Us = 'About us',
+  Settings = 'Settings',
+  Login = 'Login',
+  Register = 'Register',
+  Logout = 'Logout',
 }
 export enum RouterLinks {
-  DASHBOARD = 'dashboard',
-  MARKETS = 'markets',
-  TRADE = 'trade',
-  PORTFOLIO = 'portfolio',
-  ABOUT_US = 'about-Us',
-  SETTINGS = 'settings',
-  LOGIN = 'login',
-  REGISTER = 'register',
-  LOGOUT = 'logout',
+  Dashboard = 'dashboard',
+  Markets = 'markets',
+  Trades = 'trade',
+  Portfolio = 'portfolio',
+  About_Us = 'about-us',
+  Settings = 'settings',
+  Login = 'login',
+  Register = 'register',
+  Logout = 'logout',
+}
+
+export enum PublicRoutes {
+  //Routes for Unautorizated users
+  Dashboard = 'dashboard',
+  Markets = 'markets',
+  Trades = 'trade',
+  Portfolio = 'portfolio',
+  About_Us = 'about-us',
+  Settings = 'settings',
+  Login = 'login',
+  Register = 'register',
+}
+
+export enum PrivateRoutes {
+  Dashboard = 'dashboard',
+  Markets = 'markets',
+  Trades = 'trade',
+  Portfolio = 'portfolio',
+  About_Us = 'about-us',
+  Settings = 'settings',
+  Logout = 'logout',
 }

@@ -20,9 +20,9 @@ export default class RegisterPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  protected btn_text = NavLink.REGISTER;
-  protected login_link_text = NavLink.LOGIN;
-  protected login_link = RouterLinks.LOGIN;
+  protected btn_text = NavLink.Register;
+  protected login_link_text = NavLink.Login;
+  protected login_link = RouterLinks.Login;
 
   registerForm = this.fb.group(
     {
@@ -40,6 +40,6 @@ export default class RegisterPageComponent {
   handleSubmit() {
     if (this.registerForm.invalid) return;
 
-    this.router.navigate([RouterLinks.DASHBOARD]);
+    this.router.navigate([RouterLinks.Dashboard]);
   }
 }
