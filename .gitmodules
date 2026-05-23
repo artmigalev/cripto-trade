@@ -1,0 +1,9 @@
+[submodule "backend"]
+    path = backend
+    url = https://github.com/artmigalev/cripto-trade-backend.git
+    branch = dev
+
+[submodule "frontend"]
+    path = frontend
+    url = https://github.com/artmigalev/cripto-trade-frontend.git
+    branch = develop
