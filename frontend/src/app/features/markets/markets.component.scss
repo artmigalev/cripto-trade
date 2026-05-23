@@ -1,0 +1,35 @@
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.tab-group {
+  background-color: var(--mat-sys-surface-container);
+  border-radius: var(--mat-sys-corner-medium);
+  height: 100%;
+  border: 1px solid var(--mat-sys-outline);
+  .tab {
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.market-table {
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface);
+  box-shadow: var(--mat-sys-corner-extra-large);
+}
+.row-table:hover {
+  cursor: pointer;
+  background-color: var(--mat-sys-secondary-container);
+}
+
+.column-title {
+  font-weight: bold;
+  color: var(--mat-sys-primary);
+  background-color: var(--mat-sys-on-tertiary-container);
+}
+.rows-text {
+  color: var(--mat-sys-on-secondary-fixed-variant);
+}

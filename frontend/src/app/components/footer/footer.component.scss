@@ -1,0 +1,13 @@
+:host {
+  display: block;
+
+  width: 100%;
+}
+
+.footer {
+  padding: var(--padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
