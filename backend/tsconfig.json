@@ -18,6 +18,7 @@
       "@dto/*": ["src/auth/dto/*"],
       "@auth/*": ["src/auth/*"],
       "@keys/*": ["src/key/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@/*": ["./*"],
     },
     "incremental": true,

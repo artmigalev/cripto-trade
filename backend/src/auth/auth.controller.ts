@@ -5,6 +5,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   HttpStatus,
   Inject,
   Post,
@@ -16,10 +17,11 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get('/me')
-  getCredentials() {
-    return this.authService.getUser();
+  getCredentials(@Body() userCredentials: LoginDto) {
+    return this.authService.getUser(userCredentials.email);
   }
   // /auth/register
+  @HttpCode(HttpStatus.OK)
   @Post('/register')
   createUser(@Body() userCredentials: RegisterDto) {
     return this.authService.userRegister(userCredentials);
