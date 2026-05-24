@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async userRegister(userCredentials: RegisterDto) {
-    try {
+
       const user = this.getUser(userCredentials.email);
 
       if (user) {
@@ -39,18 +39,12 @@ export class AuthService {
         email: userCredentials.email,
       });
 
-      return { access_token: await access_token };
-    } catch (error: unknown) {
-      if (error instanceof BadRequestException) {
-        return error;
-      }
+      return { access_token };
 
-      return error;
-    }
   }
 
   async userLogin(userCredentials: LoginDto) {
-    try {
+
       const user = this.getUser(userCredentials.email);
 
       if (!user) {
@@ -70,9 +64,7 @@ export class AuthService {
         email: user.email,
       });
 
-      return { access_token: await access_token };
-    } catch (error: unknown) {
-      return error;
-    }
+      return { access_token };
+
   }
 }
