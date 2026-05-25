@@ -22,60 +22,45 @@ export class AuthService {
   }
 
   async userRegister(userCredentials: RegisterDto) {
-    try {
-      const user = this.getUser(userCredentials.email);
+    const user = this.getUser(userCredentials.email);
 
-      if (user) {
-        throw new BadRequestException('User already exists');
-      }
-      const nextId = randomUUID();
-
-      const hash = await bcrypt.hash(userCredentials.password, 10);
-
-      this.users.push({ ...userCredentials, password: hash, id: nextId });
-
-      const access_token = this.jwtService.signAsync({
-        sub: nextId,
-        email: userCredentials.email,
-      });
-
-      return { access_token: await access_token };
-    } catch (error: unknown) {
-      if (error instanceof BadRequestException) {
-        return error;
-      }
-
-      return error;
+    if (user) {
+      throw new BadRequestException('User already exists');
     }
+    const nextId = randomUUID();
+
+    const hash = await bcrypt.hash(userCredentials.password, 10);
+
+    this.users.push({ ...userCredentials, password: hash, id: nextId });
+
+    const access_token = this.jwtService.signAsync({
+      sub: nextId,
+      email: userCredentials.email,
+    });
+
+    return { access_token: await access_token };
   }
 
   async userLogin(userCredentials: LoginDto) {
-    try {
-      const user = this.getUser(userCredentials.email);
+    const user = this.getUser(userCredentials.email);
 
-      if (!user) {
-        throw new UnauthorizedException('Invalid credentials');
-      }
-      const isMatch = await bcrypt.compare(
-        userCredentials.password,
-        user.password,
-      );
-
-      if (!isMatch) {
-        throw new UnauthorizedException('Invalid credentials');
-      }
-
-      const access_token = this.jwtService.signAsync({
-        sub: user.id,
-        email: user.email,
-      });
-
-      return { access_token: await access_token };
-    } catch (error: unknown) {
-      if (error instanceof UnauthorizedException) {
-        return error;
-      }
-      return error;
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+    const isMatch = await bcrypt.compare(
+      userCredentials.password,
+      user.password,
+    );
+
+    if (!isMatch) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const access_token = this.jwtService.signAsync({
+      sub: user.id,
+      email: user.email,
+    });
+
+    return { access_token: await access_token };
   }
 }
