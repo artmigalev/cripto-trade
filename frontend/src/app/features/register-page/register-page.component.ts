@@ -1,5 +1,7 @@
+import { AuthService } from '@/app/core/services/auth.service';
 import { NavLink, RouterLinks } from '@/enums/nav-link.enum';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -17,12 +19,15 @@ const passwordMatchValidator = (group: AbstractControl) => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class RegisterPageComponent {
+  private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
   protected btn_text = NavLink.Register;
   protected login_link_text = NavLink.Login;
   protected login_link = RouterLinks.Login;
+
+  isSuccess = signal(false);
 
   registerForm = this.fb.group(
     {
@@ -37,9 +42,23 @@ export default class RegisterPageComponent {
   pswd = this.registerForm.controls.password;
   pswdConfirm = this.registerForm.controls.passwordConfirm;
 
-  handleSubmit() {
+  async handleSubmit() {
     if (this.registerForm.invalid) return;
+    try {
+      await this.authService.register(this.email.value!, this.pswd.value!);
 
-    this.router.navigate([RouterLinks.Dashboard]);
+      this.isSuccess.set(true);
+      this.registerForm.reset();
+      setTimeout(() => {
+        this.router.navigate([RouterLinks.Settings]);
+      }, 2000);
+    } catch (error) {
+      if (error instanceof HttpErrorResponse && error.status === 400) {
+        this.registerForm.setErrors({
+          exists: true,
+          error: error.error.message,
+        });
+      }
+    }
   }
 }
