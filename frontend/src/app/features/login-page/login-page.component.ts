@@ -1,5 +1,5 @@
 import { AuthService } from '@/app/core/services/auth.service';
-import { NavLink, RouterLinks } from '@/enums/nav-link.enum';
+import { AuthRotes, RouterLinks } from '@/enums/nav-link.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -17,8 +17,8 @@ export default class LoginPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  protected btn_text = NavLink.Login;
-  protected register_link_text = NavLink.Register;
+  protected btn_text = AuthRotes.Login;
+  protected register_link_text = AuthRotes.Register;
   protected register_link = RouterLinks.Register;
 
   loginForm = this.fb.group({

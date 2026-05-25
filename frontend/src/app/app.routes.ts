@@ -1,5 +1,5 @@
 import { authGuard } from '@/app/shared/guards/auth-guard';
-import { NavLink } from '@/enums/nav-link.enum';
+import { AuthRotes } from '@/enums/nav-link.enum';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -39,14 +39,14 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./features/login-page/login-page.component'),
-    title: NavLink.Login,
+    title: AuthRotes.Login,
 
     canActivate: [authGuard],
   },
   {
     path: 'register',
     loadComponent: () => import('./features/register-page/register-page.component'),
-    title: NavLink.Register,
+    title: AuthRotes.Register,
     canActivate: [authGuard],
   },
   {

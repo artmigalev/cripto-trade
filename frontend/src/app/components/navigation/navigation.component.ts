@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NavLink, PrivateRoutes, PublicRoutes } from '@enums/nav-link.enum';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NavLink } from '@enums/nav-link.enum';
 import { MatListItem, MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '@services/auth.service';
 
 interface NavItem {
-  title: NavLink;
-  link: string;
+  title: string;
+  link: keyof typeof NavLink;
 }
 
 // type NavListType = NavItem[];
@@ -19,10 +18,7 @@ interface NavItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-  private readonly authService = inject(AuthService);
-
-  isAuthenticated = computed(() => this.authService.isApiConfigured());
-  navList = Object.entries(this.isAuthenticated() ? PrivateRoutes : PublicRoutes).map(
-    ([title, link]) => ({ title, link }) as NavItem
+  navList = Object.entries(NavLink).map(
+    ([title, link]) => ({ title: title, link: link.toLowerCase() }) as NavItem
   );
 }

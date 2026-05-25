@@ -1,5 +1,5 @@
 import { AuthService } from '@/app/core/services/auth.service';
-import { NavLink, RouterLinks } from '@/enums/nav-link.enum';
+import { AuthRotes, RouterLinks } from '@/enums/nav-link.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
@@ -23,8 +23,8 @@ export default class RegisterPageComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  protected btn_text = NavLink.Register;
-  protected login_link_text = NavLink.Login;
+  protected btn_text = AuthRotes.Register;
+  protected login_link_text = AuthRotes.Login;
   protected login_link = RouterLinks.Login;
 
   isSuccess = signal(false);

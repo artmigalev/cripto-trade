@@ -4,5 +4,22 @@
   </a>
   <app-navigation />
   <app-search-bar />
-  <app-status-icon />
+  <div class="flex flex-row items-center">
+    <mat-nav-list class="">
+      <ul class="flex flex-wrap">
+        @for (item of authLinks; track $index) {
+          <li>
+            <a
+              mat-list-item
+              routerLinkActive="activeLink"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="item.link">
+              {{ item.title }}
+            </a>
+          </li>
+        }
+      </ul>
+    </mat-nav-list>
+    <app-status-icon />
+  </div>
 </header>

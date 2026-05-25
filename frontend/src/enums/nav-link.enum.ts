@@ -1,18 +1,21 @@
 export enum NavLink {
   Dashboard = 'Dashboard',
   Markets = 'Markets',
-  Trades = 'Trade',
+  Trade = 'Trade',
   Portfolio = 'Portfolio',
   About_Us = 'About us',
   Settings = 'Settings',
+}
+export enum AuthRotes {
   Login = 'Login',
   Register = 'Register',
   Logout = 'Logout',
 }
+
 export enum RouterLinks {
   Dashboard = 'dashboard',
   Markets = 'markets',
-  Trades = 'trade',
+  Trade = 'trade',
   Portfolio = 'portfolio',
   About_Us = 'about-us',
   Settings = 'settings',
