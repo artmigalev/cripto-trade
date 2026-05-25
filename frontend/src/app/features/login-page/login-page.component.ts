@@ -1,4 +1,6 @@
+import { AuthService } from '@/app/core/services/auth.service';
 import { NavLink, RouterLinks } from '@/enums/nav-link.enum';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -11,11 +13,12 @@ import { Router, RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class LoginPageComponent {
+  private readonly authService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
   protected btn_text = NavLink.Login;
-  protected register_link_text = NavLink.Login;
+  protected register_link_text = NavLink.Register;
   protected register_link = RouterLinks.Register;
 
   loginForm = this.fb.group({
@@ -26,9 +29,21 @@ export default class LoginPageComponent {
   email = this.loginForm.controls.email;
   password = this.loginForm.controls.password;
 
-  handleSubmit() {
+  async handleSubmit() {
     if (this.loginForm.invalid) return;
 
-    this.router.navigate([RouterLinks.Dashboard]);
+    try {
+      await this.authService.login(this.email.value!, this.password.value!);
+      this.router.navigate([RouterLinks.Dashboard]);
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        this.loginForm.setErrors({
+          invalidCredentials: true,
+          error: error.error.message,
+        });
+
+        return;
+      }
+    }
   }
 }

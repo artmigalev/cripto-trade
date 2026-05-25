@@ -50,6 +50,10 @@
           "type": "directive",
           "skipTests": true,
           "standalone": true
+        },
+        "@schematics/angular:interceptor": {
+          "path": "src/app/shared/interceptors",
+          "functional": true
         }
       },
 

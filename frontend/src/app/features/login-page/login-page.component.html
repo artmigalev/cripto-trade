@@ -28,7 +28,9 @@
       </div>
     }
   </fieldset>
-
+  @if (loginForm.hasError('invalidCredentials')) {
+    <div class="alert alert-danger">{{ loginForm.getError('error') }}</div>
+  }
   <button type="submit" [disabled]="loginForm.invalid">{{ btn_text }}</button>
 
   <a class="link-reg-page" [routerLink]="[`/${register_link}`]">{{ register_link_text }}</a>
