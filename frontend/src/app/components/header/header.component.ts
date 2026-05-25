@@ -28,7 +28,7 @@ export class HeaderComponent {
   apiService = inject(ApiService);
   private readonly authService = inject(AuthService);
 
-  isAuthenticated = computed(() => this.authService.isApiConfigured());
+  isAuthenticated = computed(() => this.authService.isAuthenticated());
   homeLink = NavLink.Dashboard.toLowerCase();
 
   authLinks = Object.entries(AuthRotes)

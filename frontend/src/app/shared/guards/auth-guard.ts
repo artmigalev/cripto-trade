@@ -12,13 +12,13 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const path = route.routeConfig?.path;
 
   if (path && publicPath.includes(path as RouterLinks)) {
-    if (authService.isApiConfigured()) {
+    if (authService.isAuthenticated()) {
       return router.parseUrl(`${RouterLinks.Dashboard}`);
     }
     return true;
   }
 
-  if (authService.isApiConfigured()) {
+  if (authService.isAuthenticated()) {
     return true;
   }
   return router.parseUrl(`${RouterLinks.Settings}`);
