@@ -1,17 +1,25 @@
+import { AuthGuard } from '@auth/auth.guard';
+import { KeyDto } from '@keys/dto/key.dto';
 import { KeyService } from '@keys/key.service';
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Request, Controller, Get, Put, UseGuards } from '@nestjs/common';
 
 @Controller('keys')
 export class KeyController {
   constructor(private keyService: KeyService) {}
 
-  @Get()
-  getKey() {
-    return this.keyService.forwardKey();
-  }
 
+  @UseGuards(AuthGuard)
+  @Get()
+  getKey(@Request() req: Request) {
+
+    const userId = req['user'].sub;
+
+    return this.keyService.forwardKey(userId);
+  }
+  @UseGuards(AuthGuard)
   @Put()
-  updateKey(@Body() key: string) {
-    return this.keyService.update(key);
+  updateKey(@Request() req: Request, @Body() dto: KeyDto) {
+    const userId = req['user'].sub;
+    return this.keyService.update(userId, dto);
   }
 }
