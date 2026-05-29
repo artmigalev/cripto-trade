@@ -1,5 +1,8 @@
 {
   "prettier.experimentalTernaries": true,
-
+  "prettier.configPath": "frontend/.prettierrc",
+  "prettier.prettierPath": "./node_modules/prettier",
   "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "vsicons.presets.angular": true,
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

@@ -7,7 +7,6 @@
     "types": ["node"],
     "baseUrl": "./src/",
     "paths": {
-      "@/*": ["./*"],
       "@components/*": ["app/components/*"],
       "@enums/*": ["enums/*"],
       "@services/*": ["app/core/services/*"],
@@ -15,7 +14,8 @@
       "@directives/*": ["app/shared/directives/*"],
       "@pipes/*": ["app/shared/pipes/*"],
       "@guards/*": ["app/shared/guards/*"],
-      "@features/*": ["app/features/*"]
+      "@features/*": ["app/features/*"],
+      "@/*": ["./*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],

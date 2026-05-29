@@ -15,7 +15,22 @@
   </fieldset>
   <fieldset>
     <legend for="">Secret Key</legend>
-    <input type="password" formControlName="secretKey" name="secretKey" />
+    <div class="secret-key">
+      <input type="{{ inputType() }}" formControlName="secretKey" name="secretKey" />
+      <button class="btn-icon" (click)="toggleInputType()">
+        @if (inputState() === 'visible') {
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="visibility"></mat-icon>
+        } @else {
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="visibility_off"></mat-icon>
+        }
+      </button>
+    </div>
     @if (secretKey?.invalid && (secretKey?.dirty || secretKey?.touched)) {
       <div class="alert alert-danger">
         @if (secretKey?.hasError('required')) {
