@@ -55,6 +55,9 @@ export class AuthService {
     );
     return response;
   }
+  async getAccount() {
+    return await firstValueFrom(this.http.get(`${this.config.backendUrl}/auth/me`));
+  }
 
   async checkKeys() {
     const token = localStorage.getItem('access_token');

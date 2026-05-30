@@ -1,10 +1,13 @@
 import { AuthService } from '@/app/core/services/auth.service';
-import { RouterLinks } from '@/enums/nav-link.enum';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { SettingComponent } from '@/app/interfaces/setting-component.interface';
+import { KeysService } from '@services/keys.service';
+import { SettingFormError } from '@enums/custom-error-message.enum';
+import { SettingForm } from '@enums/notify-messages.enum';
+import { RouterLinks } from '@enums/nav-link.enum';
 
 @Component({
   selector: 'app-settings',
@@ -16,8 +19,13 @@ import { SettingComponent } from '@/app/interfaces/setting-component.interface';
 })
 export default class SettingsComponent {
   private readonly authService = inject(AuthService);
+  private readonly keyService = inject(KeysService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+
+  protected readonly _notifyMessage = signal('');
+
+  notifyMessage = computed(() => this._notifyMessage());
 
   private readonly _secretFieldState = signal<SettingComponent['fieldState']>({
     state: 'hidden',
@@ -44,14 +52,32 @@ export default class SettingsComponent {
   handleResetForm() {
     this.form.reset();
   }
-  handleSubmit() {
+  async handleSubmit() {
     if (this.form.invalid) return;
 
-    const { apiKey, secretKey } = this.form.value;
+    try {
+      const { apiKey, secretKey } = this.form.value;
 
-    localStorage.setItem('binance_keys', JSON.stringify({ apiKey, secretKey }));
-    this.authService.setKeysConfigured(true);
-    this.form.reset();
-    this.router.navigate([RouterLinks.Dashboard]);
+      const { configured } = await this.keyService.saveKeys({
+        apiKey: apiKey!,
+        secretKey: secretKey!,
+      });
+      await this.authService.getAccount();
+
+      this.authService.setKeysConfigured(true);
+      if (!configured) {
+        throw new Error(SettingFormError.InvalidKeys);
+      }
+      this.form.reset();
+      this._notifyMessage.set(SettingForm.Connected);
+      setTimeout(() => {
+        this.router.navigate([RouterLinks.Dashboard]);
+      }, 3000);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        this.form.setErrors({ saveFailed: true });
+        this._notifyMessage.set(error.message);
+      }
+    }
   }
 }

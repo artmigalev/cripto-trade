@@ -42,6 +42,11 @@
       </div>
     }
   </fieldset>
+  @if (form.hasError('saveFailed')) {
+    <div class="alert alert-danger">{{ notifyMessage() }}</div>
+  } @else {
+    <div class="alert alert-success">{{ notifyMessage() }}</div>
+  }
   <div class="form-buttons">
     <button type="submit" [disabled]="form.invalid">submit</button>
     <button type="reset" (click)="handleResetForm()">reset</button>

@@ -61,6 +61,11 @@
   font: var(--mat-sys-label-large);
   padding: var(--padding);
 }
+.alert-success {
+  color: var(--mat-sys-tertiary-fixed-dim);
+  font: var(--mat-sys-label-large);
+  padding: var(--padding);
+}
 .form-buttons {
   width: 100%;
   display: flex;
