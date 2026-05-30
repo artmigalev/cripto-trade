@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { MatTableModule } from '@angular/material/table';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { DecimalPipe } from '@angular/common';
+import { DashboardErrors } from '@enums/custom-error-message.enum';
 
 // interface MarketTable {
 //   pair: string;
@@ -46,4 +47,23 @@ export default class MarketsComponent {
     }
     return markets;
   });
+  protected readonly isLoad = signal(false);
+  protected readonly error = signal('');
+
+  constructor() {
+    this.loadData();
+  }
+
+  async loadData() {
+    this.isLoad.set(true);
+    this.error.set('');
+
+    try {
+      await this.marketService.loadedData();
+    } catch {
+      this.error.set(DashboardErrors.Load);
+    } finally {
+      this.isLoad.set(false);
+    }
+  }
 }
