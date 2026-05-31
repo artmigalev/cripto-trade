@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   inject,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
@@ -14,10 +15,23 @@ import { AuthService } from '@/app/core/services/auth.service';
 import { API_CONFIG } from '@/app/core/services/tokens/api-config.tokens';
 import { authInterceptor } from '@/app/shared/interceptors/auth-interceptor';
 import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
+import { MarketService } from '@services/market.service';
+import { GlobalErrorComponent } from '@/app/core/handlers/global-error/global-error.component';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAppInitializer(() => inject(AuthService).checkKeys()),
+    provideAppInitializer(async () => {
+      try {
+        const marketService = inject(MarketService);
+        const authService = inject(AuthService);
+
+        await authService.checkKeys();
+
+        await marketService.loadedData();
+      } catch (error) {
+        console.error(error);
+      }
+    }),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor]), withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideBrowserGlobalErrorListeners(),
@@ -29,6 +43,10 @@ export const appConfig: ApplicationConfig = {
         wsUrl: 'wss://ws-api.testnet.binance.vision/ws-api/v3',
         backendUrl: 'http://localhost:3000',
       },
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorComponent,
     },
   ],
 };
