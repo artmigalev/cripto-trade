@@ -1,3 +1,14 @@
+@use './material-tokens.typography.scss';
+
 :root {
   --padding: 8px;
+  --padding-top: 12px;
+  --padding-bottom: 20px;
+  --padding-lr: 24px;
+
+  --title-section: var(--mat-sys-headline-large);
+  --subtitle: var(--mat-sys-title-medium);
+  --text-body: var(--mat-sys-body-large);
+  --label: var(--mat-sys-label-large);
+  --display: var(--mat-sys-display-large);
 }

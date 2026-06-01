@@ -3,13 +3,20 @@
 
   margin: auto;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 .dashboard {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
+  gap: 10px;
+  padding: var(--padding);
+  background-color: var(--mat-sys-surface);
+}
+.title {
+  font: var(--title-section);
 }
 .card-list {
   width: 100%;

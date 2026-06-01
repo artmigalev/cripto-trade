@@ -5,13 +5,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { DecimalPipe } from '@angular/common';
 
-// interface MarketTable {
-//   pair: string;
-//   price: string;
-//   '24hChange': string;
-//   '24hVolume': string;
-// }
-
 @Component({
   selector: 'app-markets',
   imports: [MatTabGroup, MatTab, MatTableModule],

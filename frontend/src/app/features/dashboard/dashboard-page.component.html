@@ -1,21 +1,13 @@
 <section class="dashboard">
-  <h1 class="text-2xl font-bold relative top-0 left-0">Dashboard</h1>
-
   @if (isLoad()) {
     <div>Loading...</div>
   } @else if (error()) {
     <div>{{ error() }}</div>
   } @else {
-    @if (tickers().length === 0) {
-      <h2>Tickers not found</h2>
-    } @else {
-      <ul class="card-list">
-        @for (ticker of tickers(); track ticker.symbol) {
-          <li class="list-item">
-            <app-market-card [ticker]="ticker" />
-          </li>
-        }
-      </ul>
-    }
+    <app-market-overview />
+    <div class="flex flex-row w-full gap-4">
+      <app-watch-list />
+      <app-portfolio-summary />
+    </div>
   }
 </section>

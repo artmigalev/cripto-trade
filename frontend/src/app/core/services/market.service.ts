@@ -21,10 +21,18 @@ export class MarketService {
 
   watchListCount = computed(() => this._market().watchList.length);
 
+  private readonly _searchValue = signal<string>('');
+
+  searchValue = this._searchValue.asReadonly();
+
   constructor() {
     effect(() => {
       localStorage.setItem(Key.CRYPTO_WATCHLIST, JSON.stringify(this._market().watchList));
     });
+  }
+
+  setSearch(value: string) {
+    this._searchValue.set(value);
   }
 
   toggleFavorite(symbol: string) {

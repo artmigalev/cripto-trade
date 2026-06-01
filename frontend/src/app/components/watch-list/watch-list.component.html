@@ -1,0 +1,19 @@
+<section class="watch-list">
+  <h4 class="favorite-title">Favorite List</h4>
+  <mat-list role="list" class="faworite-list">
+    @for (item of favoritePairs(); track $index) {
+      <mat-list-item class="favorite-listitem">
+        <div class="pair-list">
+          <span class="pair-key-name">{{ item.symbol }}</span>
+          <span class="pair-key">{{ item.lastPrice }}</span>
+          <span class="pair-key">{{ item.priceChangePercent }} %</span>
+          <mat-icon
+            aria-hidden="false"
+            class="remove-icon"
+            aria-label="Remove pair"
+            fontIcon="delete"></mat-icon>
+        </div>
+      </mat-list-item>
+    }
+  </mat-list>
+</section>
