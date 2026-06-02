@@ -37,3 +37,6 @@
     background-color: var(--mat-sys-secondary-fixed-dim);
   }
 }
+.btn-card:disabled {
+  background-color: var(--mat-sys-on-secondary-fixed);
+}

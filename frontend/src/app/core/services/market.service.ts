@@ -12,22 +12,25 @@ interface Market {
   providedIn: 'root',
 })
 export class MarketService {
+  private readonly _searchValue = signal<string>('');
   private serviceApi = inject(ApiService);
   private readonly _market = signal<Market>({
     tickers: [],
     watchList: this.loadWatchList(),
   });
+
   market = this._market.asReadonly();
 
   watchListCount = computed(() => this._market().watchList.length);
-
-  private readonly _searchValue = signal<string>('');
 
   searchValue = this._searchValue.asReadonly();
 
   constructor() {
     effect(() => {
-      localStorage.setItem(Key.CRYPTO_WATCHLIST, JSON.stringify(this._market().watchList));
+      const watchList = this._market().watchList;
+      if (watchList && watchList.length > 0) {
+        localStorage.setItem(Key.CRYPTO_WATCHLIST, JSON.stringify(this._market().watchList));
+      }
     });
   }
 
@@ -37,6 +40,7 @@ export class MarketService {
 
   toggleFavorite(symbol: string) {
     const current = this._market().watchList;
+    console.log(symbol);
     if (current.includes(symbol)) {
       this._market.update(prev => ({
         ...prev,
@@ -52,6 +56,12 @@ export class MarketService {
 
   isFavorite(symbol: string) {
     return this._market().watchList.includes(symbol);
+  }
+
+  getFavoriteTickers(): Ticker[] {
+    const favTickets = this._market().watchList;
+
+    return this._market().tickers.filter(ticker => favTickets.includes(ticker.symbol));
   }
 
   async loadedData() {
@@ -94,8 +104,8 @@ export class MarketService {
     return result;
   }
 
-  loadWatchList() {
+  loadWatchList(): [] | string[] {
     const saved = localStorage.getItem(Key.CRYPTO_WATCHLIST);
-    return saved ? JSON.parse(saved) : ['BTCUSDT', 'ETHUSDT', 'BNBUSDT'];
+    return saved ? JSON.parse(saved) : [];
   }
 }

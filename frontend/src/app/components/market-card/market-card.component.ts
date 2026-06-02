@@ -24,6 +24,9 @@ export class MarketCardComponent {
     change24h: this.ticker()?.priceChangePercent,
     volume: this.ticker()?.volume,
   }));
+  protected readonly isFavorite = computed(() =>
+    this.marketService.isFavorite(this.ticker()?.symbol as string)
+  );
 
   toggle() {
     this.marketService.toggleFavorite(this.ticker()?.symbol as string);

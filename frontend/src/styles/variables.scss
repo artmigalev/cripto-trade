@@ -30,6 +30,17 @@
   --dash-card-btn-color: var(--mat-sys-on-secondary-fixed-variant);
   --dash-card-btn-bg-color: var(--mat-sys-secondary-container);
   --dash-card-btn-text: var(--mat-sys-label-large);
+
+  //dashboard
+
+  --section-bg-color: var(--mat-sys-surface-container-highest);
+  --section-color-text: var(--mat-sys-on-surface);
+  --section-color-title: var(--mat-sys-on-surface);
+  --section-text-title: var(--mat-sys-title-large);
+  --ticker-symbol-color: var(--mat-sys-primary);
+  --ticker-symbol-text: var(--mat-sys-label-large);
+  --ticker-price-text: var(--mat-sys-body-large);
+  --ticker-percent-text: var(--mat-sys-body-large);
 }
 // Surface  – роль, используемая для фона и больших, малозаметных областей экрана.
 // Основные, второстепенные, третичные цвета – роли акцентных цветов, используемые для подчеркивания или приглушения элементов переднего плана.

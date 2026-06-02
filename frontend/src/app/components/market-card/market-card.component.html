@@ -22,7 +22,9 @@
     </ul>
   </mat-card-content>
   <mat-card-actions>
-    <button class="btn-card favorite-btn" matButton>Add to favorites</button>
+    <button [disabled]="isFavorite()" class="btn-card favorite-btn" matButton (click)="toggle()">
+      Add to favorites
+    </button>
   </mat-card-actions>
 </mat-card>
 

@@ -1,16 +1,11 @@
 :host {
   display: flex;
-  width: 30%;
-  max-width: 890px;
+  width: 100%;
+  max-width: 590px;
 }
 
-.favorite-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.faworite-list,
-.watch-list,
-.pair-list {
+.favorite-list,
+.watch-list {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -20,13 +15,26 @@
   align-items: start;
   gap: 10px;
   border-radius: 20px;
-  background-color: var(--mat-sys-surface-container-highest);
+  background-color: var(--section-bg-color);
+  color: var(--section-color-text);
   padding: var(--padding-top) var(--padding-lr) var(--padding-bottom) var(--padding-lr);
-  overflow: hidden;
+  .watch-list-title {
+    font: var(--title-section);
+    color: var(--section-color-title);
+    font-weight: bold;
+  }
+}
+.favorite-list {
+  max-height: 300px;
+  height: 100%;
+  overflow: auto;
 }
 
-.favorite-listitem {
+.favorite-item {
   width: 100%;
+  height: 50px;
+  padding: var(--padding);
+  flex: 1;
 }
 .pair-list {
   width: 100%;
@@ -35,19 +43,21 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--padding);
-  border-bottom: 1px solid var(--mat-sys-surface-container-low);
 }
-.pair-key {
-  font-weight: bold;
-}
-.pair-key-name {
-  color: var(--mat-sys-primary);
-  font: var(--label);
-  font-weight: bold;
-}
+
 .remove-icon {
   cursor: pointer;
   &:hover {
     color: var(--mat-sys-error);
   }
+}
+.ticker-name {
+  font: var(--ticker-symbol-text);
+  font-weight: bold;
+  color: var(--ticker-symbol-color);
+}
+.ticker-price {
+  color: var(--mat-sys-primary);
+  font: var(--label);
+  font-weight: bold;
 }
