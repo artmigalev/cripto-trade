@@ -7,11 +7,13 @@
     <ul>
       <li class="card-item">
         <span class="label">Price:</span>
-        <span class="value">{{ card().currentPrice }}</span>
+        <span class="value">{{ card().currentPrice | converter: card().symbol }} </span>
       </li>
       <li class="card-item">
         <span class="label"> 24h change:</span>
-        <span class="value">{{ card().change24h }}</span>
+        <span class="value" appHighlight="{{ card().change24h }}" class="value"
+          >{{ card().change24h }} %</span
+        >
       </li>
       <li class="card-item">
         <span class="label">Volume:</span>

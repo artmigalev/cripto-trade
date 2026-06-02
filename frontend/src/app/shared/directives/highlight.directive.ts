@@ -1,12 +1,13 @@
-import { Directive, input } from '@angular/core';
+import { Directive, computed, input } from '@angular/core';
 
 @Directive({
   selector: '[appHighlight]',
   host: {
-    '[style.color]': '(change() < 0) ? "red": defaultColor',
+    '[style.color]': '(result()) ? "red" : this.defaultColor',
   },
 })
 export class HighlightDirective {
   readonly defaultColor = 'green';
-  readonly change = input<number>(0, { alias: 'appHighlight' });
+  readonly change = input<string>('', { alias: 'appHighlight' });
+  readonly result = computed(() => Number(this.change()) < 0);
 }

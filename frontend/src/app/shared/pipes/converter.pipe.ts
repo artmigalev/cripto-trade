@@ -7,9 +7,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ConverterPipe implements PipeTransform {
   private readonly decimalPipe = new DecimalPipe('en-US');
-  transform(value: number, symbol: string) {
+  transform(value: number | string, symbol: string) {
     if (symbol.endsWith(FavoriteSymbol.BTC)) {
-      return this.decimalPipe.transform(value, '1.8-8');
+      return this.decimalPipe.transform(value, '1.8-0');
     }
 
     if (symbol.endsWith(FavoriteSymbol.USDT)) {

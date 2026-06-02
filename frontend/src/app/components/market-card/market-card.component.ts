@@ -4,11 +4,13 @@ import { MarketService } from '@/app/core/services/market.service';
 import { Ticker } from '@interfaces/ticker.interfaсe';
 import { MatCardModule } from '@angular/material/card';
 import { Card } from '@interfaces/card.interface';
+import { ConverterPipe } from '../../shared/pipes/converter.pipe';
+import { HighlightDirective } from '@directives/highlight.directive';
 
 @Component({
   selector: 'app-market-card',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, ConverterPipe, HighlightDirective],
   templateUrl: './market-card.component.html',
   styleUrl: './market-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
