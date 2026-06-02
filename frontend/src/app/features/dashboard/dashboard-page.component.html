@@ -4,10 +4,10 @@
   } @else if (error()) {
     <div>{{ error() }}</div>
   } @else {
-    <app-market-overview [topCards]="topCards" />
+    <app-market-overview [topCards]="topCards()" />
     <div class="flex flex-row w-full gap-4">
-      <app-watch-list />
-      <app-portfolio-summary />
+      <app-watch-list [favoritePairs]="watchList()" />
+      <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
     </div>
   }
 </section>

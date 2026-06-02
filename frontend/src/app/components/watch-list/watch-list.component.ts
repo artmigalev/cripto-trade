@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
-import { MarketService } from '@services/market.service';
 import { HighlightDirective } from '@directives/highlight.directive';
+import { Dashboard } from '@interfaces/dashboard.interface';
+import { DashboardService } from '@services/dashboard.service';
 
 @Component({
   selector: 'app-watch-list',
@@ -12,12 +13,11 @@ import { HighlightDirective } from '@directives/highlight.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WatchListComponent {
-  private readonly marketService = inject(MarketService);
+  private readonly dashboardService = inject(DashboardService);
+  favoritePairs = input<Dashboard['watchList']['favoritePairs']>();
 
-  protected readonly favoritePairs = computed(() => this.marketService.getFavoriteTickers());
-
-  removeFavorite(symbol: string) {
-    this.marketService.toggleFavorite(symbol);
+  removeFavorite(symbol: string): Dashboard['watchList']['removePair'] {
+    this.dashboardService.toggleFavorite(symbol);
   }
 }
 // The user can add any trading pair to the watchlist using an "Add to favorites" button.

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MarketCardComponent } from '@components/market-card/market-card.component';
-import { Ticker } from '@interfaces/ticker.interfaсe';
+import { Card } from '@interfaces/card.interface';
 
 @Component({
   selector: 'app-market-overview',
@@ -10,7 +10,7 @@ import { Ticker } from '@interfaces/ticker.interfaсe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketOverviewComponent {
-  topCards = input<Ticker[]>();
+  topCards = input<Card[]>();
 }
 
 // Display cards for the top pairs by trading volume (at least 5). Each card shows: pair symbol, current price, 24h change (percentage), volume.

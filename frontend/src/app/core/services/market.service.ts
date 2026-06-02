@@ -38,31 +38,21 @@ export class MarketService {
     this._searchValue.set(value);
   }
 
-  toggleFavorite(symbol: string) {
-    const current = this._market().watchList;
-    console.log(symbol);
-    if (current.includes(symbol)) {
-      this._market.update(prev => ({
-        ...prev,
-        watchList: prev.watchList.filter(item => item !== symbol),
-      }));
-    } else {
-      this._market.update(prev => ({
-        ...prev,
-        watchList: [...prev.watchList, symbol],
-      }));
-    }
-  }
-
-  isFavorite(symbol: string) {
-    return this._market().watchList.includes(symbol);
-  }
-
-  getFavoriteTickers(): Ticker[] {
-    const favTickets = this._market().watchList;
-
-    return this._market().tickers.filter(ticker => favTickets.includes(ticker.symbol));
-  }
+  // toggleFavorite(symbol: string) {
+  //   const current = this._market().watchList;
+  //   console.log(symbol);
+  //   if (current.includes(symbol)) {
+  //     this._market.update(prev => ({
+  //       ...prev,
+  //       watchList: prev.watchList.filter(item => item !== symbol),
+  //     }));
+  //   } else {
+  //     this._market.update(prev => ({
+  //       ...prev,
+  //       watchList: [...prev.watchList, symbol],
+  //     }));
+  //   }
+  // }
 
   async loadedData() {
     const response = await this.serviceApi.getTicker24hr();

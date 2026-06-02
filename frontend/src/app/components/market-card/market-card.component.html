@@ -1,23 +1,21 @@
 <mat-card class="dashboard-card" appearance="outlined">
   <mat-card-header>
-    <mat-card-title class="card-title">{{ card().symbol }}</mat-card-title>
+    <mat-card-title class="card-title">{{ ticker().symbol }}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
     <ul>
       <li class="card-item">
         <span class="label">Price:</span>
-        <span class="value">{{ card().currentPrice | converter: card().symbol }} </span>
+        <span class="value">{{ ticker().currentPrice | converter: ticker().symbol }} </span>
       </li>
       <li class="card-item">
         <span class="label"> 24h change:</span>
-        <span class="value" appHighlight="{{ card().change24h }}" class="value"
-          >{{ card().change24h }} %</span
-        >
+        <span class="value" [appHighlight]="ticker().change24h">{{ ticker().change24h }} %</span>
       </li>
       <li class="card-item">
         <span class="label">Volume:</span>
-        <span class="value">{{ card().volume }}</span>
+        <span class="value">{{ ticker().volume }}</span>
       </li>
     </ul>
   </mat-card-content>

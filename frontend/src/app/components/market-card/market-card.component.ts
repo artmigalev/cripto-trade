@@ -1,11 +1,10 @@
 // import { MarketCard } from '@/app/interfaces/market-card.interface';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { MarketService } from '@/app/core/services/market.service';
-import { Ticker } from '@interfaces/ticker.interfaсe';
 import { MatCardModule } from '@angular/material/card';
 import { Card } from '@interfaces/card.interface';
 import { ConverterPipe } from '../../shared/pipes/converter.pipe';
 import { HighlightDirective } from '@directives/highlight.directive';
+import { DashboardService } from '@services/dashboard.service';
 
 @Component({
   selector: 'app-market-card',
@@ -16,19 +15,14 @@ import { HighlightDirective } from '@directives/highlight.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarketCardComponent {
-  private readonly marketService = inject(MarketService);
-  ticker = input.required<Ticker>();
-  card = computed<Card>(() => ({
-    symbol: this.ticker()?.symbol,
-    currentPrice: this.ticker()?.lastPrice,
-    change24h: this.ticker()?.priceChangePercent,
-    volume: this.ticker()?.volume,
-  }));
+  private readonly dashboardService = inject(DashboardService);
+  ticker = input.required<Card>();
+
   protected readonly isFavorite = computed(() =>
-    this.marketService.isFavorite(this.ticker()?.symbol as string)
+    this.dashboardService.isFavorite(this.ticker()?.symbol as string)
   );
 
   toggle() {
-    this.marketService.toggleFavorite(this.ticker()?.symbol as string);
+    this.dashboardService.toggleFavorite(this.ticker()?.symbol as string);
   }
 }

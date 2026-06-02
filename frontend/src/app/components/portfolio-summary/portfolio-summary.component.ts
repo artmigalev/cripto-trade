@@ -22,7 +22,7 @@ const mockDataTable: PeriodicElement[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortfolioSummaryComponent {
-  protected readonly totalPortfolioValue = input<number>(0);
+  totalPortfolioValue = input<string>();
   displayedColumns: string[] = ['name', 'quantity', 'symbol', 'value'];
   protected dataSource = mockDataTable;
 }

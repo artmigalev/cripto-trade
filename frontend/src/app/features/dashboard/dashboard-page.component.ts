@@ -1,8 +1,9 @@
-import { MarketService } from '@services/market.service';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
 import { WatchListComponent } from '@components/watch-list/watch-list.component';
 import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
+import { DashboardService } from '@services/dashboard.service';
+import { PortfolioValue } from '@enums/dashboard.enum';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,15 +13,14 @@ import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfol
   imports: [MarketOverviewComponent, WatchListComponent, PortfolioSummaryComponent],
 })
 export default class DashboardPageComponent {
-  private markedService = inject(MarketService);
-  protected readonly tickers = computed(() => this.markedService.market().tickers);
+  private dashboardService = inject(DashboardService);
+  protected readonly topCards = computed(() => this.dashboardService.state().cards);
 
-  protected readonly topCards = this.tickers().slice(0, 10);
-  protected readonly watchList = [];
-  protected readonly portfolioSummary = [];
+  protected readonly watchList = computed(() => this.dashboardService.getFavoriteTickers());
+  protected readonly portfolioSummary = `1000 ${PortfolioValue.USDT}`;
 
   // protected readonly topPairsByTrading =
 
-  protected readonly isLoad = signal(false);
-  protected readonly error = signal('');
+  protected readonly isLoad = computed(() => this.dashboardService.state().isLoad);
+  protected readonly error = computed(() => this.dashboardService.state().error);
 }

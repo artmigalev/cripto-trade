@@ -7,6 +7,7 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
 
@@ -17,21 +18,24 @@ import { authInterceptor } from '@/app/shared/interceptors/auth-interceptor';
 import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
 import { MarketService } from '@services/market.service';
 import { GlobalErrorComponent } from '@/app/core/handlers/global-error/global-error.component';
+import { DashboardService } from '@services/dashboard.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAppInitializer(async () => {
       try {
+        const dashboardService = inject(DashboardService);
         const marketService = inject(MarketService);
         const authService = inject(AuthService);
 
         await authService.checkKeys();
-
+        await dashboardService.loadedData();
         await marketService.loadedData();
       } catch (error) {
         console.error(error);
       }
     }),
+    provideAnimationsAsync(),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor]), withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideBrowserGlobalErrorListeners(),

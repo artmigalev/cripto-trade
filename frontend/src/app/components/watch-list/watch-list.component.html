@@ -1,20 +1,18 @@
 <section class="watch-list">
   <h4 class="watch-list-title">Favorite List</h4>
   <mat-list role="list" class="favorite-list">
-    @for (item of favoritePairs(); track $index) {
+    @for (pair of favoritePairs(); track $index) {
       <mat-list-item class="favorite-item">
         <div class="pair-list">
-          <span class="ticker-name">{{ item.symbol }}</span>
-          <span class="ticker-price">{{ item.lastPrice }}</span>
-          <span appHighlight="{{ item.priceChangePercent }}" class="ticker-procent"
-            >{{ item.priceChangePercent }} %</span
-          >
+          <span class="ticker-name">{{ pair.symbol }}</span>
+          <span class="ticker-price">{{ pair.currentPrice }}</span>
+          <span [appHighlight]="pair.change24h" class="ticker-procent">{{ pair.change24h }} %</span>
           <mat-icon
             aria-hidden="false"
             class="remove-icon"
             aria-label="Remove pair"
             fontIcon="delete"
-            (click)="removeFavorite(item.symbol)"></mat-icon>
+            (click)="removeFavorite(pair.symbol)"></mat-icon>
         </div>
       </mat-list-item>
     }
