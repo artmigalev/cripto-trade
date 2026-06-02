@@ -80,7 +80,12 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css", "src/app/app.scss"],
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css",
+              "src/app/app.scss",
+              "src/styles/_scss-material-variables.scss"
+            ],
             "security": {}
           },
           "configurations": {

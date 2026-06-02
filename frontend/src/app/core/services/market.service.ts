@@ -60,16 +60,9 @@ export class MarketService {
 
     const topTickets = this.getTopTickers(data, ['USDT', 'BTC']);
 
-    const ticketsData = topTickets.map(ticker => ({
-      symbol: ticker['symbol'] as string,
-      price: parseFloat(ticker['priceChange'] as string),
-      change24h: parseFloat(ticker['priceChangePercent'] as string),
-      volume: parseFloat(ticker['volume'] as string),
-    }));
-
     this._market.update(prev => ({
       ...prev,
-      tickers: ticketsData,
+      tickers: topTickets,
     }));
   }
   getTopTickers(tickets: Ticker24hrResponse[], query: string[]) {

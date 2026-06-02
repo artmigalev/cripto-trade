@@ -1,27 +1,39 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  height: 250px;
-  padding: var(--padding);
-  background-color: var(--mat-sys-surface-variant);
-  font: var(--mat-sys-body-large);
-  border-radius: var(--mat-sys-corner-small);
-  border: solid 1px var(--mat-sys-outline-variant);
-  //  box-shadow: rgb(0,0,0,0.7) 5px 10px 50px ,rgb(0,0,0,0.7) -5px 0px 250px;
-  box-shadow: (--mat-sys-level1);
-}
-:host:hover .title {
-  border-bottom: 1px solid var(--mat-sys-primary);
-}
-
-.title {
-  text-align: center;
+  display: block;
+  max-width: 300px;
   width: 100%;
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: var(--mat-sys-primary);
 }
-.key {
-  font-weight: 500;
+.dashboard-card {
+  width: 250px;
+  background-color: var(--dash-card-color-bg);
+  gap: 10px;
+}
+.card-title {
+  font: var(--dash-card-title);
+  color: var(--dash-card-title-color);
+  font-weight: bold;
+}
+.card-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.label {
+  color: var(--dash-card-label-color);
+  font: var(--dash-card-label);
+  font-weight: bold;
+}
+.value {
+  color: var(--mat-sys-on-secondary-container);
+}
+.btn-card {
+  padding: var(--padding);
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--dash-card-btn-bg-color);
+  color: var(--dash-card-btn-color);
+  font: var(--dash-card-btn-text);
+  &:hover {
+    cursor: pointer;
+    background-color: var(--mat-sys-secondary-fixed-dim);
+  }
 }

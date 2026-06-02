@@ -1,4 +1,7 @@
-@use './material-tokens.typography.scss';
+@forward './material-tokens.typography';
+@forward './material-tokens.colors';
+@forward './material-tokens.shape';
+@forward './material-tokens.effects';
 
 :root {
   --padding: 8px;
@@ -11,4 +14,25 @@
   --text-body: var(--mat-sys-body-large);
   --label: var(--mat-sys-label-large);
   --display: var(--mat-sys-display-large);
+
+  //dashboard card
+
+  --dash-card-color-bg: var(--mat-sys-secondary-container);
+
+  --dash-card-title: var(--mat-sys-title-large);
+  --dash-card-title-color: var(--mat-sys-on-secondary-fixed-variant);
+
+  --dash-card-label: var(--mat-sys-label-large);
+  --dash-card-label-color: var(--mat-sys-on-secondary-fixed-variant);
+
+  --dash-card-body: var(--mat-sys-body-medium);
+
+  --dash-card-btn-color: var(--mat-sys-on-secondary-fixed-variant);
+  --dash-card-btn-bg-color: var(--mat-sys-secondary-container);
+  --dash-card-btn-text: var(--mat-sys-label-large);
 }
+// Surface  – роль, используемая для фона и больших, малозаметных областей экрана.
+// Основные, второстепенные, третичные цвета – роли акцентных цветов, используемые для подчеркивания или приглушения элементов переднего плана.
+// Контейнеры — роли, используемые в качестве цвета заливки для элементов переднего плана, таких как кнопки. Их не следует использовать для текста или значков.
+// On – Роли, начинающиеся с этого термина, указывают цвет текста или значков поверх соответствующего родительского цвета. Например, on primary используется для текста и значков относительно основного цвета заливки.
+// Вариант – Роли, заканчивающиеся этим термином, предлагают менее выразительную альтернативу своему невариантному аналогу. Например, вариант контура  – ​​это менее выразительная версия цвета контура  .

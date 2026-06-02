@@ -15,7 +15,7 @@ export default class DashboardPageComponent {
   private markedService = inject(MarketService);
   protected readonly tickers = computed(() => this.markedService.market().tickers);
 
-  protected readonly topCards = [];
+  protected readonly topCards = this.tickers().slice(0, 10);
   protected readonly watchList = [];
   protected readonly portfolioSummary = [];
 

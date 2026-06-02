@@ -4,7 +4,7 @@
   } @else if (error()) {
     <div>{{ error() }}</div>
   } @else {
-    <app-market-overview />
+    <app-market-overview [topCards]="topCards" />
     <div class="flex flex-row w-full gap-4">
       <app-watch-list />
       <app-portfolio-summary />
