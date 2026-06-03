@@ -1,11 +1,10 @@
 import { MarketService } from '@services/market.service';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { MarketsTableComponent } from '@components/markets-table/markets-table.component';
 
 @Component({
   selector: 'app-markets',
-  imports: [MarketsTableComponent],
+  imports: [],
   templateUrl: './markets.component.html',
   styleUrl: './markets.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

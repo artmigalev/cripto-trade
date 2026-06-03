@@ -13,6 +13,9 @@
   background-color: var(--mat-sys-surface-container-highest);
 }
 .title {
+  font: var(--title-section);
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 .section-title {
   font: var(--title-section);
@@ -23,6 +26,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--padding);
+  padding: var(--padding-top) var(--padding-lr) var(--padding-bottom) var(--padding-lr);
 }
 .list-item {
 }

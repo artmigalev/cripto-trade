@@ -12,6 +12,12 @@
   border-radius: 20px;
   background-color: var(--mat-sys-surface-container-highest);
   padding: var(--padding-top) var(--padding-lr) var(--padding-bottom) var(--padding-lr);
+  .portfolio-value {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: 5px;
+  }
   .mat-elevation-z8 {
     background: transparent;
     th {

@@ -9,6 +9,7 @@ import { PortfolioValue } from '@enums/dashboard.enum';
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
+
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MarketOverviewComponent, WatchListComponent, PortfolioSummaryComponent],
 })
