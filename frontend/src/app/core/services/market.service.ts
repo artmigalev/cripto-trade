@@ -1,71 +1,41 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { ApiService, Ticker24hrResponse } from '@services/api.service';
-import { Key } from '@enums/keys.enum';
+import { inject, Injectable, linkedSignal, signal } from '@angular/core';
+import { ApiService } from '@services/api.service';
 import { Ticker } from '@/app/interfaces/ticker.interfaсe';
-
-interface Market {
-  tickers: Ticker[];
-  watchList: string[];
-}
+import { Market } from '@interfaces/market.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarketService {
-  private readonly _searchValue = signal<string>('');
   private serviceApi = inject(ApiService);
-  private readonly _market = signal<Market>({
+  private readonly _market = signal<Market['state']>({
     tickers: [],
-    watchList: this.loadWatchList(),
+    searchValue: '',
   });
 
   market = this._market.asReadonly();
 
-  watchListCount = computed(() => this._market().watchList.length);
+  searchValue = linkedSignal(() => this._market().searchValue);
 
-  searchValue = this._searchValue.asReadonly();
-
-  constructor() {
-    effect(() => {
-      const watchList = this._market().watchList;
-      if (watchList && watchList.length > 0) {
-        localStorage.setItem(Key.CRYPTO_WATCHLIST, JSON.stringify(this._market().watchList));
-      }
-    });
+  setSearch(value: string): ReturnType<Market['setSearch']> {
+    this._market.update(prev => ({
+      ...prev,
+      searchValue: value,
+    }));
   }
 
-  setSearch(value: string) {
-    this._searchValue.set(value);
-  }
-
-  // toggleFavorite(symbol: string) {
-  //   const current = this._market().watchList;
-  //   console.log(symbol);
-  //   if (current.includes(symbol)) {
-  //     this._market.update(prev => ({
-  //       ...prev,
-  //       watchList: prev.watchList.filter(item => item !== symbol),
-  //     }));
-  //   } else {
-  //     this._market.update(prev => ({
-  //       ...prev,
-  //       watchList: [...prev.watchList, symbol],
-  //     }));
-  //   }
-  // }
-
-  async loadedData() {
+  async loadedData(): ReturnType<Market['loadedData']> {
     const response = await this.serviceApi.getTicker24hr();
     const data = Array.isArray(response) ? response : [response];
 
-    const topTickets = this.getTopTickers(data, ['USDT', 'BTC']);
+    const topTickets = this.getTopTickers(data, ['USDT', 'BTC', 'ETH']);
 
     this._market.update(prev => ({
       ...prev,
       tickers: topTickets,
     }));
   }
-  getTopTickers(tickets: Ticker24hrResponse[], query: string[]) {
+  getTopTickers(tickets: Ticker[], query: string[]): ReturnType<Market['getTopTickers']> {
     return tickets
       .filter(ticket => {
         const { symbol } = ticket;
@@ -77,7 +47,7 @@ export class MarketService {
       );
   }
 
-  sortByQuery(query: string[]) {
+  sortByQuery(query: string[]): ReturnType<Market['sortByQuery']> {
     const result: Record<string, Ticker[]> = {};
     const allTickers = this._market().tickers;
 
@@ -92,10 +62,5 @@ export class MarketService {
     }
 
     return result;
-  }
-
-  loadWatchList(): [] | string[] {
-    const saved = localStorage.getItem(Key.CRYPTO_WATCHLIST);
-    return saved ? JSON.parse(saved) : [];
   }
 }

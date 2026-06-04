@@ -84,7 +84,8 @@
               "src/material-theme.scss",
               "src/styles.css",
               "src/app/app.scss",
-              "src/styles/_scss-material-variables.scss"
+              "src/styles/_scss-material-variables.scss",
+              "src/styles/variables.scss"
             ],
             "security": {}
           },
@@ -115,14 +116,20 @@
         "serve": {
           "builder": "@ngx-env/builder:dev-server",
           "options": {
-            "proxyConfig": "proxy.config.json"
+            "proxyConfig": "proxy.config.json",
+            "hmr": true,
+            "liveReload": true,
+            "poll": 2000
           },
           "configurations": {
             "production": {
-              "buildTarget": "crypto-trade:build:production"
+              "buildTarget": "crypto-trade:build:production",
+              "hmr": false
             },
             "development": {
-              "buildTarget": "crypto-trade:build:development"
+              "buildTarget": "crypto-trade:build:development",
+              "hmr": true,
+              "liveReload": true
             }
           },
           "defaultConfiguration": "development"
