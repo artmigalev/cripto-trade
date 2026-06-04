@@ -1,3 +1,33 @@
-<!-- @if(!isPairs()){ -->
-<!-- <h1>{{emptyPairs}}</h1> -->
-<!-- } -->
+<table class="markets-table">
+  <thead>
+    <tr class="header-row">
+      <th class="header-cell headercell-symbol">Pair</th>
+
+      <th class="header-cell">Price</th>
+      <th class="header-cell">24h Change (%)</th>
+      <th class="header-cell">24h Volume</th>
+    </tr>
+  </thead>
+  <tbody class="table-body">
+    @for (pair of pairs(); track pair.symbol) {
+      <tr class="data-row">
+        <td class="data-cell symbol-cell">{{ pair.symbol }}</td>
+        <td class="data-cell">{{ pair.lastPrice }}</td>
+        <td class="data-cell">{{ pair.priceChangePercent }}%</td>
+        <td class="data-cell">{{ pair.quoteVolume }}</td>
+        <td class="data-cell favorite-cell">
+          <button
+            mat-icon-button
+            (click)="toggleFavorite(pair.symbol, $event)"
+            [attr.aria-label]="
+              isFavorite(pair.symbol) ? 'Remove from favorites' : 'Add to favorites'
+            "
+            class="favorite-button">
+            <mat-icon
+              [fontIcon]="isFavorite(pair.symbol) ? 'favorite' : 'favorite_border'"></mat-icon>
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
