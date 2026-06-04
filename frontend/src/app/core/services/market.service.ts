@@ -47,7 +47,7 @@ export class MarketService {
       );
   }
 
-  sortByQuery(query: string[]): ReturnType<Market['sortByQuery']> {
+  filterByQuote(query: string[]): ReturnType<Market['sortByQuery']> {
     const result: Record<string, Ticker[]> = {};
     const allTickers = this._market().tickers;
 

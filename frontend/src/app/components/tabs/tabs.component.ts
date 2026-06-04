@@ -15,5 +15,5 @@ export class TabsComponent {
 
   protected readonly tabsName = Object.values(MarketTabs);
 
-  filteredPairs = this.marketService.sortByQuery(this.tabsName);
+  filteredPairs = this.marketService.filterByQuote(this.tabsName);
 }
