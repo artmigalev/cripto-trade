@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { MarketTabs } from '@enums/market.enum';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MarketsTableComponent } from '@components/markets-table/markets-table.component';
@@ -15,5 +15,5 @@ export class TabsComponent {
 
   protected readonly tabsName = Object.values(MarketTabs);
 
-  filteredPairs = this.marketService.filterByQuote(this.tabsName);
+  protected readonly tickers = computed(() => this.marketService.market().tickers);
 }

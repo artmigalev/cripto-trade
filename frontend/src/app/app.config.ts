@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
 
         await authService.checkKeys();
         await dashboardService.loadedData();
-        await marketService.loadedData();
+        await marketService.init();
       } catch (error) {
         console.error(error);
       }

@@ -24,6 +24,9 @@
 }
 .header-cell {
   padding: var(--padding);
+  display: table-cell;
+  align-items: center;
+  flex-direction: row;
 }
 .headercell-symbol {
   text-align: left;
@@ -54,4 +57,9 @@
 }
 .favorite-icon {
   color: red;
+}
+.sorted-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

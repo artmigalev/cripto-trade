@@ -1,7 +1,7 @@
 export enum MarketTable {
-  'Symbol' = 'symbol',
+  'Pair' = 'symbol',
   'Price' = 'lastPrice',
-  'Change24h' = 'change24h',
+  'Change24h' = 'priceChangePercent',
   'Volume' = 'volume',
 }
 export enum MarketTableColumns {
