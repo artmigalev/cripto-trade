@@ -101,10 +101,14 @@ export class MarketService {
     const { currentTab, column, direction } = this._tableState();
     const valueTicker = MarketTable[column];
     const tickers = this._market()['tickers'][currentTab];
-    return [...tickers].sort((a, b) => {
-      return direction === 'asc'
-        ? parseFloat(a[valueTicker] as string) - parseFloat(b[valueTicker])
-        : parseFloat(b[valueTicker]) - parseFloat(a[valueTicker]);
-    });
+    return [...tickers]
+      .sort((a, b) => {
+        return direction === 'asc'
+          ? parseFloat(a[valueTicker] as string) - parseFloat(b[valueTicker])
+          : parseFloat(b[valueTicker]) - parseFloat(a[valueTicker]);
+      })
+      .filter(ticker =>
+        ticker.symbol.toLowerCase().includes(this._market().searchValue.toLowerCase())
+      );
   });
 }

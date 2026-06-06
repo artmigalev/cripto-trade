@@ -26,3 +26,6 @@ export class SearchBarComponent {
     this.subjectSearch.next(input.value);
   }
 }
+// A search bar at the top of the page (or in the header).
+// Results are filtered as the user types, without delay and without pressing Enter.
+// Search works by pair symbol (e.g., typing "BTC" shows BTCUSDT, BTCETH, etc.).
