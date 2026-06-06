@@ -12,8 +12,8 @@ export enum MarketTableColumns {
 }
 
 export enum MarketTabs {
+  'ALL' = 'ALL',
   'USDT' = 'USDT',
   'BTC' = 'BTC',
   'ETH' = 'ETH',
-  'ALL' = 'ALL',
 }

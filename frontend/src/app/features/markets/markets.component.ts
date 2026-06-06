@@ -1,5 +1,4 @@
-import { MarketService } from '@services/market.service';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { TabsComponent } from '@components/tabs/tabs.component';
 
@@ -11,8 +10,4 @@ import { TabsComponent } from '@components/tabs/tabs.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DecimalPipe],
 })
-export default class MarketsComponent {
-  private marketService = inject(MarketService);
-
-  protected readonly tickers = computed(() => this.marketService.market().tickers);
-}
+export default class MarketsComponent {}

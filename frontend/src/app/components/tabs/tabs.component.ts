@@ -15,5 +15,10 @@ export class TabsComponent {
 
   protected readonly tabsName = Object.values(MarketTabs);
 
-  protected readonly tickers = computed(() => this.marketService.market().tickers);
+  currentTab = computed(() => this.marketService.tableState().currentTab);
+
+  toggleTab(index: number) {
+    const tab = this.tabsName[index];
+    this.marketService.setTab(tab);
+  }
 }

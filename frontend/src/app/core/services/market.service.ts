@@ -1,7 +1,7 @@
-import { inject, Injectable, linkedSignal, signal } from '@angular/core';
+import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
 import { ApiService } from '@services/api.service';
 import { Ticker } from '@/app/interfaces/ticker.interfaсe';
-import { DirectionType, Market } from '@interfaces/market.interface';
+import { Market } from '@interfaces/market.interface';
 import { MarketTable, MarketTabs } from '@enums/market.enum';
 
 @Injectable({
@@ -18,6 +18,13 @@ export class MarketService {
     },
     searchValue: '',
   });
+  private readonly _tableState = signal<Market['tableState']>({
+    currentTab: MarketTabs['ALL'],
+    column: 'Pair',
+    direction: 'asc',
+  });
+
+  tableState = this._tableState.asReadonly();
 
   market = this._market.asReadonly();
 
@@ -75,13 +82,29 @@ export class MarketService {
 
     return result;
   }
-  sortingByColumn(tab: MarketTabs, column: MarketTable, direction: DirectionType): Ticker[] {
-    const tickers = this.market().tickers[tab];
 
-    return tickers.sort((a, b) => {
-      return direction === 'asc'
-        ? parseFloat(a[column] as string) - parseFloat(b[column])
-        : parseFloat(b[column]) - parseFloat(a[column]);
-    });
+  setTab(tab: MarketTabs) {
+    this._tableState.update(prev => ({
+      ...prev,
+      currentTab: tab,
+    }));
   }
+  setSorting(column: keyof typeof MarketTable) {
+    this._tableState.update(prev => ({
+      ...prev,
+      column: column || prev.column,
+      direction: prev.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  }
+
+  sortedTickers = computed(() => {
+    const { currentTab, column, direction } = this._tableState();
+    const valueTicker = MarketTable[column];
+    const tickers = this._market()['tickers'][currentTab];
+    return [...tickers].sort((a, b) => {
+      return direction === 'asc'
+        ? parseFloat(a[valueTicker] as string) - parseFloat(b[valueTicker])
+        : parseFloat(b[valueTicker]) - parseFloat(a[valueTicker]);
+    });
+  });
 }
