@@ -4,7 +4,7 @@
     <h2 class="text-center text-2xl">Tickers not found</h2>
   } @else {
     <ul class="card-list">
-      @for (card of topCards(); track card) {
+      @for (card of topCards(); track card.currentPrice) {
         <li class="list-item">
           <app-market-card [ticker]="card" />
         </li>

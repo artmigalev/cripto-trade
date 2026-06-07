@@ -7,23 +7,26 @@ import { Subject } from 'rxjs';
 })
 export class WebsocketService {
   private socket: WebSocket | null = null;
-  private subjectTicker = new Subject<TickerStreamsPayload>();
+  private subjectTicker = new Subject<TickerStreamsPayload[]>();
   tickers$ = this.subjectTicker.asObservable(); // !ticker@arr
 
-  connect() {
-    this.socket = new WebSocket('wss://stream.testnet.binance.vision/ws/!miniTicker@arr');
+  async connect(): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.socket = new WebSocket('wss://stream.testnet.binance.vision/ws/!miniTicker@arr');
+      this.socket.onopen = () => {
+        this.subscribe();
 
-    this.socket.onopen = () => {
-      this.subscribe();
-    };
-    this.socket.onerror = () => console.log('error');
-    this.socket.onclose = () => console.log('close');
+        resolve();
+      };
+      this.socket.onerror = () => console.log('error');
+      this.socket.onclose = () => console.log('close');
+    });
   }
   subscribe() {
     if (this.socket)
       this.socket.onmessage = event => {
         this.subjectTicker.next(JSON.parse(event.data));
-        console.log(event.data);
+        // console.log(event.data);
       };
   }
 

@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
         const marketService = inject(MarketService);
         const authService = inject(AuthService);
 
-        webSocketService.connect();
+        await webSocketService.connect();
         await authService.checkKeys();
         await dashboardService.loadedData();
         await marketService.init();

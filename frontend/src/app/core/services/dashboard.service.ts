@@ -1,10 +1,13 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, effect, inject, Injectable, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DashboardEnums } from '@enums/dashboard.enum';
 import { Card } from '@interfaces/card.interface';
 import { Dashboard } from '@interfaces/dashboard.interface';
-import { Ticker } from '@interfaces/ticker.interfaсe';
+import { Ticker, TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 import { ApiService } from '@services/api.service';
 import { MarketService } from '@services/market.service';
+import { WebsocketService } from '@services/websocket.service';
+import { filter, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,8 @@ import { MarketService } from '@services/market.service';
 export class DashboardService {
   private readonly serviceApi = inject(ApiService);
   private readonly marketService = inject(MarketService);
+  private readonly websocket = inject(WebsocketService);
+  private destroyRef = inject(DestroyRef);
 
   private readonly _state = signal<Dashboard['state']>({
     cards: [],
@@ -25,7 +30,13 @@ export class DashboardService {
   state = this._state.asReadonly();
 
   constructor() {
+    this.updateTickers();
     effect(() => {
+      const cards = this._state().cards;
+
+      if (cards.length > 0) {
+        this.updateTickers();
+      }
       const watchList = this._state().watchList;
       if (watchList.length > 0) {
         localStorage.setItem(DashboardEnums['WatchList'], JSON.stringify(watchList));
@@ -88,7 +99,56 @@ export class DashboardService {
       cards: stateCards,
     }));
   }
+  updateTickers() {
+    // const allCards = this._state().cards
 
+    this.websocket.tickers$
+      .pipe(
+        // tap(data => console.log('WS data:', data, 'currentSymbols:', currentSymbols)),
+        filter<TickerStreamsPayload[]>(tickers => {
+          const currentSymbols = this._state().cards.map(card => card.symbol);
+          const hash = tickers.some(ticker => {
+            return currentSymbols.includes(ticker.s);
+          });
+
+          return hash;
+        }),
+        map(tickers => {
+          return tickers.map(
+            ticker =>
+              ({
+                symbol: ticker.s,
+                currentPrice: ticker.c,
+                change24h: ticker.P,
+                volume: ticker.q,
+              }) satisfies Card
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: tickers => {
+          this._state.update(prev => ({
+            ...prev,
+            cards: prev.cards.map(card => {
+              const findCard = tickers.find(ticker => ticker.symbol === card.symbol);
+
+              return findCard
+                ? {
+                    ...card,
+                    currentPrice: findCard.currentPrice,
+                    change24h: findCard.change24h || card.change24h,
+                  }
+                : card;
+            }),
+          }));
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => 'complete',
+      });
+  }
   getTopTickers(tickets: Ticker[], query: string[]): Ticker[] {
     return tickets
       .filter(ticket => {
