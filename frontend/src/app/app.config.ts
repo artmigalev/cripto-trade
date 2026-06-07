@@ -19,15 +19,18 @@ import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
 import { MarketService } from '@services/market.service';
 import { GlobalErrorComponent } from '@/app/core/handlers/global-error/global-error.component';
 import { DashboardService } from '@services/dashboard.service';
+import { WebsocketService } from '@services/websocket.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAppInitializer(async () => {
       try {
+        const webSocketService = inject(WebsocketService);
         const dashboardService = inject(DashboardService);
         const marketService = inject(MarketService);
         const authService = inject(AuthService);
 
+        webSocketService.connect();
         await authService.checkKeys();
         await dashboardService.loadedData();
         await marketService.init();
