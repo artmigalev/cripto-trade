@@ -26,7 +26,6 @@ export class WebsocketService {
     if (this.socket)
       this.socket.onmessage = event => {
         this.subjectTicker.next(JSON.parse(event.data));
-        // console.log(event.data);
       };
   }
 

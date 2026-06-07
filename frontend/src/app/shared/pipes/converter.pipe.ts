@@ -9,7 +9,7 @@ export class ConverterPipe implements PipeTransform {
   private readonly decimalPipe = new DecimalPipe('en-US');
   transform(value: number | string, symbol: string) {
     if (symbol.endsWith(FavoriteSymbol.BTC)) {
-      return this.decimalPipe.transform(value, '1.8-0');
+      return this.decimalPipe.transform(value, '1.8-8');
     }
 
     if (symbol.endsWith(FavoriteSymbol.USDT)) {

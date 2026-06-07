@@ -1,14 +1,28 @@
-import { computed, inject, Injectable, linkedSignal, signal } from '@angular/core';
+import {
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  Injectable,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { ApiService } from '@services/api.service';
-import { Ticker } from '@/app/interfaces/ticker.interfaсe';
+import { Ticker, TickerMarketType, TickerStreamsPayload } from '@/app/interfaces/ticker.interfaсe';
 import { Market } from '@interfaces/market.interface';
 import { MarketTable, MarketTabs } from '@enums/market.enum';
+import { WebsocketService } from '@services/websocket.service';
+import { filter, map } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarketService {
   private serviceApi = inject(ApiService);
+  private readonly socketService = inject(WebsocketService);
+  private destroyRef = inject(DestroyRef);
+
   private readonly _market = signal<Market['state']>({
     tickers: {
       [MarketTabs['USDT']]: [],
@@ -29,6 +43,16 @@ export class MarketService {
   market = this._market.asReadonly();
 
   searchValue = linkedSignal(() => this._market().searchValue);
+  constructor() {
+    // Слушаем WebSocket когда данные загружены
+    effect(() => {
+      const tickers = this._market().tickers['ALL'];
+
+      if (tickers.length > 0) {
+        this.updateTickers();
+      }
+    });
+  }
 
   async init() {
     const tickersState = await this.filterByQuote();
@@ -45,13 +69,21 @@ export class MarketService {
     }));
   }
 
-  async loadedData(): Promise<Ticker[]> {
+  async loadedData(): Promise<TickerMarketType[]> {
     const response = await this.serviceApi.getTicker24hr();
     const data = Array.isArray(response) ? response : [response];
 
     const topTickets = this.getTopTickers(data, ['USDT', 'BTC', 'ETH']);
 
-    return topTickets;
+    return topTickets.map(
+      ticker =>
+        ({
+          symbol: ticker.symbol,
+          lastPrice: ticker.lastPrice,
+          volume: ticker.volume,
+          priceChangePercent: ticker.priceChangePercent,
+        }) satisfies TickerMarketType
+    );
   }
   getTopTickers(tickets: Ticker[], query: string[]): ReturnType<Market['getTopTickers']> {
     return tickets
@@ -65,22 +97,24 @@ export class MarketService {
       );
   }
 
-  async filterByQuote(): Promise<Record<MarketTabs, Ticker[]>> {
-    const result: Record<string, Ticker[]> = {};
-    const allTickers = await this.loadedData();
-    const query = Object.values(MarketTabs);
+  async filterByQuote(data?: TickerMarketType[]): Promise<Record<MarketTabs, TickerMarketType[]>> {
+    const allTickers = data || (await this.loadedData());
 
-    for (const symbol of query) {
-      const tickers = allTickers.filter(ticker => ticker.symbol.endsWith(symbol));
-
-      if (symbol === 'ALL') {
-        result[symbol] = allTickers;
-      } else {
-        result[symbol] = tickers;
-      }
-    }
-
-    return result;
+    return Object.entries(this._market().tickers).reduce(
+      (acc, [tab]) => ({
+        ...acc,
+        [tab]:
+          tab === MarketTabs['ALL']
+            ? allTickers
+            : allTickers.filter(ticker => ticker.symbol.endsWith(tab)),
+      }),
+      {
+        [MarketTabs['ALL']]: [],
+        [MarketTabs['USDT']]: [],
+        [MarketTabs['BTC']]: [],
+        [MarketTabs['ETH']]: [],
+      } satisfies Record<MarketTabs, TickerMarketType[]>
+    );
   }
 
   setTab(tab: MarketTabs) {
@@ -111,4 +145,63 @@ export class MarketService {
         ticker.symbol.toLowerCase().includes(this._market().searchValue.toLowerCase())
       );
   });
+
+  updateTickers() {
+    // const allCards = this._state().cards
+
+    this.socketService.tickers$
+      .pipe(
+        // tap(data => console.log('WS data:', data, 'currentSymbols:', currentSymbols)),
+        filter<TickerStreamsPayload[]>(tickers => {
+          const currentSymbols = this._market().tickers['ALL'].map(card => card.symbol);
+          const hash = tickers.some(ticker => {
+            return currentSymbols.includes(ticker.s);
+          });
+
+          return hash;
+        }),
+        map(tickers => {
+          const updatedTickers = tickers.map(
+            ticker =>
+              ({
+                symbol: ticker.s,
+                lastPrice: ticker.p,
+                volume: ticker.q,
+                priceChangePercent: ticker.P,
+              }) satisfies TickerMarketType
+          );
+
+          return updatedTickers;
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (updatedTickers: TickerMarketType[]) => {
+          this._market.update(prev => ({
+            ...prev,
+            tickers: Object.entries(prev.tickers).reduce(
+              (acc, [tab, tickers]) => ({
+                ...acc,
+                [tab]: tickers.map(card => {
+                  const updated = updatedTickers.find(t => t.symbol === card.symbol);
+                  return updated
+                    ? {
+                        symbol: card.symbol,
+                        lastPrice: updated.lastPrice || card.lastPrice,
+                        volume: updated.volume || card.volume,
+                        priceChangePercent: updated.priceChangePercent || card.priceChangePercent,
+                      }
+                    : card;
+                }),
+              }),
+              {} as Record<MarketTabs, TickerMarketType[]>
+            ),
+          }));
+        },
+        error: error => {
+          console.log(error);
+        },
+        complete: () => 'complete',
+      });
+  }
 }

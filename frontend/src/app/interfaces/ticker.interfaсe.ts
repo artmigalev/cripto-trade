@@ -16,6 +16,11 @@ export interface Ticker {
   count: number;
 }
 
+export type TickerMarketType = Pick<
+  Ticker,
+  'lastPrice' | 'symbol' | 'volume' | 'priceChangePercent'
+>;
+
 export interface TickerStreamsPayload {
   e: string; // Event type
   E: number; // Event time

@@ -34,8 +34,6 @@ export class MarketsTableComponent {
   toggleSortColumn(event: Event, column: string) {
     event.preventDefault();
 
-    console.log(column);
-
     this.marketService.setSorting(column as keyof typeof MarketTable);
   }
 }

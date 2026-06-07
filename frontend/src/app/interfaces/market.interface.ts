@@ -1,7 +1,7 @@
 import { MarketTable, MarketTabs } from '@enums/market.enum';
-import { Ticker } from '@interfaces/ticker.interfaсe';
+import { Ticker, TickerMarketType } from '@interfaces/ticker.interfaсe';
 
-type TickersGraf = Record<MarketTabs, Ticker[]>;
+type TickersGraf = Record<MarketTabs, TickerMarketType[]>;
 export type DirectionType = 'asc' | 'desc';
 
 export interface Market {
@@ -16,7 +16,7 @@ export interface Market {
   };
 
   setSearch: () => void;
-  sortByQuery(query: string[]): Record<string, Ticker[]>;
+  sortByQuery(query: string[]): Record<string, TickerMarketType[]>;
   getTopTickers(tickets: Ticker[], query: string[]): Ticker[];
   loadedData: () => Ticker[];
 }
