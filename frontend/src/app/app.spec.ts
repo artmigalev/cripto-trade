@@ -39,10 +39,10 @@ describe('App', () => {
     fixture.detectChanges();
     expect(app).toBeTruthy();
   });
-  // it('should render title', async () => {
-  //   const fixture = TestBed.createComponent(App);
-  //   await fixture.whenStable();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('h1')?.textContent).toContain('Hello, crypto-trade');
-  // });
+  it('should render title', async () => {
+    const fixture = TestBed.createComponent(App);
+    const h1 = fixture.componentInstance;
+    fixture.detectChanges();
+    expect(h1['title']()).toEqual('crypto-trade');
+  });
 });
