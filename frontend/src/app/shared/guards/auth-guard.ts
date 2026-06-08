@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
-import { RouterLinks } from '@/enums/nav-link.enum';
+import { RouterLinks } from '@enums/nav-link.enum';
 
 const publicPath = [RouterLinks.Login, RouterLinks.Register];
 

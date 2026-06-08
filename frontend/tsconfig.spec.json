@@ -4,7 +4,18 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "paths": {
+      "@components/*": ["./src/app/components/*"],
+      "@enums/*": ["./src/enums/*"],
+      "@services/*": ["./src/app/core/services/*"],
+      "@interfaces/*": ["./src/app/interfaces/*"],
+      "@directives/*": ["./src/app/shared/directives/*"],
+      "@pipes/*": ["./src/app/shared/pipes/*"],
+      "@guards/*": ["./src/app/shared/guards/*"],
+      "@features/*": ["./src/app/features/*"],
+      "@/*": ["./*"]
+    }
   },
   "include": ["src/**/*.d.ts", "src/**/*.spec.ts"]
 }

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NavigationComponent } from '../navigation/navigation.component';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { ApiService } from '@services/api.service';
-import { StatusIconComponent } from '../status-icon/status-icon.component';
+import { NavigationComponent } from '@components/navigation/navigation.component';
+import { SearchBarComponent } from '@components/search-bar/search-bar.component';
+import { StatusIconComponent } from '@components/status-icon/status-icon.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthRotes, NavLink } from '@/enums/nav-link.enum';
+import { AuthRotes, NavLink } from '@enums/nav-link.enum';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { AuthService } from '@/app/core/services/auth.service';
+import { AuthService } from '@services/auth.service';
+import { HeaderNavLink } from '@interfaces/header.interface';
 
 @Component({
   selector: 'app-header',
@@ -25,13 +25,12 @@ import { AuthService } from '@/app/core/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  apiService = inject(ApiService);
   private readonly authService = inject(AuthService);
 
   isAuthenticated = computed(() => this.authService.isAuthenticated());
   homeLink = NavLink.Dashboard.toLowerCase();
 
-  authLinks = Object.entries(AuthRotes)
+  authLinks: HeaderNavLink[] = Object.entries(AuthRotes)
     .map(([title, link]) => ({
       title: title,
       link: link.toLowerCase(),

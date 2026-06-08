@@ -1,4 +1,4 @@
-import { API_CONFIG } from '@/app/core/services/tokens/api-config.tokens';
+import { API_CONFIG } from '@services/tokens/api-config.tokens';
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Ticker } from '@interfaces/ticker.interfaсe';

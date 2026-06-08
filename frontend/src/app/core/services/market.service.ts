@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { ApiService } from '@services/api.service';
-import { Ticker, TickerMarketType, TickerStreamsPayload } from '@/app/interfaces/ticker.interfaсe';
+import { Ticker, TickerMarketType, TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 import { Market } from '@interfaces/market.interface';
 import { MarketTable, MarketTabs } from '@enums/market.enum';
 import { WebsocketService } from '@services/websocket.service';
