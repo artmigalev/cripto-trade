@@ -79,4 +79,15 @@ describe('Auth Service', () => {
     expect(authService.isAuthenticated()).toBe(false);
     expect(localStorage.getItem('access_token')).toBe(null);
   });
+  it('should  get keys ', async () => {
+    const keys = { apiKey: 'apiKey', configured: true };
+    const promise = authService.getKeys();
+
+    const request = httpMock.expectOne(`http://localhost:3000/keys`);
+    request.flush(keys);
+    const response = await promise;
+    expect(request.request.method).toBe('GET');
+    expect(typeof response.apiKey).toBe('string');
+    expect(response.configured).true;
+  });
 });
