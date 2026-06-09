@@ -87,4 +87,11 @@ describe('Market Service', () => {
     const tickersData = await marketService.loadedData();
     expect(tickersData.length).toBe(2);
   });
+  it('should return Top tickers', () => {
+    const topSymbol = 'USDT';
+
+    const topTickers = marketService.getTopTickers(mockTickers, [topSymbol]);
+
+    expect(topTickers.length).toBe(2);
+  });
 });
