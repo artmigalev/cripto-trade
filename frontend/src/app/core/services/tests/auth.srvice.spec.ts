@@ -104,4 +104,11 @@ describe('Auth Service', () => {
     expect(request.request.method).toBe('GET');
     expect(authService.isApiConfigured()).toBe(true);
   });
+  it('should key is configured when status is true', () => {
+    const responseGetKeys = { apiKey: 'apiKey', configured: true };
+
+    authService.setKeysConfigured(responseGetKeys.configured);
+
+    expect(authService.isApiConfigured()).toBe(true);
+  });
 });
