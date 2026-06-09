@@ -94,4 +94,13 @@ describe('Market Service', () => {
 
     expect(topTickers.length).toBe(2);
   });
+  it('should be table state contain name tab', () => {
+    const tabName = MarketTabs['BTC'];
+
+    marketService.setTab(tabName);
+
+    const tabstate = marketService.tableState;
+
+    expect(tabstate().currentTab).toBe(tabName);
+  });
 });
