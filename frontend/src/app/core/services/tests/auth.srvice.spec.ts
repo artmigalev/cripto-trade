@@ -90,4 +90,18 @@ describe('Auth Service', () => {
     expect(typeof response.apiKey).toBe('string');
     expect(response.configured).true;
   });
+  it('should  check keys ', async () => {
+    const keys = { apiKey: 'apiKey', configured: true };
+    localStorage.setItem('access_token', 'token');
+    localStorage.setItem('binance_keys', 'keys');
+
+    const promise = authService.checkKeys();
+
+    const request = httpMock.expectOne(`http://localhost:3000/keys`);
+    request.flush(keys);
+    await promise;
+
+    expect(request.request.method).toBe('GET');
+    expect(authService.isApiConfigured()).toBe(true);
+  });
 });
