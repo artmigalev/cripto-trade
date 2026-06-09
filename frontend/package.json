@@ -22,6 +22,7 @@
   "packageManager": "pnpm@9.15.0",
   "private": true,
   "dependencies": {
+    "@analogjs/platform": "^2.6.0",
     "@angular/cdk": "^21.2.10",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
@@ -57,6 +58,7 @@
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.56.1",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "vitest-localstorage-mock": "^0.1.2"
   }
 }
