@@ -54,4 +54,29 @@ describe('Auth Service', () => {
     expect(request.request.method).toBe('POST');
     expect(authService.isAuthenticated()).toBe(true);
   });
+  it('should register user and store access token', async () => {
+    const promise = authService.register(userMock.email, userMock.password);
+
+    const request = httpMock.expectOne(`http://localhost:3000/auth/register`);
+    request.flush({ access_token: 'token' });
+    await promise;
+
+    expect(request.request.body).toEqual(userMock);
+    expect(request.request.method).toBe('POST');
+    expect(authService.isAuthenticated()).toBe(true);
+  });
+  it('should  user unauthenticated and remove access token', async () => {
+    const token = 'token';
+    const promise = authService.login(userMock.email, userMock.password);
+
+    const request = httpMock.expectOne(`http://localhost:3000/auth/login`);
+    request.flush({ access_token: token });
+    await promise;
+    expect(authService.isAuthenticated()).toBe(true);
+
+    authService.logout();
+
+    expect(authService.isAuthenticated()).toBe(false);
+    expect(localStorage.getItem('access_token')).toBe(null);
+  });
 });
