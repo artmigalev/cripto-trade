@@ -1,29 +1,33 @@
-<mat-card class="dashboard-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title class="card-title">{{ ticker().symbol }}</mat-card-title>
-  </mat-card-header>
+@defer (on viewport) {
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title class="card-title">{{ ticker().symbol }}</mat-card-title>
+    </mat-card-header>
 
-  <mat-card-content>
-    <ul>
-      <li class="card-item">
-        <span class="label">Price:</span>
-        <span class="value">{{ ticker().currentPrice | converter: ticker().symbol }} </span>
-      </li>
-      <li class="card-item">
-        <span class="label"> 24h change:</span>
-        <span class="value" [appHighlight]="ticker().change24h">{{ ticker().change24h }} %</span>
-      </li>
-      <li class="card-item">
-        <span class="label">Volume:</span>
-        <span class="value">{{ ticker().volume }}</span>
-      </li>
-    </ul>
-  </mat-card-content>
-  <mat-card-actions>
-    <button [disabled]="isFavorite()" class="btn-card favorite-btn" matButton (click)="toggle()">
-      Add to favorites
-    </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-content>
+      <ul>
+        <li class="card-item">
+          <span class="label">Price:</span>
+          <span class="value">{{ ticker().currentPrice | converter: ticker().symbol }} </span>
+        </li>
+        <li class="card-item">
+          <span class="label"> 24h change:</span>
+          <span class="value" [appHighlight]="ticker().change24h">{{ ticker().change24h }} %</span>
+        </li>
+        <li class="card-item">
+          <span class="label">Volume:</span>
+          <span class="value">{{ ticker().volume }}</span>
+        </li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="isFavorite()" class="btn-card favorite-btn" matButton (click)="toggle()">
+        Add to favorites
+      </button>
+    </mat-card-actions>
+  </mat-card>
+} @placeholder (minimum 500ms) {
+  <facebook-content-loader></facebook-content-loader>
+}
 
 <!-- Card shows: pair symbol, current price, 24h change (percentage), volume. -->

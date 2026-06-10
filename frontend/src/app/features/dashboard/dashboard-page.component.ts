@@ -4,6 +4,7 @@ import { WatchListComponent } from '@components/watch-list/watch-list.component'
 import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
 import { DashboardService } from '@services/dashboard.service';
 import { PortfolioValue } from '@enums/dashboard.enum';
+import { SpinnerComponent } from '@components/spinner/spinner.component';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -11,7 +12,12 @@ import { PortfolioValue } from '@enums/dashboard.enum';
   styleUrl: './dashboard-page.component.scss',
 
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MarketOverviewComponent, WatchListComponent, PortfolioSummaryComponent],
+  imports: [
+    MarketOverviewComponent,
+    WatchListComponent,
+    PortfolioSummaryComponent,
+    SpinnerComponent,
+  ],
 })
 export default class DashboardPageComponent {
   private dashboardService = inject(DashboardService);

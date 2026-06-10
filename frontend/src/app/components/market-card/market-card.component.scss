@@ -1,12 +1,20 @@
 :host {
   display: block;
   max-width: 300px;
-  width: 100%;
+  width: 250px;
+  height: 250px;
+  padding: var(--padding);
+  overflow: hidden;
 }
 .dashboard-card {
-  width: 250px;
-  background-color: var(--dash-card-color-bg);
+  width: 100%;
+  height: 100%;
   gap: 10px;
+  background-color: transparent;
+  background-color: var(--dash-card-color-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .card-title {
   font: var(--dash-card-title);
@@ -27,9 +35,11 @@
   font-weight: bold;
 }
 .btn-card {
+  position: relative;
+  bottom: 0;
   padding: var(--padding);
   border-radius: var(--mat-sys-corner-medium);
-  background-color: var(--dash-card-btn-bg-color);
+  background-color: var(--mat-sys-surface-container-low);
   color: var(--dash-card-btn-color);
   font: var(--dash-card-btn-text);
   &:hover {

@@ -19,7 +19,7 @@
           "standalone": true,
           "displayBlock": true,
           "changeDetection": "OnPush",
-          "skipTests": true,
+          "skipTests": false,
           "inlineTemplate": false,
           "inlineStyle": false,
           "style": "scss",

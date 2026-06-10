@@ -4,11 +4,10 @@ import { MatIcon } from '@angular/material/icon';
 import { HighlightDirective } from '@directives/highlight.directive';
 import { Dashboard } from '@interfaces/dashboard.interface';
 import { DashboardService } from '@services/dashboard.service';
-import { WatchList } from '@enums/notify-messages.enum';
-
+import { ContentLoaderModule } from '@ngneat/content-loader';
 @Component({
   selector: 'app-watch-list',
-  imports: [MatListModule, MatIcon, HighlightDirective],
+  imports: [MatListModule, MatIcon, HighlightDirective, ContentLoaderModule],
   templateUrl: './watch-list.component.html',
   styleUrl: './watch-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,7 +16,6 @@ export class WatchListComponent {
   private readonly dashboardService = inject(DashboardService);
   favoritePairs = input<Dashboard['watchList']['favoritePairs']>();
   protected emptyList = computed(() => this.dashboardService.watchListCount() === 0);
-  protected listMessage = WatchList.Lengths;
   removeFavorite(symbol: string): Dashboard['watchList']['removePair'] {
     this.dashboardService.toggleFavorite(symbol);
   }

@@ -4,5 +4,11 @@ Columns: Pair, Price, 24h Change (%), 24h Volume.
 Table data updates in real time via WebSocket (!ticker@arr) without page reload.
 Rows are clickable — clicking a pair navigates to the Trade page for that pair. -->
 <section>
-  <app-tabs> </app-tabs>
+  @defer (on viewport) {
+    <app-tabs></app-tabs>
+  } @placeholder (minimum 500ms) {
+    <app-spinner></app-spinner>
+  } @error {
+    <div class="error">Failed to load markets</div>
+  }
 </section>

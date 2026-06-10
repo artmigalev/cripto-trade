@@ -5,11 +5,12 @@ import { Card } from '@interfaces/card.interface';
 import { ConverterPipe } from '../../shared/pipes/converter.pipe';
 import { HighlightDirective } from '@directives/highlight.directive';
 import { DashboardService } from '@services/dashboard.service';
+import { ContentLoaderModule } from '@ngneat/content-loader';
 
 @Component({
   selector: 'app-market-card',
   standalone: true,
-  imports: [MatCardModule, ConverterPipe, HighlightDirective],
+  imports: [MatCardModule, ConverterPipe, HighlightDirective, ContentLoaderModule],
   templateUrl: './market-card.component.html',
   styleUrl: './market-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

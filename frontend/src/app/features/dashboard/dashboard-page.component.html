@@ -1,13 +1,13 @@
 <section class="dashboard">
-  @if (isLoad()) {
-    <div>Loading...</div>
-  } @else if (error()) {
-    <div>{{ error() }}</div>
-  } @else {
+  @defer {
     <app-market-overview [topCards]="topCards()" />
     <div class="flex flex-row w-full gap-4">
       <app-watch-list [favoritePairs]="watchList()" />
       <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
     </div>
+  } @placeholder (minimum 800ms) {
+    <app-spinner />
+  } @error {
+    <span>{{ error() }}</span>
   }
 </section>

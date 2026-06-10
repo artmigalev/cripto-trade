@@ -40,6 +40,9 @@ importers:
       '@binance/connector-typescript':
         specifier: ^0.3.16
         version: 0.3.16
+      '@ngneat/content-loader':
+        specifier: ^7.0.0
+        version: 7.0.0(@angular/core@21.2.13(@angular/compiler@21.2.13)(rxjs@7.8.2)(zone.js@0.16.2))
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@10.3.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.3.0(jiti@2.7.0))(typescript@5.9.3))(eslint@10.3.0(jiti@2.7.0))
@@ -2004,6 +2007,14 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1
       '@emnapi/runtime': ^1.7.1
+
+  '@ngneat/content-loader@7.0.0':
+    resolution:
+      {
+        integrity: sha512-CfwsDxh2hsQfUwca3SWnyjQD5jcG6Vb6Ew0JIztj/spr3YIC9Obz7AqEVMDYPKch4QzPJiJ6OVRuLRM2DKiG9g==,
+      }
+    peerDependencies:
+      '@angular/core': '>= 13.0.0'
 
   '@ngx-env/builder@21.0.1':
     resolution:
@@ -9433,6 +9444,11 @@ snapshots:
       '@emnapi/runtime': 1.10.0
       '@tybys/wasm-util': 0.10.2
     optional: true
+
+  '@ngneat/content-loader@7.0.0(@angular/core@21.2.13(@angular/compiler@21.2.13)(rxjs@7.8.2)(zone.js@0.16.2))':
+    dependencies:
+      '@angular/core': 21.2.13(@angular/compiler@21.2.13)(rxjs@7.8.2)(zone.js@0.16.2)
+      tslib: 2.8.1
 
   '@ngx-env/builder@21.0.1(@angular/build@21.2.11(wdmrrt7iclqabvtsgvkx4w56am))(webpack@5.106.2(lightningcss@1.32.0)(postcss@8.5.14))':
     dependencies:
