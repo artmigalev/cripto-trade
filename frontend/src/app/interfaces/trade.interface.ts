@@ -1,13 +1,15 @@
 import { ErrorChard } from '@enums/trade.enum';
 import { Chart } from '@interfaces/chart.interface';
+import { OrderBook } from '@interfaces/order-book.interface';
 
 export type ResponseKlineTypes = [(string & number)[]];
 
 export interface Trade {
-  state: {
+  _state: {
     chart: Chart;
+    orderBook: OrderBook['orders'];
   };
-  error: ErrorTrade[];
+  errors: ErrorTrade[];
 }
 
 export type TradeErrorType = 'chartError' | 'orderBook' | 'orderForm';
