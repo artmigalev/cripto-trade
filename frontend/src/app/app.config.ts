@@ -16,8 +16,8 @@ import { API_CONFIG } from '@/app/core/services/tokens/api-config.tokens';
 import { authInterceptor } from '@/app/shared/interceptors/auth-interceptor';
 import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
 import { MarketService } from '@services/market.service';
-import { GlobalErrorComponent } from '@/app/core/handlers/global-error/global-error.component';
 import { WebsocketService } from '@services/websocket.service';
+import { GlobalErrorHandler } from '@/app/core/handlers/global-error.handler';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -48,7 +48,7 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: ErrorHandler,
-      useClass: GlobalErrorComponent,
+      useClass: GlobalErrorHandler,
     },
   ],
 };
