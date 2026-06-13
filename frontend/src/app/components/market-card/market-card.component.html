@@ -8,11 +8,15 @@
       <ul>
         <li class="card-item">
           <span class="label">Price:</span>
-          <span class="value">{{ ticker().currentPrice | converter: ticker().symbol }} </span>
+          <span class="value"
+            >{{ ticker().currentPrice | converter: ticker().symbol }}
+          </span>
         </li>
         <li class="card-item">
           <span class="label"> 24h change:</span>
-          <span class="value" [appHighlight]="ticker().change24h">{{ ticker().change24h }} %</span>
+          <span class="value" [appHighlight]="ticker().change24h"
+            >{{ ticker().change24h }} %</span
+          >
         </li>
         <li class="card-item">
           <span class="label">Volume:</span>
@@ -21,7 +25,11 @@
       </ul>
     </mat-card-content>
     <mat-card-actions>
-      <button [disabled]="isFavorite()" class="btn-card favorite-btn" matButton (click)="toggle()">
+      <button
+        [disabled]="isFavorite()"
+        class="btn-card favorite-btn"
+        matButton
+        (click)="toggle()">
         Add to favorites
       </button>
     </mat-card-actions>

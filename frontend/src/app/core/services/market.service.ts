@@ -8,7 +8,11 @@ import {
   signal,
 } from '@angular/core';
 import { ApiService } from '@services/api.service';
-import { Ticker, TickerMarketType, TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
+import {
+  Ticker,
+  TickerMarketType,
+  TickerStreamsPayload,
+} from '@interfaces/ticker.interfaсe';
 import { Market } from '@interfaces/market.interface';
 import { MarketTable, MarketTabs } from '@enums/market.enum';
 import { WebsocketService } from '@services/websocket.service';
@@ -85,7 +89,10 @@ export class MarketService {
         }) satisfies TickerMarketType
     );
   }
-  getTopTickers(tickets: Ticker[], query: string[]): ReturnType<Market['getTopTickers']> {
+  getTopTickers(
+    tickets: Ticker[],
+    query: string[]
+  ): ReturnType<Market['getTopTickers']> {
     return tickets
       .filter(ticket => {
         const { symbol } = ticket;
@@ -93,11 +100,15 @@ export class MarketService {
         return query.some(querySymbol => String(symbol).endsWith(querySymbol));
       })
       .sort(
-        (a, b) => parseFloat(b['quoteVolume'] as string) - parseFloat(a['quoteVolume'] as string)
+        (a, b) =>
+          parseFloat(b['quoteVolume'] as string) -
+          parseFloat(a['quoteVolume'] as string)
       );
   }
 
-  async filterByQuote(data?: TickerMarketType[]): Promise<Record<MarketTabs, TickerMarketType[]>> {
+  async filterByQuote(
+    data?: TickerMarketType[]
+  ): Promise<Record<MarketTabs, TickerMarketType[]>> {
     const allTickers = data || (await this.loadedData());
 
     return Object.entries(this._market().tickers).reduce(
@@ -142,7 +153,9 @@ export class MarketService {
           : parseFloat(b[valueTicker]) - parseFloat(a[valueTicker]);
       })
       .filter(ticker =>
-        ticker.symbol.toLowerCase().includes(this._market().searchValue.toLowerCase())
+        ticker.symbol
+          .toLowerCase()
+          .includes(this._market().searchValue.toLowerCase())
       );
   });
 
@@ -153,7 +166,9 @@ export class MarketService {
       .pipe(
         // tap(data => console.log('WS data:', data, 'currentSymbols:', currentSymbols)),
         filter<TickerStreamsPayload[]>(tickers => {
-          const currentSymbols = this._market().tickers['ALL'].map(card => card.symbol);
+          const currentSymbols = this._market().tickers['ALL'].map(
+            card => card.symbol
+          );
           const hash = tickers.some(ticker => {
             return currentSymbols.includes(ticker.s);
           });
@@ -183,13 +198,16 @@ export class MarketService {
               (acc, [tab, tickers]) => ({
                 ...acc,
                 [tab]: tickers.map(card => {
-                  const updated = updatedTickers.find(t => t.symbol === card.symbol);
+                  const updated = updatedTickers.find(
+                    t => t.symbol === card.symbol
+                  );
                   return updated
                     ? {
                         symbol: card.symbol,
                         lastPrice: updated.lastPrice || card.lastPrice,
                         volume: updated.volume || card.volume,
-                        priceChangePercent: updated.priceChangePercent || card.priceChangePercent,
+                        priceChangePercent:
+                          updated.priceChangePercent || card.priceChangePercent,
                       }
                     : card;
                 }),

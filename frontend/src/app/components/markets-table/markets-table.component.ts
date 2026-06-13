@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { MarketTable, MarketTableColumns } from '@enums/market.enum';
 import { MarketService } from '@services/market.service';
 import { DashboardService } from '@services/dashboard.service';
@@ -20,7 +25,9 @@ export class MarketsTableComponent {
 
   protected columns = Object.entries(MarketTableColumns);
 
-  private favoritesSet = computed(() => new Set(this.dashboardService.state().watchList));
+  private favoritesSet = computed(
+    () => new Set(this.dashboardService.state().watchList)
+  );
 
   isFavorite(symbol: string): boolean {
     return this.favoritesSet().has(symbol);

@@ -12,7 +12,9 @@ export class WebsocketService {
 
   async connect(): Promise<void> {
     return new Promise<void>(resolve => {
-      this.socket = new WebSocket('wss://stream.testnet.binance.vision/ws/!miniTicker@arr');
+      this.socket = new WebSocket(
+        'wss://stream.testnet.binance.vision/ws/!miniTicker@arr'
+      );
       this.socket.onopen = () => {
         this.subscribe();
 

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { MarketTabs } from '@enums/market.enum';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MarketsTableComponent } from '@components/markets-table/markets-table.component';

@@ -1,8 +1,18 @@
 import { AuthService } from '@/app/core/services/auth.service';
 import { AuthRotes, RouterLinks } from '@/enums/nav-link.enum';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 const passwordMatchValidator = (group: AbstractControl) => {

@@ -26,7 +26,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--padding);
-  padding: var(--padding-top) var(--padding-lr) var(--padding-bottom) var(--padding-lr);
+  padding: var(--padding-top) var(--padding-lr) var(--padding-bottom)
+    var(--padding-lr);
 }
 .list-item {
 }

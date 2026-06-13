@@ -1,4 +1,8 @@
-import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,

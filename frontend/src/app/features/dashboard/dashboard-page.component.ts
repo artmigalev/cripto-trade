@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
 import { WatchListComponent } from '@components/watch-list/watch-list.component';
 import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
@@ -21,13 +26,21 @@ import { SpinnerComponent } from '@components/spinner/spinner.component';
 })
 export default class DashboardPageComponent {
   private dashboardService = inject(DashboardService);
-  protected readonly topCards = computed(() => this.dashboardService.state().cards);
+  protected readonly topCards = computed(
+    () => this.dashboardService.state().cards
+  );
 
-  protected readonly watchList = computed(() => this.dashboardService.getFavoriteTickers());
+  protected readonly watchList = computed(() =>
+    this.dashboardService.getFavoriteTickers()
+  );
   protected readonly portfolioSummary = `1000 ${PortfolioValue.USDT}`;
 
   // protected readonly topPairsByTrading =
 
-  protected readonly isLoad = computed(() => this.dashboardService.state().isLoad);
-  protected readonly error = computed(() => this.dashboardService.state().error);
+  protected readonly isLoad = computed(
+    () => this.dashboardService.state().isLoad
+  );
+  protected readonly error = computed(
+    () => this.dashboardService.state().error
+  );
 }

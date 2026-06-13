@@ -30,8 +30,6 @@ export interface OrderFormParameters {
   quantity: number;
 }
 
-
-
 export type TimeInForce = 'GTC' | 'IOC' | 'FOK';
 
 export type OrderType =

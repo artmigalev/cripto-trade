@@ -9,8 +9,12 @@ import { firstValueFrom } from 'rxjs';
 export class AuthService {
   private readonly http = inject(HttpClient);
 
-  private readonly _isApiConfigured = signal<boolean>(!!localStorage.getItem('binance_keys'));
-  private readonly _isAuthenticated = signal<boolean>(!!localStorage.getItem('access_token'));
+  private readonly _isApiConfigured = signal<boolean>(
+    !!localStorage.getItem('binance_keys')
+  );
+  private readonly _isAuthenticated = signal<boolean>(
+    !!localStorage.getItem('access_token')
+  );
 
   private readonly config = inject(API_CONFIG);
 
@@ -19,10 +23,13 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const response = await firstValueFrom(
-      this.http.post<{ access_token: string }>(`${this.config.backendUrl}/auth/login`, {
-        email,
-        password,
-      })
+      this.http.post<{ access_token: string }>(
+        `${this.config.backendUrl}/auth/login`,
+        {
+          email,
+          password,
+        }
+      )
     );
 
     localStorage.setItem('access_token', response['access_token']);
@@ -31,10 +38,13 @@ export class AuthService {
 
   async register(email: string, password: string) {
     const response = await firstValueFrom(
-      this.http.post<{ access_token: string }>(`${this.config.backendUrl}/auth/register`, {
-        email,
-        password,
-      })
+      this.http.post<{ access_token: string }>(
+        `${this.config.backendUrl}/auth/register`,
+        {
+          email,
+          password,
+        }
+      )
     );
 
     localStorage.setItem('access_token', response['access_token']);
@@ -56,7 +66,9 @@ export class AuthService {
     return response;
   }
   async getAccount() {
-    return await firstValueFrom(this.http.get(`${this.config.backendUrl}/auth/me`));
+    return await firstValueFrom(
+      this.http.get(`${this.config.backendUrl}/auth/me`)
+    );
   }
 
   async checkKeys() {

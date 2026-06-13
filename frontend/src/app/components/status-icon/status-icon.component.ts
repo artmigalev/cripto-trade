@@ -1,5 +1,10 @@
 import { AuthService } from '@services/auth.service';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 
 @Component({
   selector: 'app-status-icon',

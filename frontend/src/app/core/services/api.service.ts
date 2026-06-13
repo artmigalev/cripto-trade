@@ -32,7 +32,9 @@ export class ApiService {
         );
       } else {
         return firstValueFrom(
-          this.http.get<Ticker24hrResponse>(`${this.config.baseUrl}/v3/ticker/24hr?symbol=${query}`)
+          this.http.get<Ticker24hrResponse>(
+            `${this.config.baseUrl}/v3/ticker/24hr?symbol=${query}`
+          )
         );
       }
     }

@@ -43,7 +43,9 @@ const mockTickers = [
   },
 ];
 
-const getTicker: Mocked<ApiService['getTicker24hr']> = vi.fn().mockReturnValue(mockTickers);
+const getTicker: Mocked<ApiService['getTicker24hr']> = vi
+  .fn()
+  .mockReturnValue(mockTickers);
 
 describe('Market Service', () => {
   const state: Market['state'] = {

@@ -9,7 +9,9 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td class="pair-name" mat-cell *matCellDef="let element">{{ element.name }}</td>
+        <td class="pair-name" mat-cell *matCellDef="let element">
+          {{ element.name }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="quantity">
@@ -30,6 +32,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   } @placeholder (minimum 800ms) {
-    <list-content-loader [viewBox]="'0 0 100 100'" [style]="{ width: '100%', height: '100%' }" />
+    <list-content-loader
+      [viewBox]="'0 0 100 100'"
+      [style]="{ width: '100%', height: '100%' }" />
   } @error {}
 </section>

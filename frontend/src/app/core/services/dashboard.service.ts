@@ -27,7 +27,10 @@ export class DashboardService {
       this.init();
       const watchList = this._state().watchList;
       if (watchList.length > 0) {
-        localStorage.setItem(DashboardEnums['WatchList'], JSON.stringify(watchList));
+        localStorage.setItem(
+          DashboardEnums['WatchList'],
+          JSON.stringify(watchList)
+        );
       }
     });
   }
@@ -43,12 +46,16 @@ export class DashboardService {
   getFavoriteTickers(): Card[] {
     const favTickets = this._state().watchList;
 
-    return this._state().cards.filter(ticker => favTickets.includes(ticker.symbol));
+    return this._state().cards.filter(ticker =>
+      favTickets.includes(ticker.symbol)
+    );
   }
 
   toggleFavorite(
     symbol: Card['symbol']
-  ): Dashboard['watchList']['removePair'] | Dashboard['marketOverview']['addFavorite'] {
+  ):
+    | Dashboard['watchList']['removePair']
+    | Dashboard['marketOverview']['addFavorite'] {
     const current = this._state().watchList;
     if (current.includes(symbol)) {
       this._state.update(prev => ({
@@ -71,7 +78,11 @@ export class DashboardService {
       const isLoaded = Object.values(allTickers).some(tab => tab.length > 0);
       if (isLoaded) {
         const tickers = this.marketService.market().tickers;
-        const topTickets: TickerMarketType[] = [...tickers.BTC, ...tickers.ETH, ...tickers.USDT];
+        const topTickets: TickerMarketType[] = [
+          ...tickers.BTC,
+          ...tickers.ETH,
+          ...tickers.USDT,
+        ];
         const stateCards = topTickets
           .map(ticker => {
             const { symbol, priceChangePercent, volume, lastPrice } = ticker;

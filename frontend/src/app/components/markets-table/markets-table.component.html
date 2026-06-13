@@ -28,11 +28,15 @@
             mat-icon-button
             (click)="toggleFavorite(pair.symbol, $event)"
             [attr.aria-label]="
-              isFavorite(pair.symbol) ? 'Remove from favorites' : 'Add to favorites'
+              isFavorite(pair.symbol)
+                ? 'Remove from favorites'
+                : 'Add to favorites'
             "
             class="favorite-button">
             <mat-icon
-              [fontIcon]="isFavorite(pair.symbol) ? 'favorite' : 'favorite_border'"></mat-icon>
+              [fontIcon]="
+                isFavorite(pair.symbol) ? 'favorite' : 'favorite_border'
+              "></mat-icon>
           </button>
         </td>
       </tr>

@@ -1,5 +1,11 @@
 // import { MarketCard } from '@/app/interfaces/market-card.interface';
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Card } from '@interfaces/card.interface';
 import { ConverterPipe } from '../../shared/pipes/converter.pipe';
@@ -10,7 +16,12 @@ import { ContentLoaderModule } from '@ngneat/content-loader';
 @Component({
   selector: 'app-market-card',
   standalone: true,
-  imports: [MatCardModule, ConverterPipe, HighlightDirective, ContentLoaderModule],
+  imports: [
+    MatCardModule,
+    ConverterPipe,
+    HighlightDirective,
+    ContentLoaderModule,
+  ],
   templateUrl: './market-card.component.html',
   styleUrl: './market-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,5 +1,8 @@
 import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import {
+  provideHttpClientTesting,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from '@services/auth.service';
 import { API_CONFIG } from '@services/tokens/api-config.tokens';

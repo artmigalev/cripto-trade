@@ -19,7 +19,10 @@ export class KeysService {
   }
   async saveKeys({ apiKey, secretKey }: PayloadKeys): Promise<ResponseKey> {
     return await firstValueFrom(
-      this.http.put<ResponseKey>(`${this.config.backendUrl}/keys`, { apiKey, secretKey })
+      this.http.put<ResponseKey>(`${this.config.backendUrl}/keys`, {
+        apiKey,
+        secretKey,
+      })
     );
   }
 }

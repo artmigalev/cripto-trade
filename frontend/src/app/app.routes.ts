@@ -10,7 +10,8 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/dashboard-page.component'),
+    loadComponent: () =>
+      import('./features/dashboard/dashboard-page.component'),
   },
   {
     path: 'markets',
@@ -45,7 +46,8 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/register-page/register-page.component'),
+    loadComponent: () =>
+      import('./features/register-page/register-page.component'),
     title: AuthRotes.Register,
     canActivate: [authGuard],
   },

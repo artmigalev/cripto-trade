@@ -1,4 +1,7 @@
-<form [formGroup]="registerForm" (ngSubmit)="handleSubmit()" class="register-form">
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="handleSubmit()"
+  class="register-form">
   <fieldset>
     <legend>Email</legend>
     <input type="email" formControlName="email" />
@@ -41,7 +44,10 @@
         }
       </div>
     }
-    @if (registerForm.hasError('notConfirm') && (pswdConfirm.dirty || pswdConfirm.touched)) {
+    @if (
+      registerForm.hasError('notConfirm') &&
+      (pswdConfirm.dirty || pswdConfirm.touched)
+    ) {
       <div class="alert alert-danger">Passwords do not match.</div>
     }
   </fieldset>
@@ -53,7 +59,11 @@
   @if (isSuccess()) {
     <div class="alert alert-success">Registration successful!</div>
   }
-  <button type="submit" [disabled]="registerForm.invalid">{{ btn_text }}</button>
+  <button type="submit" [disabled]="registerForm.invalid">
+    {{ btn_text }}
+  </button>
 
-  <a class="link-reg-page" [routerLink]="[`/${login_link}`]">{{ login_link_text }}</a>
+  <a class="link-reg-page" [routerLink]="[`/${login_link}`]">{{
+    login_link_text
+  }}</a>
 </form>

@@ -10,7 +10,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { AuthService } from '@/app/core/services/auth.service';
 import { API_CONFIG } from '@/app/core/services/tokens/api-config.tokens';
 import { authInterceptor } from '@/app/shared/interceptors/auth-interceptor';
@@ -34,7 +38,10 @@ export const appConfig: ApplicationConfig = {
         console.error(error);
       }
     }),
-    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor]), withFetch()),
+    provideHttpClient(
+      withInterceptors([authInterceptor, errorInterceptor]),
+      withFetch()
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),

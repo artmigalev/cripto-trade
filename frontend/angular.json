@@ -137,7 +137,10 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "setupFiles": ["./test-setup.ts", "./node_modules/vitest-localstorage-mock"]
+            "setupFiles": [
+              "./test-setup.ts",
+              "./node_modules/vitest-localstorage-mock"
+            ]
           }
         },
         "lint": {

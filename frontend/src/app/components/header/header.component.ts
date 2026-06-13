@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
 import { NavigationComponent } from '@components/navigation/navigation.component';
 import { SearchBarComponent } from '@components/search-bar/search-bar.component';
 import { StatusIconComponent } from '@components/status-icon/status-icon.component';
@@ -36,6 +41,8 @@ export class HeaderComponent {
       link: link.toLowerCase(),
     }))
     .filter(({ title }) =>
-      this.isAuthenticated() ? title === AuthRotes.Logout : title !== AuthRotes.Logout
+      this.isAuthenticated()
+        ? title === AuthRotes.Logout
+        : title !== AuthRotes.Logout
     );
 }
