@@ -1,28 +1,36 @@
 import { ResponseKey } from '@interfaces/key.interface';
 import { KeyDto } from '@keys/dto/key.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class KeyService {
   private readonly keys = new Map<string, KeyDto>();
 
-  forwardKey(userId: string):ResponseKey {
+  forwardKey(userId: string): ResponseKey {
     const key = this.keys.get(userId);
 
     if (!key) {
       return {
         apiKey: '',
-        configured: false
-      }
+        configured: false,
+      };
     }
 
     return {
       apiKey: key?.apiKey,
-      configured: true
+      configured: true,
+    };
+  }
+
+  getKey(userId: string) {
+    if (userId && this.keys.has(userId)) {
+      return this.keys.get(userId);
+    } else {
+      throw new UnauthorizedException('invalid user');
     }
   }
 
-  update(userId: string, key: KeyDto):ResponseKey {
+  update(userId: string, key: KeyDto): ResponseKey {
     this.keys.set(userId, key);
 
     return {
