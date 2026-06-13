@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { PriceChartComponent } from '@components/price-chart/price-chart.component';
 
 @Component({
   selector: 'app-trade',
-  imports: [],
+  imports: [PriceChartComponent],
   templateUrl: './trade.component.html',
   styleUrl: './trade.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,54 +1,59 @@
-<form (ngSubmit)="handleSubmit()" [formGroup]="form" class="setting-form">
-  <fieldset>
-    <legend>API Key</legend>
-    <input type="text" formControlName="apiKey" name="apiKey" />
-    @if (apiKey?.invalid && (apiKey?.dirty || apiKey?.touched)) {
-      <div class="alert alert-danger">
-        @if (apiKey?.hasError('required')) {
-          <div>Name is required.</div>
-        }
-        @if (apiKey?.hasError('minlength')) {
-          <div>Name must be at least 4 characters long.</div>
-        }
+<section class="layout-page">
+  <form (ngSubmit)="handleSubmit()" [formGroup]="form" class="setting-form">
+    <fieldset>
+      <legend>API Key</legend>
+      <input type="text" formControlName="apiKey" name="apiKey" />
+      @if (apiKey?.invalid && (apiKey?.dirty || apiKey?.touched)) {
+        <div class="alert alert-danger">
+          @if (apiKey?.hasError('required')) {
+            <div>Name is required.</div>
+          }
+          @if (apiKey?.hasError('minlength')) {
+            <div>Name must be at least 4 characters long.</div>
+          }
+        </div>
+      }
+    </fieldset>
+    <fieldset>
+      <legend for="">Secret Key</legend>
+      <div class="secret-key">
+        <input
+          type="{{ inputType() }}"
+          formControlName="secretKey"
+          name="secretKey" />
+        <button class="btn-icon" (click)="toggleInputType()">
+          @if (inputState() === 'visible') {
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="visibility"></mat-icon>
+          } @else {
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="visibility_off"></mat-icon>
+          }
+        </button>
       </div>
+      @if (secretKey?.invalid && (secretKey?.dirty || secretKey?.touched)) {
+        <div class="alert alert-danger">
+          @if (secretKey?.hasError('required')) {
+            <div>Name is required.</div>
+          }
+          @if (secretKey?.hasError('minlength')) {
+            <div>Name must be at least 4 characters long.</div>
+          }
+        </div>
+      }
+    </fieldset>
+    @if (form.hasError('saveFailed')) {
+      <div class="alert alert-danger">{{ notifyMessage() }}</div>
+    } @else {
+      <div class="alert alert-success">{{ notifyMessage() }}</div>
     }
-  </fieldset>
-  <fieldset>
-    <legend for="">Secret Key</legend>
-    <div class="secret-key">
-      <input type="{{ inputType() }}" formControlName="secretKey" name="secretKey" />
-      <button class="btn-icon" (click)="toggleInputType()">
-        @if (inputState() === 'visible') {
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="visibility"></mat-icon>
-        } @else {
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="visibility_off"></mat-icon>
-        }
-      </button>
+    <div class="form-buttons">
+      <button type="submit" [disabled]="form.invalid">submit</button>
+      <button type="reset" (click)="handleResetForm()">reset</button>
     </div>
-    @if (secretKey?.invalid && (secretKey?.dirty || secretKey?.touched)) {
-      <div class="alert alert-danger">
-        @if (secretKey?.hasError('required')) {
-          <div>Name is required.</div>
-        }
-        @if (secretKey?.hasError('minlength')) {
-          <div>Name must be at least 4 characters long.</div>
-        }
-      </div>
-    }
-  </fieldset>
-  @if (form.hasError('saveFailed')) {
-    <div class="alert alert-danger">{{ notifyMessage() }}</div>
-  } @else {
-    <div class="alert alert-success">{{ notifyMessage() }}</div>
-  }
-  <div class="form-buttons">
-    <button type="submit" [disabled]="form.invalid">submit</button>
-    <button type="reset" (click)="handleResetForm()">reset</button>
-  </div>
-</form>
+  </form>
+</section>

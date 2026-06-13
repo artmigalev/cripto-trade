@@ -4,6 +4,12 @@
   justify-content: center;
   height: 100%;
 }
+section {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
 .setting-form {
   display: flex;
   flex-direction: column;
