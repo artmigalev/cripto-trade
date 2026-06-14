@@ -1,24 +1,25 @@
 import { CandleIntervals } from '@enums/trade.enum';
+import { OhlcData } from 'lightweight-charts';
 
 export interface Chart {
-  klines: Kline[];
+  klines: OhlcData[];
   candleIntervals: CandleIntervals[];
   activeCandleInterval: CandleIntervals;
 }
 
-export interface Kline {
-  openTime: number;
-  openPrice: string;
-  highPrice: string;
-  lowPrice: string;
-  closePrice: string;
-  volume: string;
-  closeTime: number;
-  quoteAssetVolume: string;
-  numberOfTrades: number;
-  takerBuyBaseAssetVolume: string;
-  takerBuyQuoteAssetVolume: string;
-}
+// export interface Kline {
+//   openTime: number;
+//   openPrice: string;
+//   highPrice: string;
+//   lowPrice: string;
+//   closePrice: string;
+//   volume: string;
+//   closeTime: number;
+//   quoteAssetVolume: string;
+//   numberOfTrades: number;
+//   takerBuyBaseAssetVolume: string;
+//   takerBuyQuoteAssetVolume: string;
+// }
 
 // [
 //   [

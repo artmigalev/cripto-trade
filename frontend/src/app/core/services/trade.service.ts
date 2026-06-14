@@ -1,5 +1,7 @@
+import { mapCandle } from '@/app/shared/mappers/chart.mapper';
 import { Injectable, signal } from '@angular/core';
-import { CandleIntervals } from '@enums/trade.enum';
+import { CandleIntervals, ErrorChart } from '@enums/trade.enum';
+import { ResponseKlineTypes } from '@interfaces/api.interface';
 import { Trade } from '@interfaces/trade.interface';
 
 @Injectable({
@@ -15,4 +17,22 @@ export class TradeService {
     orderBook: [],
   });
   errors = signal<Trade['errors']>([]);
+
+  state = this._state.asReadonly();
+
+  updateKlines(klines: ResponseKlineTypes[]) {
+    if (klines.length === 0) {
+      this.errors.update(state => [
+        ...state,
+        { type: 'chartError', message: ErrorChart.EMPTY_DATA },
+      ]);
+      return;
+    }
+    const mapperKlines = klines.map(kline => mapCandle(kline));
+
+    this._state.update(state => ({
+      ...state,
+      chart: { ...state.chart, klines: mapperKlines },
+    }));
+  }
 }

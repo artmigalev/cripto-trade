@@ -1,3 +1,4 @@
+import { klinesResolver } from '@/app/core/resolvers/klines.resolver';
 import { authGuard } from '@/app/shared/guards/auth-guard';
 import { AuthRotes } from '@/enums/nav-link.enum';
 import { Routes } from '@angular/router';
@@ -26,6 +27,9 @@ export const routes: Routes = [
     path: 'trade/:symbol',
     loadComponent: () => import('./features/trade/trade.component'),
     canActivate: [authGuard],
+    resolve: {
+      symbol: klinesResolver,
+    },
   },
 
   {

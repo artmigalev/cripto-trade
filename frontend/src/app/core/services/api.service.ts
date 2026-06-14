@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Ticker } from '@interfaces/ticker.interfaсe';
 import { firstValueFrom } from 'rxjs';
+import { ResponseKlineTypes } from '@interfaces/api.interface';
+import { CandleIntervals, ErrorChart, Trade } from '@enums/trade.enum';
+import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 
 export type Ticker24hrResponse = Ticker;
 
@@ -45,4 +48,21 @@ export class ApiService {
       )
     );
   };
+  async getKlines(
+    symbol = 'BTCUSDT',
+    interval: CandleIntervals = CandleIntervals['1d']
+  ): Promise<ResponseKlineTypes[]> {
+    try {
+      return await firstValueFrom(
+        this.http.get<ResponseKlineTypes>(
+          `${this.config.baseUrl}${Trade.PATH_KLINES}?symbol=${symbol}&interval=${interval}`
+        )
+      );
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+      }
+      throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+    }
+  }
 }

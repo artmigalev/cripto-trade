@@ -1,8 +1,6 @@
-import { ErrorChard } from '@enums/trade.enum';
+import { ErrorChart } from '@enums/trade.enum';
 import { Chart } from '@interfaces/chart.interface';
 import { OrderBook } from '@interfaces/order-book.interface';
-
-export type ResponseKlineTypes = [(string & number)[]];
 
 export interface Trade {
   _state: {
@@ -16,5 +14,5 @@ export type TradeErrorType = 'chartError' | 'orderBook' | 'orderForm';
 
 export interface ErrorTrade {
   type: TradeErrorType;
-  massage: ErrorChard;
+  message: ErrorChart | ErrorChart;
 }

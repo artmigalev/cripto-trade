@@ -7,6 +7,9 @@ const unusedImports = require('eslint-plugin-unused-imports');
 
 module.exports = defineConfig([
   {
+    ignores: ['**/.angular/**', '**/node_modules/**', '**/dist/**'],
+  },
+  {
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
@@ -53,6 +56,9 @@ module.exports = defineConfig([
       '**/server/**',
       '.angular/**',
       '.vscode/**',
+      '**/.angular/**',
+      '**/node_modules/**',
+      '**/dist/**',
     ],
   },
   {
