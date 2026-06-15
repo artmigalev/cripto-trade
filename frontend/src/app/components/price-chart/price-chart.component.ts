@@ -6,22 +6,47 @@ import {
   signal,
   ViewChild,
   AfterViewInit,
+  effect,
 } from '@angular/core';
 import { ErrorChart } from '@enums/trade.enum';
 import { Chart } from '@interfaces/chart.interface';
-import { createChart, ColorType, CandlestickSeries } from 'lightweight-charts';
+import {
+  createChart,
+  ColorType,
+  CandlestickSeries,
+  IChartApi,
+  ISeriesApi,
+} from 'lightweight-charts';
 @Component({
   selector: 'app-price-chart',
-  // imports: [SpinnerComponent],
   templateUrl: './price-chart.component.html',
   styleUrls: ['./price-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PriceChartComponent implements AfterViewInit {
   @ViewChild('chart', { static: false }) chartRef!: ElementRef<HTMLElement>;
-  readonly data = input.required<Chart['klines']>();
+  readonly history = input.required<Chart['historyCandles']>();
+  readonly candle = input<Chart['lastRealtimeCandle']>();
+  private chart: IChartApi | null = null;
+  private series: ISeriesApi<'Candlestick'> | null = null;
+
   errormsgs = ErrorChart;
   error = signal<string | null>(this.errormsgs.EMPTY_DATA);
+
+  constructor() {
+    effect(() => {
+      const history = this.history();
+      if (history) {
+        this.series?.setData(history);
+      }
+    });
+    effect(() => {
+      const candle = this.candle();
+      if (candle) {
+        this.series?.update(candle);
+      }
+    });
+  }
 
   ngAfterViewInit() {
     if (!this.chartRef.nativeElement) {
@@ -33,7 +58,7 @@ export class PriceChartComponent implements AfterViewInit {
   }
 
   init(container: HTMLElement) {
-    const chart = createChart(container, {
+    this.chart = createChart(container, {
       layout: {
         background: { type: ColorType.Solid, color: 'white' },
         textColor: 'black',
@@ -50,7 +75,7 @@ export class PriceChartComponent implements AfterViewInit {
         },
       },
     });
-    const candlestickSeries = chart.addSeries(CandlestickSeries, {
+    this.series = this.chart.addSeries(CandlestickSeries, {
       upColor: '#26a69a',
       downColor: '#ef5350',
       borderVisible: false,
@@ -58,9 +83,8 @@ export class PriceChartComponent implements AfterViewInit {
       wickDownColor: '#ef5350',
     });
 
-    candlestickSeries.setData(this.data()!);
-    chart.timeScale().fitContent();
-    // chart.addCandlestickSeries();
+    this.series.setData(this.history()!);
+    // this.chart.timeScale().fitContent();
   }
 }
 // / Price Chart (interactive)

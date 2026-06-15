@@ -12,6 +12,10 @@ export const klinesResolver: ResolveFn<void> = async (
   const symbol = route.paramMap.get('symbol')!;
 
   const klines = await apiService.getKlines(symbol);
-  console.log(klines);
-  return klines && tradeService.updateKlines(klines);
+
+  if (klines) {
+    tradeService.updateKlines(klines);
+
+    await tradeService.createdStream();
+  }
 };

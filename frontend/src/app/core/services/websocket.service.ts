@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -7,16 +6,14 @@ import { Subject } from 'rxjs';
 })
 export class WebsocketService {
   private socket: WebSocket | null = null;
-  private subjectTicker = new Subject<TickerStreamsPayload[]>();
-  tickers$ = this.subjectTicker.asObservable(); // !ticker@arr
 
-  async connect(): Promise<void> {
+  async connect<T>(stream: string, subject: Subject<T>): Promise<void> {
     return new Promise<void>(resolve => {
       this.socket = new WebSocket(
-        'wss://stream.testnet.binance.vision/ws/!miniTicker@arr'
+        `wss://stream.testnet.binance.vision/ws/${stream}`
       );
       this.socket.onopen = () => {
-        this.subscribe();
+        this.subscribe(subject);
 
         resolve();
       };
@@ -24,10 +21,10 @@ export class WebsocketService {
       this.socket.onclose = () => console.log('close');
     });
   }
-  subscribe() {
+  subscribe<T>(subject: Subject<T>) {
     if (this.socket)
       this.socket.onmessage = event => {
-        this.subjectTicker.next(JSON.parse(event.data));
+        subject.next(JSON.parse(event.data));
       };
   }
 

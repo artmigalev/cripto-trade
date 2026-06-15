@@ -22,6 +22,7 @@ import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
 import { MarketService } from '@services/market.service';
 import { WebsocketService } from '@services/websocket.service';
 import { GlobalErrorHandler } from '@/app/core/handlers/global-error.handler';
+import { TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +32,10 @@ export const appConfig: ApplicationConfig = {
         const marketService = inject(MarketService);
         const authService = inject(AuthService);
 
-        await webSocketService.connect();
+        await webSocketService.connect<TickerStreamsPayload[]>(
+          marketService.stream,
+          marketService.subjectTicker
+        );
         await authService.checkKeys();
         await marketService.init();
       } catch (error) {

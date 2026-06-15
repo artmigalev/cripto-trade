@@ -1,1 +1,1 @@
-export type ResponseKlineTypes = (string & number)[];
+export type ResponseKlineTypes = (string & number & boolean)[];

@@ -17,3 +17,6 @@ export enum MarketTabs {
   'BTC' = 'BTC',
   'ETH' = 'ETH',
 }
+export enum MarketStreams {
+  TICKERS = '!miniTicker@arr',
+}

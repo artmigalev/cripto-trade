@@ -3,9 +3,11 @@ import {
   Component,
   computed,
   inject,
+  OnDestroy,
 } from '@angular/core';
 import { PriceChartComponent } from '@components/price-chart/price-chart.component';
 import { TradeService } from '@services/trade.service';
+import { WebsocketService } from '@services/websocket.service';
 
 @Component({
   selector: 'app-trade',
@@ -14,7 +16,17 @@ import { TradeService } from '@services/trade.service';
   styleUrl: './trade.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TradeComponent {
+export default class TradeComponent implements OnDestroy {
   private readonly tradeService = inject(TradeService);
-  klines = computed(() => this.tradeService.state().chart.klines);
+  historyCandles = computed(
+    () => this.tradeService.state().chart.historyCandles
+  );
+  candle = computed(() => this.tradeService.state().chart.lastRealtimeCandle);
+  private webSocketService = inject(WebsocketService);
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.webSocketService.disconnect();
+  }
 }
