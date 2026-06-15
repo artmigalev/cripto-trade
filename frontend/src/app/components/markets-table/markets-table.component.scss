@@ -16,7 +16,7 @@
   padding: var(--padding);
   border-bottom: 3px solid var(--mat-sys-on-secondary-fixed-variant);
   color: var(--mat-sys-tertiary);
-  font: var(--mat-sys-headline-large);
+  font: var(--mat-sys-title-small);
   position: sticky;
   top: 0;
   background-color: var(--mat-sys-secondary-container);
@@ -27,6 +27,7 @@
   display: table-cell;
   align-items: center;
   flex-direction: row;
+  align-items: center;
 }
 .headercell-symbol {
   text-align: left;
@@ -44,10 +45,10 @@
   padding: var(--padding);
   text-align: left;
   text-align: center;
-  font: var(--mat-sys-label-large);
+  font: var(--mat-sys-label-small);
 }
 .symbol-cell {
-  font: var(--mat-sys-body-large);
+  font: var(--mat-sys-body-small);
   font-weight: bold;
   text-align: left;
 }

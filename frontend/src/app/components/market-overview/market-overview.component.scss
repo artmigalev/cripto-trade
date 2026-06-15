@@ -7,7 +7,7 @@
 .overview {
   display: flex;
   flex-direction: column;
-
+  height: 100%;
   border-radius: var(--mat-sys-corner-medium);
   padding: var(--padding);
   background-color: var(--mat-sys-surface-container-highest);
@@ -28,6 +28,8 @@
   gap: var(--padding);
   padding: var(--padding-top) var(--padding-lr) var(--padding-bottom)
     var(--padding-lr);
+  max-height: 100%;
+  overflow-y: auto;
 }
 .list-item {
 }
