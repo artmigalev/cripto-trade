@@ -2,6 +2,7 @@ import { mapCandle, mapStreamKline } from '@/app/shared/mappers/chart.mapper';
 import {
   computed,
   DestroyRef,
+  effect,
   inject,
   Injectable,
   signal,
@@ -42,16 +43,35 @@ export class TradeService {
 
   state = this._state.asReadonly();
 
-  // constructor() {
-  //   // Слушаем WebSocket когда данные загружены
-  //   effect(() => {
-  //     const klines = this.state().chart.historyCandles;
+  constructor() {
+    const symbol = this.chartSymbol();
+    const interval = this.activeInterval();
 
-  //     if (klines.length > 0) {
-  //       this.updateKlineStream();
-  //     }
-  //   });
-  // }
+    effect(async () => {
+      if (symbol) {
+        await this.createdStream();
+      }
+    });
+    effect(async () => {
+      if (interval) {
+        await this.createdStream();
+      }
+    });
+  }
+
+  setSymbol(symbol: string) {
+    this._state.update(prev => ({
+      ...prev,
+      chart: { ...prev.chart, chartSymbol: symbol },
+    }));
+  }
+
+  setInterval(interval: CandleIntervals) {
+    this._state.update(state => ({
+      ...state,
+      chart: { ...state.chart, activeCandleInterval: interval },
+    }));
+  }
 
   updateKlines(klines: ResponseKlineTypes[]) {
     if (klines.length === 0) {

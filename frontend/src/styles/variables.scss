@@ -45,6 +45,10 @@
   //market overview
   --market-table-bg: var(--mat-sys-surface-container);
   --market-table-border-color: var(--mat-sys-on-primary-fixed-variant);
+  //price chart
+  --chart-section-bg-color: var(--mat-sys-background);
+  --chart-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
+  --chart-button-bg: var(--mat-sys-surface-container-low);
 }
 
 // Surface  – фона и больших, малозаметных областей экрана.

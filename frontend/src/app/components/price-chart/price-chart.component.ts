@@ -4,12 +4,15 @@ import {
   ElementRef,
   input,
   signal,
-  ViewChild,
   AfterViewInit,
   effect,
+  computed,
+  inject,
+  viewChild,
 } from '@angular/core';
-import { ErrorChart } from '@enums/trade.enum';
+import { CandleIntervals, ErrorChart } from '@enums/trade.enum';
 import { Chart } from '@interfaces/chart.interface';
+import { TradeService } from '@services/trade.service';
 import {
   createChart,
   ColorType,
@@ -22,69 +25,106 @@ import {
   templateUrl: './price-chart.component.html',
   styleUrls: ['./price-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // imports: [SpinnerComponent],
 })
 export class PriceChartComponent implements AfterViewInit {
-  @ViewChild('chart', { static: false }) chartRef!: ElementRef<HTMLElement>;
+  private readonly tradeService = inject(TradeService);
+  private chartRef = viewChild<ElementRef>('chart');
   readonly history = input.required<Chart['historyCandles']>();
   readonly candle = input<Chart['lastRealtimeCandle']>();
   private chart: IChartApi | null = null;
   private series: ISeriesApi<'Candlestick'> | null = null;
-
+  protected readonly candleIntervals = Object.values(CandleIntervals);
+  _activeInterval = computed(() => this.tradeService.activeInterval());
+  private chartReady = signal<boolean>(false);
   errormsgs = ErrorChart;
   error = signal<string | null>(this.errormsgs.EMPTY_DATA);
 
   constructor() {
     effect(() => {
-      const history = this.history();
-      if (history) {
-        this.series?.setData(history);
+      if (this.chartReady()) {
+        if (this.series === null) {
+          return;
+        }
+
+        if (this.candle()) {
+          this.series.update(this.candle()!);
+        }
       }
     });
     effect(() => {
-      const candle = this.candle();
-      if (candle) {
-        this.series?.update(candle);
+      if (this.chartReady()) {
+        if (this.series === null) {
+          return;
+        }
+
+        if (this.history()) {
+          this.series?.setData(this.history());
+        }
       }
     });
   }
 
-  ngAfterViewInit() {
-    if (!this.chartRef.nativeElement) {
-      this.error.set(this.errormsgs.NOT_FOUNT_DATA);
-      console.log(this.error());
-      return;
-    }
-    this.init(this.chartRef.nativeElement);
+  btnToggleInterval(interval: CandleIntervals) {
+    this.tradeService.setInterval(interval);
   }
 
+  ngAfterViewInit() {
+    const container = this.chartRef()?.nativeElement;
+    if (!container) return;
+    this.init(container);
+    this.setupDataHandling();
+  }
+  private setupDataHandling() {
+    effect(() => {
+      if (!this.chartReady()) return;
+      this.updateChartData();
+    });
+  }
+
+  private updateChartData() {
+    const history = this.history();
+    if (history.length === 0) {
+      this.error.set(this.errormsgs.EMPTY_DATA);
+      return;
+    }
+    if (this.series) {
+      this.series?.setData(history);
+    }
+  }
   init(container: HTMLElement) {
-    this.chart = createChart(container, {
-      layout: {
-        background: { type: ColorType.Solid, color: 'white' },
-        textColor: 'black',
-      },
-
-      autoSize: true,
-      localization: {
-        timeFormatter: (timestamp: number) => {
-          const date = new Date(timestamp * 1000);
-          const hours = date.getHours();
-          const minutes = date.getMinutes();
-          const seconds = date.getSeconds();
-          return `${hours}:${minutes}:${seconds}`;
+    try {
+      this.chart = createChart(container, {
+        layout: {
+          background: { type: ColorType.Solid, color: 'white' },
+          textColor: 'black',
         },
-      },
-    });
-    this.series = this.chart.addSeries(CandlestickSeries, {
-      upColor: '#26a69a',
-      downColor: '#ef5350',
-      borderVisible: false,
-      wickUpColor: '#26a69a',
-      wickDownColor: '#ef5350',
-    });
 
-    this.series.setData(this.history()!);
-    // this.chart.timeScale().fitContent();
+        autoSize: true,
+        localization: {
+          timeFormatter: (timestamp: number) => {
+            const date = new Date(timestamp * 1000);
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+            const seconds = date.getSeconds();
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+          },
+        },
+      });
+      this.series = this.chart.addSeries(CandlestickSeries, {
+        upColor: '#26a69a',
+        downColor: '#ef5350',
+        borderVisible: false,
+        wickUpColor: '#26a69a',
+        wickDownColor: '#ef5350',
+      });
+      if (this.series) {
+        this.chartReady.set(true);
+      }
+      this.chart.timeScale().fitContent();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 // / Price Chart (interactive)

@@ -1,9 +1,13 @@
-<!-- <p>price-chart works!</p> -->
-
-<div class="chart" #chart></div>
-<!-- @defer (on viewport) { -->
-<!-- }@placeholder (minimum 500ms) {
-  <app-spinner/>
-} @error {
-  <span>{{ error() }}</span>
-} -->
+<section class="price-chart">
+  <div class="chart" #chart></div>
+  <div class="chart-controls">
+    @for (interval of candleIntervals; track $index) {
+      <button
+        class="button-interval"
+        (click)="btnToggleInterval(interval)"
+        [attr.id]="interval === _activeInterval() ? 'active' : null">
+        {{ interval }}
+      </button>
+    }
+  </div>
+</section>
