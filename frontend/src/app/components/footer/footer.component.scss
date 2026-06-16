@@ -5,9 +5,11 @@
 }
 
 .footer {
-  padding: var(--padding);
+  padding: var(--footer-padding);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--footer-bg);
+  border-radius: var(--mat-sys-corner-medium);
   gap: 10px;
 }

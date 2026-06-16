@@ -6,6 +6,8 @@ header {
   width: 100%;
   background-color: var(--mat-sys-surface-dim);
   padding: var(--padding);
+  border-radius: var(--mat-sys-corner-medium);
+
   a {
     color: var(--mat-sys-primary);
   }
