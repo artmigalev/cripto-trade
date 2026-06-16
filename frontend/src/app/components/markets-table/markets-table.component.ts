@@ -10,10 +10,7 @@ import { DashboardService } from '@services/dashboard.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  Router,
-  RouterLink,
-} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-markets-table',
   imports: [MatTableModule, MatIcon, MatButtonModule, RouterLink],
