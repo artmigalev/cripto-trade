@@ -10,7 +10,7 @@ export const klinesResolver: ResolveFn<void> = async (
   const tradeService = inject(TradeService);
 
   const symbol = route.paramMap.get('symbol')!;
-
+  tradeService.setSymbol(symbol);
   const klines = await apiService.getKlines(symbol);
 
   if (klines) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { TabsComponent } from '@components/tabs/tabs.component';
 import { SpinnerComponent } from '@components/spinner/spinner.component';
@@ -12,4 +12,6 @@ import { SpinnerComponent } from '@components/spinner/spinner.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DecimalPipe],
 })
-export default class MarketsComponent {}
+export default class MarketsComponent {
+  private readonly isNavigate = signal(false);
+}

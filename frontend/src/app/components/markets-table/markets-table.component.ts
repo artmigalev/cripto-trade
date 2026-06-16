@@ -10,9 +10,13 @@ import { DashboardService } from '@services/dashboard.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import {
+  Router,
+  RouterLink,
+} from '@angular/router';
 @Component({
   selector: 'app-markets-table',
-  imports: [MatTableModule, MatIcon, MatButtonModule],
+  imports: [MatTableModule, MatIcon, MatButtonModule, RouterLink],
   templateUrl: './markets-table.component.html',
   styleUrl: './markets-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class MarketsTableComponent {
   private readonly marketService = inject(MarketService);
   private readonly dashboardService = inject(DashboardService);
+  private readonly router = inject(Router);
   pairs = this.marketService.sortedTickers;
   tab = computed(() => this.marketService.tableState().currentTab);
 
