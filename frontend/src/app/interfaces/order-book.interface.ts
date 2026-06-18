@@ -6,12 +6,10 @@ export interface OrderBook {
   rows: OrderBookRows;
 }
 
-export type OrderBoolResponse = Order;
-
 export interface Order {
   lastUpdateId: number;
-  bids: [string[]];
-  asks: [string[]];
+  bids: [string, string][];
+  asks: [string, string][];
 }
 
 export interface OrderStream {

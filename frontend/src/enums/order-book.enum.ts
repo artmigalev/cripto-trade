@@ -1,12 +1,13 @@
 export enum OrderBook {
   PATH = '/v3/depth', // Initial snapshot loaded via REST AP
+  TITLE = 'Order Book',
 }
 
 // Display the order book: separate columns for bids (buy) and asks (sell).
 
 export enum OrderBookColumns {
-  'Buy' = 'Bids',
-  'Sell' = 'Asks',
+  'Buy' = 'bids',
+  'Sell' = 'asks',
 }
 
 export enum OrderBookRows {
