@@ -6,6 +6,8 @@ import { firstValueFrom } from 'rxjs';
 import { ResponseKlineTypes } from '@interfaces/api.interface';
 import { CandleIntervals, ErrorChart, Trade } from '@enums/trade.enum';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
+import { OrderBook } from '@enums/order-book.enum';
+import { Order } from '@interfaces/order-book.interface';
 
 export type Ticker24hrResponse = Ticker;
 
@@ -16,6 +18,9 @@ export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly config = inject(API_CONFIG);
   private readonly status = signal(true);
+  private paths = {
+    orders: OrderBook['PATH'],
+  };
 
   getStatus(): Signal<boolean> {
     return computed(() => this.status());
@@ -64,6 +69,20 @@ export class ApiService {
               limit: String(limit),
             },
           }
+        )
+      );
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+      }
+      throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+    }
+  }
+  async getOrder(symbol: string): Promise<Order> {
+    try {
+      return await firstValueFrom(
+        this.http.get<Order>(
+          `${this.config.baseUrl}${this.paths.orders}?symbol=${symbol}`
         )
       );
     } catch (error) {

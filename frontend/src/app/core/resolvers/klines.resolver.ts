@@ -12,12 +12,11 @@ export const klinesResolver: ResolveFn<void> = async (
   const tradeService = inject(TradeService);
   const websocketService = inject(WebsocketService);
   const symbol = route.paramMap.get('symbol')!;
+
+  const klines = await apiService.getKlines(symbol);
+  const order = await apiService.getOrder(symbol);
   tradeService.setSymbol(symbol);
-  const klines = await apiService.getKlines(
-    symbol,
-    tradeService.activeInterval(),
-    100
-  );
+  tradeService.setOrderState(order);
 
   if (klines) {
     console.log(klines, 'load kline ');

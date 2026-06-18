@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { mockOrders } from '@components/order-book/mock-data';
 import {
   OrderBook,
   OrderBookColumns,
@@ -15,9 +14,9 @@ import { Order } from '@interfaces/order-book.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderBookComponent {
-  readonly symbol = input.required<string>();
   protected title = OrderBook['TITLE'];
-  orders: Order = mockOrders;
+  readonly symbol = input.required<string>();
+  order = input<Order | null>();
   columns = Object.values(OrderBookColumns);
   rows = Object.values(OrderBookRows);
 }

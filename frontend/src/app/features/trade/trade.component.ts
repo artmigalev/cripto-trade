@@ -18,14 +18,17 @@ import { OrderBookComponent } from '@components/order-book/order-book.component'
 })
 export default class TradeComponent {
   private readonly tradeService = inject(TradeService);
+  private webSocketService = inject(WebsocketService);
   symbol = computed(() => this.tradeService.chartSymbol());
   historyCandles = computed(
     () => this.tradeService.state().chart.historyCandles
   );
   candle = computed(() => this.tradeService.state().chart.lastRealtimeCandle);
-  private webSocketService = inject(WebsocketService);
-
-  constructor() {
-    console.log('kline', this.candle());
+  order = computed(() => this.tradeService.state().orderBook);
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    const streamName = this.tradeService.createdStreamName();
+    this.webSocketService.unsubscribeStream(streamName);
   }
 }
