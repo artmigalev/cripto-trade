@@ -31,7 +31,8 @@ export const appConfig: ApplicationConfig = {
         const marketService = inject(MarketService);
         const authService = inject(AuthService);
 
-        await webSocketService.connect(marketService.stream);
+        webSocketService.connect();
+        webSocketService.subscribeStream(marketService['stream']);
         await authService.checkKeys();
         await marketService.init();
       } catch (error) {

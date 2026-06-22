@@ -1,9 +1,10 @@
-import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 import { Injectable } from '@angular/core';
 import { StreamKline } from '@interfaces/chart.interface';
 import { OrderStream } from '@interfaces/order-book.interface';
 import { TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
+import { BinanceWsMessage } from '@interfaces/websocket.interface';
 import { Subject } from 'rxjs';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 type MethodStream = 'SUBSCRIBE' | 'UNSUBSCRIBE';
 
@@ -19,7 +20,7 @@ interface RequestStream {
   providedIn: 'root',
 })
 export class WebsocketService {
-  private socket: WebSocket | null = null;
+  private socket: WebSocketSubject<unknown> | null = null;
   private tickerSubject = new Subject<TickerStreamsPayload[]>();
   private klineSubject = new Subject<StreamKline>();
   private orderSubject = new Subject<OrderStream>(); //<symbol>@depth
@@ -32,69 +33,72 @@ export class WebsocketService {
   historyCandles$ = this.klineSubject.asObservable(); //<symbol>@kline_<interval>
   orderSubject$ = this.orderSubject.asObservable(); //<symbol>@depth
 
-  async connect(stream: string): Promise<void> {
-    return new Promise<void>(resolve => {
-      this.socket = new WebSocket(
-        `wss://stream.testnet.binance.vision/ws/${stream}`
-      );
-      this.socket.onopen = () => {
-        this.subscribe();
-
-        resolve();
-      };
-      this.socket.onerror = () => console.log('error');
-      this.socket.onclose = () => console.log('close');
+  connect(): void {
+    if (this.socket) return;
+    this.socket = webSocket<unknown>({
+      url: 'wss://stream.testnet.binance.vision/ws',
+      deserializer: e => JSON.parse(e.data as string),
+      serializer: value => JSON.stringify(value),
+      openObserver: {
+        next: () => {
+          this.streamId = 0;
+        },
+      },
+      closeObserver: {
+        next: () => {
+          this.socket = null;
+        },
+      },
+    });
+    this.socket.subscribe({
+      next: message => {
+        this.routeMessage(message as BinanceWsMessage);
+      },
+      error: () => {
+        this.disconnect();
+      },
+      complete: () => this.disconnect(),
     });
   }
-  unsubscribeStream(streamName: StreamName) {
-    if (this.socket) {
-      const streamMessage: RequestStream = {
-        method: 'UNSUBSCRIBE',
-        params: [streamName],
-        id: this.streamId++,
-      };
-      this.send(streamMessage);
-    } else {
-      throw new AppError('Socked close', '404', 'SOCKET');
+
+  private routeMessage(message: BinanceWsMessage): void {
+    if (Array.isArray(message)) {
+      if (message[0]?.e === '24hrMiniTicker') {
+        this.tickerSubject.next(message);
+      }
+      return;
     }
-  }
-  subscribeStream(streamName: StreamName) {
-    if (this.socket) {
-      const streamMessage: RequestStream = {
-        method: 'SUBSCRIBE',
-        params: [streamName],
-        id: this.streamId++,
-      };
-      this.send(streamMessage);
-    } else {
-      throw new AppError('Socked close', '404', 'SOCKET');
+
+    if (message?.e === 'kline') {
+      this.klineSubject.next(message as StreamKline);
+      return;
     }
-  }
-  subscribe() {
-    if (this.socket)
-      this.socket.onmessage = event => {
-        const dataParse = JSON.parse(event.data);
-        if (Array.isArray(dataParse)) {
-          const eventType = dataParse[0].e;
-          if (eventType === '24hrMiniTicker') {
-            this.tickerSubject.next(dataParse);
-            console.log('24hrMiniTicker');
-          }
-        } else {
-          const eventType = dataParse.e;
-          if (eventType === 'kline') {
-            this.klineSubject.next(dataParse);
-          }
-        }
-      };
+
+    if (message?.e === 'depthUpdate') {
+      this.orderSubject.next(message as OrderStream);
+    }
   }
 
-  private send(payload: RequestStream) {
-    this.socket?.send(JSON.stringify(payload));
+  unsubscribeStream(streamName: StreamName) {
+    if (!this.socket) return;
+    this.socket.next({
+      method: 'UNSUBSCRIBE',
+      params: [streamName],
+      id: this.streamId++,
+    } satisfies RequestStream);
+  }
+  subscribeStream(streamName: StreamName) {
+    if (!this.socket) return;
+
+    this.socket.next({
+      method: 'SUBSCRIBE',
+      params: [streamName],
+      id: this.streamId++,
+    } satisfies RequestStream);
   }
 
   disconnect() {
-    this.socket?.close();
+    this.socket?.complete();
+    this.socket = null;
   }
 }
-// Data is loaded from Binance Testnet API. Card prices update in real time via WebSocket !ticker@arr.

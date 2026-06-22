@@ -91,15 +91,6 @@ export class TradeService {
     }));
   }
 
-  // async createdStream() {
-  //   this.webSocketService.disconnect();
-  //   const streamName = `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
-  //   await this.webSocketService.connect<StreamKline>(
-  //     streamName,
-  //     this.webSocketService.historyCandles$
-  //   );
-  //   this.updateKlineStream();
-  // }
   createdStreamName(): string {
     return `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
   }
