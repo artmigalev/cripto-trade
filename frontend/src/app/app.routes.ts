@@ -27,6 +27,7 @@ export const routes: Routes = [
     path: 'trade/:symbol',
     loadComponent: () => import('./features/trade/trade.component'),
     canActivate: [authGuard],
+
     resolve: {
       symbol: klinesResolver,
     },

@@ -14,6 +14,16 @@ export interface Order {
   asks: [string[]];
 }
 
+export interface OrderStream {
+  e: string; // Event type
+  E: number; // Event time
+  s: string; // Symbol
+  U: number; // First update ID in event
+  u: number; // Final update ID in event
+  b: Order['bids'];
+  a: Order['asks'];
+}
+
 // "lastUpdateId": 1027024,
 // "bids": [
 //     [

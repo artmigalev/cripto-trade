@@ -15,6 +15,7 @@
       "@pipes/*": ["app/shared/pipes/*"],
       "@guards/*": ["app/shared/guards/*"],
       "@features/*": ["app/features/*"],
+      "@resolver/*": ["app/core/resolvers/*"],
       "@/*": ["./*"]
     }
   },

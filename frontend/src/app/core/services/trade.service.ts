@@ -10,11 +10,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CandleIntervals, ErrorChart, TradeStreams } from '@enums/trade.enum';
 import { ResponseKlineTypes } from '@interfaces/api.interface';
-import { StreamKline } from '@interfaces/chart.interface';
 import { Trade } from '@interfaces/trade.interface';
 import { WebsocketService } from '@services/websocket.service';
 import { OhlcData } from 'lightweight-charts';
-import { map, Subject } from 'rxjs';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +29,7 @@ export class TradeService {
     },
     orderBook: [],
   });
-  private subjectKline = new Subject<StreamKline>();
   private destroyRef = inject(DestroyRef);
-
-  historyCandles$ = this.subjectKline.asObservable();
 
   activeInterval = computed(() => this._state().chart.activeCandleInterval);
   chartSymbol = computed(() => this._state().chart.chartSymbol);
@@ -49,12 +45,18 @@ export class TradeService {
 
     effect(async () => {
       if (symbol) {
-        await this.createdStream();
+        const streamname = this.createdStreamName();
+        this.webSocketService.unsubscribeStream(streamname);
+        this.webSocketService.subscribeStream(streamname);
+        this.updateKlineStream();
       }
     });
     effect(async () => {
       if (interval) {
-        await this.createdStream();
+        const streamname = this.createdStreamName();
+        this.webSocketService.unsubscribeStream(streamname);
+        this.webSocketService.subscribeStream(streamname);
+        this.updateKlineStream();
       }
     });
   }
@@ -82,21 +84,24 @@ export class TradeService {
       return;
     }
     const mapperKlines = klines.map(kline => mapCandle(kline));
-
+    console.log(mapperKlines, 'mapper');
     this._state.update(state => ({
       ...state,
       chart: { ...state.chart, klines: mapperKlines },
     }));
   }
 
-  async createdStream() {
-    this.webSocketService.disconnect();
-    const streamName = `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
-    await this.webSocketService.connect<StreamKline>(
-      streamName,
-      this.subjectKline
-    );
-    this.updateKlineStream();
+  // async createdStream() {
+  //   this.webSocketService.disconnect();
+  //   const streamName = `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
+  //   await this.webSocketService.connect<StreamKline>(
+  //     streamName,
+  //     this.webSocketService.historyCandles$
+  //   );
+  //   this.updateKlineStream();
+  // }
+  createdStreamName(): string {
+    return `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
   }
 
   updateRealtimeCandle(candle: OhlcData) {
@@ -120,7 +125,7 @@ export class TradeService {
   }
 
   updateKlineStream() {
-    this.historyCandles$
+    this.webSocketService.historyCandles$
       .pipe(map(mapStreamKline), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (kline: OhlcData) => {

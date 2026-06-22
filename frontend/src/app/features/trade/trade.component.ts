@@ -24,9 +24,14 @@ export default class TradeComponent implements OnDestroy {
   candle = computed(() => this.tradeService.state().chart.lastRealtimeCandle);
   private webSocketService = inject(WebsocketService);
 
+  constructor() {
+    console.log('kline', this.candle());
+  }
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.webSocketService.disconnect();
+    const streamName = this.tradeService.createdStreamName();
+    this.webSocketService.unsubscribeStream(streamName);
   }
 }

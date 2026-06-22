@@ -16,7 +16,7 @@ import {
 import { Market } from '@interfaces/market.interface';
 import { MarketStreams, MarketTable, MarketTabs } from '@enums/market.enum';
 import { WebsocketService } from '@services/websocket.service';
-import { filter, map, Subject } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -26,8 +26,9 @@ export class MarketService {
   private serviceApi = inject(ApiService);
   private readonly socketService = inject(WebsocketService);
   private destroyRef = inject(DestroyRef);
-  subjectTicker = new Subject<TickerStreamsPayload[]>();
-  tickers$ = this.subjectTicker.asObservable(); // !ticker@arr
+
+  tickers$ = this.socketService.tickers$;
+
   stream = MarketStreams['TICKERS'];
 
   private readonly _market = signal<Market['state']>({
