@@ -1,14 +1,22 @@
 import { CandleIntervals } from '@enums/trade.enum';
-import { OhlcData } from 'lightweight-charts';
 
 export interface Chart {
-  historyCandles: OhlcData[];
-  lastRealtimeCandle: OhlcData | null;
+  historyCandles: StreamKline[];
+  lastRealtimeCandle: StreamKline | null;
   activeCandleInterval: CandleIntervals;
   chartSymbol: string;
 }
 
 export interface StreamKline {
+  t: number; // openTime
+  o: string; // open
+  h: string; // high
+  l: string; // low
+  c: string; // close
+  v: number; // volume
+}
+
+export interface BinanceStreamKline {
   e: string;
   E: number;
   s: string;
@@ -36,10 +44,10 @@ interface K {
   B: string; //
 }
 
-export type resultKline = Pick<
-  K,
-  't' | 'o' | 'h' | 'l' | 'c' | 'v' | 'T' | 'q' | 'n' | 'V' | 'Q' | 'B'
->;
+// export type resultKline = Pick<
+//   K,
+//   't' | 'o' | 'h' | 'l' | 'c' | 'v' | 'T' | 'q' | 'n' | 'V' | 'Q' | 'B'
+// >;
 
 // export interface Kline {
 //   openTime: number;

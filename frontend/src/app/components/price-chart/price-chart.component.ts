@@ -1,3 +1,4 @@
+import { mapStreamKline } from '@/app/shared/mappers/chart.mapper';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,6 +10,7 @@ import {
   computed,
   inject,
   viewChild,
+  OnDestroy,
 } from '@angular/core';
 import { CandleIntervals, ErrorChart } from '@enums/trade.enum';
 import { Chart } from '@interfaces/chart.interface';
@@ -27,7 +29,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   // imports: [SpinnerComponent],
 })
-export class PriceChartComponent implements AfterViewInit {
+export class PriceChartComponent implements AfterViewInit, OnDestroy {
   private readonly tradeService = inject(TradeService);
   private chartRef = viewChild<ElementRef>('chart');
   readonly history = input.required<Chart['historyCandles']>();
@@ -39,28 +41,27 @@ export class PriceChartComponent implements AfterViewInit {
   private chartReady = signal<boolean>(false);
   errormsgs = ErrorChart;
   error = signal<string | null>(this.errormsgs.EMPTY_DATA);
+  private historySignal = computed(() => this.history());
+  private candleSignal = computed(() => this.candle());
 
   constructor() {
     effect(() => {
-      if (this.chartReady()) {
-        if (this.series === null) {
-          return;
-        }
-
-        if (this.candle()) {
-          this.series.update(this.candle()!);
-        }
+      if (!this.chartReady()) return;
+      if (!this.series) return;
+      const history = this.historySignal();
+      const candle = this.candleSignal();
+      if (!history || history.length === 0) {
+        this.error.set(this.errormsgs.EMPTY_DATA);
+        return;
       }
-    });
-    effect(() => {
-      if (this.chartReady()) {
-        if (this.series === null) {
-          return;
-        }
-
-        if (this.history()) {
-          this.series?.setData(this.history());
-        }
+      this.error.set(null);
+      const chartData = history.map(h => mapStreamKline(h));
+      this.series.setData(chartData);
+      if (candle) {
+        console.log('candle', candle);
+        const candleData = mapStreamKline(candle);
+        console.log('candleData', candleData);
+        this.series.update(candleData);
       }
     });
   }
@@ -73,25 +74,8 @@ export class PriceChartComponent implements AfterViewInit {
     const container = this.chartRef()?.nativeElement;
     if (!container) return;
     this.init(container);
-    this.setupDataHandling();
-  }
-  private setupDataHandling() {
-    effect(() => {
-      if (!this.chartReady()) return;
-      this.updateChartData();
-    });
   }
 
-  private updateChartData() {
-    const history = this.history();
-    if (history.length === 0) {
-      this.error.set(this.errormsgs.EMPTY_DATA);
-      return;
-    }
-    if (this.series) {
-      this.series?.setData(history);
-    }
-  }
   init(container: HTMLElement) {
     try {
       this.chart = createChart(container, {
@@ -118,12 +102,21 @@ export class PriceChartComponent implements AfterViewInit {
         wickUpColor: '#26a69a',
         wickDownColor: '#ef5350',
       });
-      if (this.series) {
-        this.chartReady.set(true);
-      }
+
+      this.chartReady.set(true);
       this.chart.timeScale().fitContent();
     } catch (error) {
-      console.log(error);
+      console.error('Chart initialization error', error);
+      this.error.set(this.errormsgs.NOT_FOUNT_DATA);
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.remove();
+      this.chart = null;
+    }
+    if (this.series) {
+      this.series = null;
     }
   }
 }

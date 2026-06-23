@@ -50,12 +50,20 @@ export class ApiService {
   };
   async getKlines(
     symbol = 'BTCUSDT',
-    interval: CandleIntervals = CandleIntervals['1d']
+    interval: CandleIntervals = CandleIntervals['1d'],
+    limit: 100
   ): Promise<ResponseKlineTypes[]> {
     try {
       return await firstValueFrom(
         this.http.get<ResponseKlineTypes>(
-          `${this.config.baseUrl}${Trade.PATH_KLINES}?symbol=${symbol}&interval=${interval}`
+          `${this.config.baseUrl}${Trade.PATH_KLINES}`,
+          {
+            params: {
+              symbol,
+              interval,
+              limit: String(limit),
+            },
+          }
         )
       );
     } catch (error) {

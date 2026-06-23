@@ -1,25 +1,28 @@
-import { mapCandle, mapStreamKline } from '@/app/shared/mappers/chart.mapper';
+// trade.service.ts
 import {
-  computed,
-  DestroyRef,
+  Injectable,
   effect,
   inject,
-  Injectable,
+  DestroyRef,
+  computed,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { WebsocketService } from './websocket.service';
 import { CandleIntervals, ErrorChart, TradeStreams } from '@enums/trade.enum';
-import { ResponseKlineTypes } from '@interfaces/api.interface';
+import { StreamKline } from '@interfaces/chart.interface';
+import { Order } from '@interfaces/order-book.interface';
 import { Trade } from '@interfaces/trade.interface';
-import { WebsocketService } from '@services/websocket.service';
-import { OhlcData } from 'lightweight-charts';
-import { map } from 'rxjs';
+import { ApiService } from '@services/api.service';
+import { mapCandle } from '@/app/shared/mappers/chart.mapper';
+import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TradeService {
   private readonly webSocketService = inject(WebsocketService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly apiService = inject(ApiService);
+
   private readonly _state = signal<Trade['_state']>({
     chart: {
       historyCandles: [],
@@ -27,102 +30,41 @@ export class TradeService {
       activeCandleInterval: CandleIntervals['1m'],
       chartSymbol: 'BTCUSDT',
     },
-    orderBook: [],
+    orderBook: null,
   });
-  private destroyRef = inject(DestroyRef);
+  private previousStream: string | null = null;
 
-  activeInterval = computed(() => this._state().chart.activeCandleInterval);
   chartSymbol = computed(() => this._state().chart.chartSymbol);
+  activeInterval = computed(() => this._state().chart.activeCandleInterval);
   stateKlines = computed(() => this._state().chart.historyCandles);
-
-  errors = signal<Trade['errors']>([]);
-
+  lastCandle = computed(() => this._state().chart.lastRealtimeCandle);
   state = this._state.asReadonly();
 
   constructor() {
-    const symbol = this.chartSymbol();
-    const interval = this.activeInterval();
+    effect(() => {
+      const symbol = this.chartSymbol();
+      const interval = this.activeInterval();
+      this.loadKlineHistory(symbol, interval);
 
-    effect(async () => {
-      if (symbol) {
-        const streamname = this.createdStreamName();
-        this.webSocketService.unsubscribeStream(streamname);
-        this.webSocketService.subscribeStream(streamname);
-        this.updateKlineStream();
+      const streamName = `${symbol.toLowerCase()}${TradeStreams.Candlestick}${interval}`;
+      if (this.previousStream) {
+        this.webSocketService.unsubscribeStream(this.previousStream);
       }
-    });
-    effect(async () => {
-      if (interval) {
-        const streamname = this.createdStreamName();
-        this.webSocketService.unsubscribeStream(streamname);
-        this.webSocketService.subscribeStream(streamname);
-        this.updateKlineStream();
-      }
-    });
-  }
-
-  setSymbol(symbol: string) {
-    this._state.update(prev => ({
-      ...prev,
-      chart: { ...prev.chart, chartSymbol: symbol },
-    }));
-  }
-
-  setInterval(interval: CandleIntervals) {
-    this._state.update(state => ({
-      ...state,
-      chart: { ...state.chart, activeCandleInterval: interval },
-    }));
-  }
-
-  updateKlines(klines: ResponseKlineTypes[]) {
-    if (klines.length === 0) {
-      this.errors.update(state => [
-        ...state,
-        { type: 'chartError', message: ErrorChart.EMPTY_DATA },
-      ]);
-      return;
-    }
-    const mapperKlines = klines.map(kline => mapCandle(kline));
-    console.log(mapperKlines, 'mapper');
-    this._state.update(state => ({
-      ...state,
-      chart: { ...state.chart, klines: mapperKlines },
-    }));
-  }
-
-  createdStreamName(): string {
-    return `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
-  }
-
-  updateRealtimeCandle(candle: OhlcData) {
-    const newKlines = this.stateKlines().map(stateKline => {
-      return stateKline['time'] === String(candle.time)
-        ? {
-            ...stateKline,
-            ...candle,
-          }
-        : stateKline;
+      console.log('streamName', streamName);
+      this.previousStream = streamName;
+      this.webSocketService.subscribeStream(streamName);
     });
 
-    this._state.update(state => ({
-      ...state,
-      chart: {
-        ...state.chart,
-        historyCandles: newKlines,
-        lastRealtimeCandle: candle,
-      },
-    }));
-  }
-
-  updateKlineStream() {
+    // Подписка на kline stream с автоматическим отключением
     this.webSocketService.historyCandles$
-      .pipe(map(mapStreamKline), takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (kline: OhlcData) => {
-          const includesKline = this.stateKlines().some(stateKline => {
-            return stateKline['time'] === kline.time;
-          });
+        next: (kline: StreamKline) => {
+          const currentCandles = this.stateKlines();
+
+          const includesKline = currentCandles.some(
+            stateKline => stateKline['t'] === kline['t']
+          );
 
           if (!includesKline) {
             this._state.update(state => ({
@@ -138,5 +80,92 @@ export class TradeService {
           }
         },
       });
+
+    // Подписка на order book stream
+    this.webSocketService.orderSubject$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: depth => {
+          const order = {
+            lastUpdateId: depth['u'],
+            bids: depth['b'],
+            asks: depth.a,
+          } satisfies Order;
+
+          this.setOrderState(order);
+        },
+      });
+  }
+  async loadKlineHistory(
+    symbol: string,
+    interval: CandleIntervals
+  ): Promise<void> {
+    try {
+      this.clearHistoryCandles();
+      const rawKlines = await this.apiService.getKlines(symbol, interval, 100);
+      const chartData = rawKlines.map(h => mapCandle(h));
+      this.updateChartHistory(chartData);
+    } catch (error: unknown) {
+      console.error(error);
+      throw new AppError(ErrorChart['NOT_FOUNT_DATA'], '404', 'TradeService');
+    }
+  }
+  clearHistoryCandles(): void {
+    this._state.update(state => ({
+      ...state,
+      chart: {
+        ...state.chart,
+        historyCandles: [],
+        lastRealtimeCandle: null,
+      },
+    }));
+  }
+  setSymbol(symbol: string): void {
+    this._state.update(prev => ({
+      ...prev,
+      chart: { ...prev.chart, chartSymbol: symbol },
+    }));
+  }
+
+  setInterval(interval: CandleIntervals): void {
+    this._state.update(state => ({
+      ...state,
+      chart: { ...state.chart, activeCandleInterval: interval },
+    }));
+  }
+
+  updateRealtimeCandle(candle: StreamKline): void {
+    const newKlines = this.stateKlines().map(stateKline => {
+      return stateKline['t'] === candle['t']
+        ? { ...stateKline, ...candle }
+        : stateKline;
+    });
+
+    this._state.update(state => ({
+      ...state,
+      chart: {
+        ...state.chart,
+        historyCandles: newKlines,
+        lastRealtimeCandle: candle,
+      },
+    }));
+  }
+
+  setOrderState(snapshot: Order): void {
+    this._state.update(state => ({
+      ...state,
+      orderBook: snapshot,
+    }));
+  }
+
+  updateChartHistory(state: Trade['_state']['chart']['historyCandles']) {
+    this._state.update(prev => ({
+      ...prev,
+      chart: { ...prev.chart, historyCandles: state },
+    }));
+  }
+
+  createdStreamName(): string {
+    return `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
   }
 }

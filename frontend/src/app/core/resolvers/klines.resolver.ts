@@ -1,3 +1,4 @@
+import { mapCandle } from '@/app/shared/mappers/chart.mapper';
 import { inject } from '@angular/core';
 import { ResolveFn, ActivatedRouteSnapshot } from '@angular/router';
 import { ApiService } from '@services/api.service';
@@ -12,12 +13,16 @@ export const klinesResolver: ResolveFn<void> = async (
   const websocketService = inject(WebsocketService);
   const symbol = route.paramMap.get('symbol')!;
   tradeService.setSymbol(symbol);
-  const klines = await apiService.getKlines(symbol);
+  const klines = await apiService.getKlines(
+    symbol,
+    tradeService.activeInterval(),
+    100
+  );
 
   if (klines) {
     console.log(klines, 'load kline ');
-
-    tradeService.updateKlines(klines);
+    const chartData = klines.map(h => mapCandle(h));
+    tradeService.updateChartHistory(chartData);
     websocketService.subscribeStream(tradeService.createdStreamName());
   }
 };

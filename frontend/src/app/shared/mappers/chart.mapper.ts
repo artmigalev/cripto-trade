@@ -1,24 +1,34 @@
 import { ResponseKlineTypes } from '@interfaces/api.interface';
-import { StreamKline } from '@interfaces/chart.interface';
+import { BinanceStreamKline, StreamKline } from '@interfaces/chart.interface';
 import { OhlcData, UTCTimestamp } from 'lightweight-charts';
 
-export const mapCandle = (candle: ResponseKlineTypes): OhlcData =>
+export const mapCandle = (k: ResponseKlineTypes): StreamKline =>
   ({
-    time: (candle[0] / 1000) as UTCTimestamp,
-    open: Number(candle[1]),
-    high: Number(candle[2]),
-    low: Number(candle[3]),
-    close: Number(candle[4]),
-  }) satisfies OhlcData;
+    t: k[0], // openTime
+    o: k[1], // open
+    h: k[2], // high
+    l: k[3], // low
+    c: k[4], // close
+    v: k[5], // volume
+  }) satisfies StreamKline;
 
 export const mapStreamKline = (streamKline: StreamKline): OhlcData => {
-  const { k } = streamKline;
-
   return {
-    time: (k.t / 1000) as UTCTimestamp,
-    open: Number(k.o),
-    high: Number(k.h),
-    low: Number(k.l),
-    close: Number(k.c),
+    time: (streamKline.t / 1000) as UTCTimestamp,
+    open: Number(streamKline.o),
+    high: Number(streamKline.h),
+    low: Number(streamKline.l),
+    close: Number(streamKline.c),
   };
 };
+
+export const mapperBinanceStreamKline = (
+  binanceKline: BinanceStreamKline
+): StreamKline => ({
+  t: binanceKline.k.t, // openTime
+  o: binanceKline.k.o, // open
+  h: binanceKline.k.h, // high
+  l: binanceKline.k.l, // low
+  c: binanceKline.k.c, // close
+  v: Number(binanceKline.k.v), // volume
+});

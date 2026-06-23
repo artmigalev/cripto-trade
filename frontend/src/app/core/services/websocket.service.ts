@@ -1,5 +1,6 @@
+import { mapperBinanceStreamKline } from '@/app/shared/mappers/chart.mapper';
 import { Injectable } from '@angular/core';
-import { StreamKline } from '@interfaces/chart.interface';
+import { BinanceStreamKline, StreamKline } from '@interfaces/chart.interface';
 import { OrderStream } from '@interfaces/order-book.interface';
 import { TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 import { BinanceWsMessage } from '@interfaces/websocket.interface';
@@ -70,7 +71,10 @@ export class WebsocketService {
     }
 
     if (message?.e === 'kline') {
-      this.klineSubject.next(message as StreamKline);
+      const convertKline = mapperBinanceStreamKline(
+        message as BinanceStreamKline
+      );
+      this.klineSubject.next(convertKline);
       return;
     }
 

@@ -1,7 +1,7 @@
 import { OrderBookColumns, OrderBookRows } from '@enums/order-book.enum';
 
 export interface OrderBook {
-  orders: Order[];
+  orders: Order | null;
   columns: OrderBookColumns;
   rows: OrderBookRows;
 }

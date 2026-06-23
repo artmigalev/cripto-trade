@@ -3,11 +3,9 @@ import {
   Component,
   computed,
   inject,
-  OnDestroy,
 } from '@angular/core';
 import { PriceChartComponent } from '@components/price-chart/price-chart.component';
 import { TradeService } from '@services/trade.service';
-import { WebsocketService } from '@services/websocket.service';
 
 @Component({
   selector: 'app-trade',
@@ -16,22 +14,12 @@ import { WebsocketService } from '@services/websocket.service';
   styleUrl: './trade.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TradeComponent implements OnDestroy {
+export default class TradeComponent {
   private readonly tradeService = inject(TradeService);
-  historyCandles = computed(
-    () => this.tradeService.state().chart.historyCandles
-  );
-  candle = computed(() => this.tradeService.state().chart.lastRealtimeCandle);
-  private webSocketService = inject(WebsocketService);
+  historyCandles = computed(() => this.tradeService.stateKlines());
+  candle = computed(() => this.tradeService.lastCandle());
 
   constructor() {
     console.log('kline', this.candle());
-  }
-
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    const streamName = this.tradeService.createdStreamName();
-    this.webSocketService.unsubscribeStream(streamName);
   }
 }
