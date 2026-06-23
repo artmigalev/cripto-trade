@@ -58,9 +58,7 @@ export class PriceChartComponent implements AfterViewInit, OnDestroy {
       const chartData = history.map(h => mapStreamKline(h));
       this.series.setData(chartData);
       if (candle) {
-        console.log('candle', candle);
         const candleData = mapStreamKline(candle);
-        console.log('candleData', candleData);
         this.series.update(candleData);
       }
     });

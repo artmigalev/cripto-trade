@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+  width: 50%;
+  height: 50%;
   max-height: 50%;
   padding: 5px;
   background-color: var(--order-book-section-bg-color);
@@ -14,6 +15,7 @@
 }
 .table-container {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   background-color: var(--mat-sys-surface-container);
@@ -22,7 +24,8 @@
   padding: 0 5px 5px 5px;
 }
 .table-book {
-  width: 50%;
+  width: 100%;
+  height: 100%;
 }
 #bids {
   color: var(--mat-sys-primary);

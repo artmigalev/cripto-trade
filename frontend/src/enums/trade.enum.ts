@@ -17,4 +17,5 @@ export enum ErrorChart {
 }
 export enum TradeStreams {
   Candlestick = '@kline_',
+  OrderBook = '@depth',
 }

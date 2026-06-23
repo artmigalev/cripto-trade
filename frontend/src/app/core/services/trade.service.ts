@@ -10,7 +10,6 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WebsocketService } from './websocket.service';
 import { CandleIntervals, ErrorChart, TradeStreams } from '@enums/trade.enum';
-import { ResponseKlineTypes } from '@interfaces/api.interface';
 import { StreamKline } from '@interfaces/chart.interface';
 import { Order } from '@interfaces/order-book.interface';
 import { Trade } from '@interfaces/trade.interface';
@@ -56,22 +55,7 @@ export class TradeService {
       this.webSocketService.subscribeStream(streamName);
     });
 
-    this._state.update(state => ({
-      ...state,
-      chart: {
-        ...state.chart,
-        historyCandles: newKlines,
-        lastRealtimeCandle: candle,
-      },
-    }));
-  }
-  setOrderState(snapshot: Order) {
-    this._state.update(state => ({
-      ...state,
-      orderBook: snapshot,
-    }));
-  }
-  updateKlineStream() {
+    // Подписка на kline stream с автоматическим отключением
     this.webSocketService.historyCandles$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -102,6 +86,7 @@ export class TradeService {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: depth => {
+          console.log('depth', depth);
           const order = {
             lastUpdateId: depth['u'],
             bids: depth['b'],

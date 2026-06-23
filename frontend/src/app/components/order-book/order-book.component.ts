@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
 import {
   OrderBook,
   OrderBookColumns,
@@ -19,4 +24,5 @@ export class OrderBookComponent {
   order = input<Order | null>();
   columns = Object.values(OrderBookColumns);
   rows = Object.values(OrderBookRows);
+  orderSignal = computed(() => this.order());
 }
