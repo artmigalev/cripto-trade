@@ -20,6 +20,8 @@ export class KeyController {
   @Put()
   updateKey(@Request() req: Request, @Body() dto: KeyDto) {
     const userId = req['user'].sub;
+    console.log('Saving keys for userId:', userId);
+
     return this.keyService.update(userId, dto);
   }
 }

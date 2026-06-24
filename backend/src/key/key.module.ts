@@ -4,6 +4,7 @@ import { KeyService } from './key.service';
 
 @Module({
   controllers: [KeyController],
-  providers: [ KeyService]
+  providers: [KeyService],
+  exports: [KeyService],
 })
 export class KeyModule {}

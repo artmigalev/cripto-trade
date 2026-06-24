@@ -9,6 +9,8 @@ export class KeyService {
   forwardKey(userId: string): ResponseKey {
     const key = this.keys.get(userId);
 
+    console.log(userId, 'user id');
+
     if (!key) {
       return {
         apiKey: '',
@@ -31,11 +33,11 @@ export class KeyService {
   }
 
   update(userId: string, key: KeyDto): ResponseKey {
-    this.keys.set(userId, key);
+    this.keys.set(userId, {
+      apiKey: key.apiKey.trim(),
+      secretKey: key.secretKey.trim(),
+    });
 
-    return {
-      apiKey: key?.apiKey,
-      configured: true,
-    };
+    return { apiKey: key.apiKey.trim(), configured: true };
   }
 }

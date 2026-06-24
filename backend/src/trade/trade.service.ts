@@ -2,10 +2,7 @@ import { HMACService } from '@/src/hmac/hmac.service';
 import { OrderResponse } from '@interfaces/trade.interface';
 import { KeyService } from '@keys/key.service';
 import { HttpService } from '@nestjs/axios';
-import {
-  BadRequestException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
@@ -23,7 +20,9 @@ export class TradeService {
   ): Promise<OrderResponse> {
     const queryString = this.getQueryString({
       ...dataOrder,
+        
       timestamp: Date.now(),
+      recvWindow: 60000,
     });
     const apiKey = this.serviceKey.getKey(userId)?.apiKey;
 
