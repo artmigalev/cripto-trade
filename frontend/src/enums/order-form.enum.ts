@@ -10,11 +10,9 @@ export enum OrderFormFields {
   Price = 'Price', // displayed only for Limit orders.
 }
 
-export enum OrderFormValues {
-  BUY = 'BUY',
-  SELL = 'SELL',
-  MARKET = 'MARKET',
-  LIMIT = 'LIMIT',
+export enum OrderSide {
+  Buy = 'buy',
+  Sell = 'sell',
 }
 
 export enum ErrorOrderFormMsg {
@@ -25,5 +23,3 @@ export enum ErrorOrderFormMsg {
   Amount_Available = 'Order total does not exceed available balance',
   // Validation: all required fields are filled, amount exceeds the minimum, order total does not exceed available balance. Clear error messages below each field on errors.
 }
-
-export enum OrderTypes {}

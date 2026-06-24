@@ -7,10 +7,11 @@ import {
 import { PriceChartComponent } from '@components/price-chart/price-chart.component';
 import { TradeService } from '@services/trade.service';
 import { OrderBookComponent } from '@components/order-book/order-book.component';
+import { OrderFormComponent } from '@components/order-form/order-form.component';
 
 @Component({
   selector: 'app-trade',
-  imports: [PriceChartComponent, OrderBookComponent],
+  imports: [PriceChartComponent, OrderBookComponent, OrderFormComponent],
   templateUrl: './trade.component.html',
   styleUrl: './trade.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

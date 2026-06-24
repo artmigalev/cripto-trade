@@ -52,6 +52,18 @@
   //order-book
   --order-book-section-bg-color: var(--mat-sys-background);
   --order-book-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
+  //order-form
+  --order-form-section-bg-color: var(--mat-sys-background);
+  --order-form-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
+  --order-form-padding: 4px;
+  --order-form-legend-font: var(--mat-sys-body-large);
+  --order-form-legend-font-color: var(--mat-sys-on-surface);
+  --order-form-bg-color: var(--mat-sys-surface-container-high);
+  --order-form-side-btn-bg: var(--mat-sys-surface-container);
+  --order-form-side-btn-hover-bg: var(--mat-sys-surface-container-high);
+  --order-form-btn-side-border-radius: var(--mat-sys-corner-small);
+  --order-form-btn-color: var(--mat-sys-surface-container-high);
+  --order-form-input-bg: var(--mat-sys-surface);
 }
 
 // Surface  – фона и больших, малозаметных областей экрана.

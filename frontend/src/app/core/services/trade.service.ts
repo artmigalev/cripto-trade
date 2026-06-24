@@ -34,10 +34,10 @@ export class TradeService {
   });
   private previousStream: string | null = null;
 
-  chartSymbol = computed(() => this._state().chart.chartSymbol);
-  activeInterval = computed(() => this._state().chart.activeCandleInterval);
-  stateKlines = computed(() => this._state().chart.historyCandles);
-  lastCandle = computed(() => this._state().chart.lastRealtimeCandle);
+  chartSymbol = computed(() => this.state().chart.chartSymbol);
+  activeInterval = computed(() => this.state().chart.activeCandleInterval);
+  stateKlines = computed(() => this.state().chart.historyCandles);
+  lastCandle = computed(() => this.state().chart.lastRealtimeCandle);
   state = this._state.asReadonly();
 
   constructor() {
@@ -50,8 +50,6 @@ export class TradeService {
       if (this.previousStream) {
         this.webSocketService.unsubscribeStream(this.previousStream);
       }
-      console.log('streamName', streamName);
-      this.previousStream = streamName;
       this.webSocketService.subscribeStream(streamName);
     });
 
@@ -86,7 +84,6 @@ export class TradeService {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: depth => {
-          console.log('depth', depth);
           const order = {
             lastUpdateId: depth['u'],
             bids: depth['b'],

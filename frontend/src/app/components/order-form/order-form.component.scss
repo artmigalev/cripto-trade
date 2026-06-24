@@ -1,3 +1,82 @@
 :host {
   display: block;
+  width: 50%;
+  height: 100%;
+  background-color: var(--order-form-section-bg-color);
+
+  border-radius: var(--mat-sys-corner-medium);
+  overflow: hidden;
+}
+.order-section {
+  width: 100%;
+  background-color: var(--order-form-section-bg-color);
+  padding: var(--order-form-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .section-title {
+    font: var(--mat-sys-headline-large);
+  }
+  .side-container {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    gap: 5px;
+    .btn-side {
+      width: 80px;
+      background-color: var(--order-form-side-btn-bg);
+      border-radius: var(--order-form-btn-side-border-radius);
+      padding: var(--padding);
+      font: var(--mat-sys-label-large);
+      &:hover {
+        cursor: pointer;
+        background: var(--order-form-side-btn-hover-bg);
+      }
+    }
+    .sell {
+    }
+    .buy {
+    }
+  }
+  .order-form {
+    background-color: var(--mat-sys-surface-container-highest);
+    border-radius: var(--mat-sys-corner-medium);
+    width: 60%;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    .form-field {
+      padding: var(--padding);
+      // border: 1px solid var(--mat-sys-on-primary-fixed-variant);
+      background-color: var(--mat-sys-surface-container-high);
+      .form-legend {
+        font: var(--mat-sys-label-large);
+      }
+      .field-input {
+        background-color: var(--mat-sys-surface-container-low);
+        padding: 4px;
+        border-radius: var(--mat-sys-corner-small);
+      }
+      .amount-input {
+      }
+      .price-input {
+      }
+    }
+  }
+  .btn-form {
+  }
+  .btn-send {
+    margin: auto;
+    font: var(--mat-sys-label-large);
+    padding: var(--padding);
+    width: 80%;
+    background-color: var(--mat-sys-surface-container-low);
+    border-radius: var(--order-form-btn-side-border-radius);
+    &:hover {
+      cursor: pointer;
+      background-color: var(--mat-sys-surface-container-lowest);
+    }
+  }
 }

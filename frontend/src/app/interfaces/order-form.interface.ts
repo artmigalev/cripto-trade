@@ -1,7 +1,7 @@
 import {
   ErrorOrderFormMsg,
   OrderFormFields,
-  OrderFormValues,
+  OrderSide,
 } from '@enums/order-form.enum';
 
 export interface OrderForm {
@@ -23,11 +23,12 @@ export type ErrorTypesOrderForm =
 
 export interface OrderFormParameters {
   symbol: string;
-  side: OrderFormValues.BUY | OrderFormValues.SELL;
+  side: OrderSide;
   type: OrderType;
   timeInForce: TimeInForce;
   price: number;
   quantity: number;
+  timestamp: string;
 }
 
 export type TimeInForce = 'GTC' | 'IOC' | 'FOK';

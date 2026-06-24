@@ -1,1 +1,36 @@
-<p>order-form works!</p>
+<section class="order-section">
+  <h2 class="section-title">{{ title }}</h2>
+  <div class="side-container">
+    <button class="btn-side buy">Buy</button>
+    <button class="btn-side sell">Sell</button>
+  </div>
+  <form class="order-form">
+    <fieldset class="form-field">
+      <select [formField]="formOrder.side" aria-placeholder="order-type">
+        <option selected value="order-type-placeholder">Order Type</option>
+        <option value="{{ orderType.MARKET }}">Market</option>
+        <option value="{{ orderType.LIMIT }}">Limit</option>
+      </select>
+    </fieldset>
+    <fieldset class="form-field">
+      <legend class="form-legend">Amount</legend>
+      <input
+        [formField]="formOrder.quantity"
+        class="field-input amount-input"
+        type="number" />
+    </fieldset>
+    <fieldset class="form-field">
+      <legend class="form-legend">Price</legend>
+      <input
+        [formField]="formOrder.price"
+        class="field-input price-input"
+        type="number" />
+      @for (error of formOrder.price().errors(); track $index) {
+        <p class="error-msg">{{ error.message }}</p>
+      }
+    </fieldset>
+    <button (click)="onSubmit($event)" class="btn-form btn-send" type="submit">
+      Send
+    </button>
+  </form>
+</section>
