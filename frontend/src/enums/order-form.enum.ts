@@ -11,8 +11,8 @@ export enum OrderFormFields {
 }
 
 export enum OrderSide {
-  Buy = 'buy',
-  Sell = 'sell',
+  Buy = 'BUY',
+  Sell = 'SELL',
 }
 
 export enum ErrorOrderFormMsg {

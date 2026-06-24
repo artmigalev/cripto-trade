@@ -1,13 +1,28 @@
 <section class="order-section">
   <h2 class="section-title">{{ title }}</h2>
-  <div class="side-container">
-    <button class="btn-side buy">Buy</button>
-    <button class="btn-side sell">Sell</button>
-  </div>
-  <form class="order-form">
+  <form [formRoot]="formOrder" class="order-form">
+    <div class="side-container">
+      <button
+        type="button"
+        class="btn-side buy"
+        [class.active]="activeSide() === orderSide.Buy"
+        (click)="setSide(orderSide.Buy)">
+        Buy
+      </button>
+      <button
+        type="button"
+        class="btn-side sell"
+        [class.active]="activeSide() === orderSide.Sell"
+        (click)="setSide(orderSide.Sell)">
+        Sell
+      </button>
+    </div>
     <fieldset class="form-field">
-      <select [formField]="formOrder.side" aria-placeholder="order-type">
-        <option selected value="order-type-placeholder">Order Type</option>
+      <select
+        [formField]="formOrder.type"
+        (change)="onTypeChange($event)"
+        aria-placeholder="order-type">
+        <option selected disabled>Order Type</option>
         <option value="{{ orderType.MARKET }}">Market</option>
         <option value="{{ orderType.LIMIT }}">Limit</option>
       </select>
@@ -17,20 +32,20 @@
       <input
         [formField]="formOrder.quantity"
         class="field-input amount-input"
-        type="number" />
+        type="text" />
     </fieldset>
-    <fieldset class="form-field">
-      <legend class="form-legend">Price</legend>
-      <input
-        [formField]="formOrder.price"
-        class="field-input price-input"
-        type="number" />
-      @for (error of formOrder.price().errors(); track $index) {
-        <p class="error-msg">{{ error.message }}</p>
-      }
-    </fieldset>
-    <button (click)="onSubmit($event)" class="btn-form btn-send" type="submit">
-      Send
-    </button>
+    @if (formOrder.type().value() === orderType.LIMIT) {
+      <fieldset class="form-field">
+        <legend class="form-legend">Price</legend>
+        <input
+          [formField]="formOrder.price"
+          class="field-input price-input"
+          type="text" />
+        @for (error of formOrder.price().errors(); track $index) {
+          <p class="error-msg">{{ error.message }}</p>
+        }
+      </fieldset>
+    }
+    <button class="btn-form btn-send" type="submit">Send</button>
   </form>
 </section>

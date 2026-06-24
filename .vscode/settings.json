@@ -5,5 +5,5 @@
   "js/ts.preferences.importModuleSpecifier": "non-relative",
   "vsicons.presets.angular": true,
   "postman.settings.dotenv-detection-notification-visibility": false,
-  "cSpell.words": ["Klines"]
+  "cSpell.words": ["analogjs", "APIKEY", "BTCUSDT", "Klines", "ngneat"]
 }

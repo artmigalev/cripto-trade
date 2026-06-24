@@ -16,6 +16,8 @@ import { Trade } from '@interfaces/trade.interface';
 import { ApiService } from '@services/api.service';
 import { mapCandle } from '@/app/shared/mappers/chart.mapper';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
+import { OrderFormParameters } from '@interfaces/order-form.interface';
+import { OrderResponse } from '@interfaces/api.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TradeService {
@@ -94,6 +96,14 @@ export class TradeService {
         },
       });
   }
+  async placeOrder(order: OrderFormParameters): Promise<OrderResponse> {
+    const payload = {
+      ...order,
+      timestamp: Date.now().toString(),
+    };
+    return await this.apiService.sendOrder(payload);
+  }
+
   async loadKlineHistory(
     symbol: string,
     interval: CandleIntervals

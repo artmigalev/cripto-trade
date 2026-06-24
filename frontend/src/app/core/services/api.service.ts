@@ -1,13 +1,14 @@
 import { API_CONFIG } from '@services/tokens/api-config.tokens';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Ticker } from '@interfaces/ticker.interfaсe';
 import { firstValueFrom } from 'rxjs';
-import { ResponseKlineTypes } from '@interfaces/api.interface';
+import { OrderResponse, ResponseKlineTypes } from '@interfaces/api.interface';
 import { CandleIntervals, ErrorChart, Trade } from '@enums/trade.enum';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 import { OrderBook } from '@enums/order-book.enum';
 import { Order } from '@interfaces/order-book.interface';
+import { OrderFormParameters } from '@interfaces/order-form.interface';
 
 export type Ticker24hrResponse = Ticker;
 
@@ -90,6 +91,22 @@ export class ApiService {
         throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
       }
       throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+    }
+  }
+
+  async sendOrder(payload: OrderFormParameters): Promise<OrderResponse> {
+    try {
+      return await firstValueFrom(
+        this.http.post<OrderResponse>(
+          `${this.config.backendUrl}/trade/create-order`,
+          payload
+        )
+      );
+    } catch (error) {
+      if (error instanceof HttpErrorResponse) {
+        throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+      }
+      throw new AppError('Unknown error', '500', 'UNKNOWN');
     }
   }
 }

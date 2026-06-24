@@ -26,8 +26,8 @@ export interface OrderFormParameters {
   side: OrderSide;
   type: OrderType;
   timeInForce: TimeInForce;
-  price: number;
-  quantity: number;
+  price: string;
+  quantity: string;
   timestamp: string;
 }
 
