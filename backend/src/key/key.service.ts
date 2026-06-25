@@ -1,15 +1,17 @@
+import { keys } from '@/src/constants';
 import { ResponseKey } from '@interfaces/key.interface';
 import { KeyDto } from '@keys/dto/key.dto';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class KeyService {
-  private readonly keys = new Map<string, KeyDto>();
+  private readonly keys = new Map<string, KeyDto>([
+    ['test', keys],
+  ]);
 
   forwardKey(userId: string): ResponseKey {
     const key = this.keys.get(userId);
 
-    console.log(userId, 'user id');
 
     if (!key) {
       return {
