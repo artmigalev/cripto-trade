@@ -1,10 +1,6 @@
 import { mockDataBinanceAccountInf } from '@/app/mockdata/portfolio';
 import { inject } from '@angular/core';
-import {
-  RedirectCommand,
-  ResolveFn,
-  Router,
-} from '@angular/router';
+import { RedirectCommand, ResolveFn, Router } from '@angular/router';
 import { BinanceAccountInfResponse } from '@interfaces/api.interface';
 import { PortfolioService } from '@services/portfolio.service';
 
