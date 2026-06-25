@@ -41,7 +41,7 @@ export interface BinanceAccountInfResponse {
   uid: number;
 }
 
-interface Balance {
+export interface Balance {
   asset: string;
   free: string;
   locked: string;

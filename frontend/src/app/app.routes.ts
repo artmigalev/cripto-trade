@@ -2,6 +2,7 @@ import { klinesResolver } from '@/app/core/resolvers/klines.resolver';
 import { authGuard } from '@/app/shared/guards/auth-guard';
 import { AuthRotes } from '@/enums/nav-link.enum';
 import { Routes } from '@angular/router';
+import { portfolioResolver } from '@resolver/portfolio.resolver';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,10 @@ export const routes: Routes = [
     path: 'portfolio',
     loadComponent: () => import('./features/portfolio/portfolio.component'),
     canActivate: [authGuard],
+
+    resolve: {
+      portfolio: portfolioResolver,
+    },
   },
   {
     path: 'about-us',

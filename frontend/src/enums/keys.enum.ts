@@ -13,8 +13,8 @@ export enum TickedKeys {
   'VOLUME' = 'volume',
 }
 
-// const API_Key: 'SiA7rW3GBSuw6gS1daPKHWPOkLAvsuWFy7yMEOyc8lVRi0ZNzoGDRXzyv4akAveo';
+// API Key: TcUzXrpK2Ko4eDQxRVPUdIkyYSZlYPWtz8kbOxmSpH4gyUOHMt6QAkeUHgLjjTkz
 
-// const Secret_Key: 'AoZaX1YlzoMyZRTssBbhbW5HsWioWHJ3R8ilCT8sxmObfpqrG1AJ1ai8HnF4Q149';
+// Secret Key: zLt1nt9oVVjeiEfKWZmCU8I9NY5waOqWSSZuqc9wT0DCreammQyY4VJCIVmpKEFF
 // test_user@mail.com
 // test_user@mail.com1

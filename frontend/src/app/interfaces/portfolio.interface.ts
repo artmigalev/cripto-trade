@@ -1,3 +1,8 @@
+import { BinanceAccountInfResponse } from '@interfaces/api.interface';
+
 export interface Portfolio {
-  state: [];
+  state: {
+    assetTableData: BinanceAccountInfResponse['balances'];
+    value: number | null;
+  };
 }
