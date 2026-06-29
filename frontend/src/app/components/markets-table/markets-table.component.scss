@@ -11,7 +11,7 @@
   width: 100%;
   // overflow: hidden;
   // border: 1px solid var(--market-table-border-color);
-  background-color: var(--mat-sys-surface-container);
+  background-color: var(--mat-sys-surface);
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
 }
@@ -23,8 +23,7 @@
   font: var(--mat-sys-title-small);
   position: sticky;
   top: 0;
-  background-color: var(--mat-sys-surface-container);
-
+  background-color: var(--mat-sys-surface);
   z-index: 1;
 }
 .header-cell {
