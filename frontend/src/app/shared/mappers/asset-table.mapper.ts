@@ -1,6 +1,8 @@
 import { Balance } from '@interfaces/api.interface';
 import { DataTable } from '@interfaces/portfolio.interface';
-import { TickerMarketType } from '@interfaces/ticker.interfaсe';
+import {
+  TickerMarketType,
+} from '@interfaces/ticker.interfaсe';
 
 export const assetTableMapper = (
   balances: Balance[],
