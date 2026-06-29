@@ -22,7 +22,7 @@ import { errorInterceptor } from '@/app/shared/interceptors/error.interseptor';
 import { MarketService } from '@services/market.service';
 import { WebsocketService } from '@services/websocket.service';
 import { GlobalErrorHandler } from '@/app/core/handlers/global-error.handler';
-
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAppInitializer(async () => {
@@ -58,5 +58,6 @@ export const appConfig: ApplicationConfig = {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler,
     },
+    provideCharts(withDefaultRegisterables()),
   ],
 };

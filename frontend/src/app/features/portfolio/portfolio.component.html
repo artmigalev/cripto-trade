@@ -1,4 +1,7 @@
 <section class="container-section layout-page portfolio">
   <app-asset-table [assets]="assets()" />
-  <app-widget [data]="portfolioValue()" type="portfolio-value" />
+  <div class="constainer">
+    <app-widget [data]="portfolioValue()" type="portfolio-value" />
+    <app-distribution [data]="distributionData()" />
+  </div>
 </section>

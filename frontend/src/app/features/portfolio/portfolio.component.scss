@@ -12,3 +12,10 @@
   flex-direction: column;
   gap: 10px;
 }
+.constainer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+}
