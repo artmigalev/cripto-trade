@@ -1,25 +1,30 @@
 :host {
+  padding-top: 4px;
+  padding-bottom: 4px;
   display: block;
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  border-radius: 24px;
 }
 .markets-table {
   width: 100%;
-  border-radius: 24px;
+  // overflow: hidden;
   // border: 1px solid var(--market-table-border-color);
-  background-color: var(--mat-sys-secondary-container);
+  background-color: var(--mat-sys-surface-container);
   padding-top: var(--padding-top);
   padding-bottom: var(--padding-bottom);
 }
 .header-row {
+  width: 100%;
   padding: var(--padding);
   border-bottom: 3px solid var(--mat-sys-on-secondary-fixed-variant);
   color: var(--mat-sys-tertiary);
   font: var(--mat-sys-title-small);
   position: sticky;
   top: 0;
-  background-color: var(--mat-sys-secondary-container);
+  background-color: var(--mat-sys-surface-container);
+
   z-index: 1;
 }
 .header-cell {

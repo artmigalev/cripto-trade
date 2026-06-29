@@ -9,7 +9,7 @@
   --padding-bottom: 20px;
   --padding-lr: 24px;
 
-  --title-section: var(--mat-sys-headline-large);
+  --title-section: var(--mat-sys-body-large);
   --subtitle: var(--mat-sys-title-medium);
   --text-body: var(--mat-sys-body-large);
   --label: var(--mat-sys-label-large);
@@ -21,10 +21,10 @@
   --footer-padding: 20px;
   //dashboard card
 
-  --dash-card-color-bg: var(--mat-sys-secondary-container);
+  --dash-card-color-bg: var(--mat-sys-surface-container);
 
-  --dash-card-title: var(--mat-sys-title-large);
-  --dash-card-title-color: var(--mat-sys-on-secondary-fixed-variant);
+  --dash-card-title: var(--mat-sys-body-large);
+  --dash-card-title-color: var(--mat-sys-primary);
 
   --dash-card-label: var(--mat-sys-label-large);
   --dash-card-label-color: var(--mat-sys-on-secondary-fixed-variant);
