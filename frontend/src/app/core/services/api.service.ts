@@ -3,7 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Ticker } from '@interfaces/ticker.interfaсe';
 import { firstValueFrom } from 'rxjs';
-import { OrderResponse, ResponseKlineTypes } from '@interfaces/api.interface';
+import {
+  BinanceAccountInfResponse,
+  OrderResponse,
+  ResponseKlineTypes,
+} from '@interfaces/api.interface';
 import { CandleIntervals, ErrorChart, Trade } from '@enums/trade.enum';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 import { OrderBook } from '@enums/order-book.enum';
@@ -107,6 +111,21 @@ export class ApiService {
         throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
       }
       throw new AppError('Unknown error', '500', 'UNKNOWN');
+    }
+  }
+
+  async getAccountInf(): Promise<BinanceAccountInfResponse['balances']> {
+    try {
+      return await firstValueFrom(
+        this.http.get<BinanceAccountInfResponse['balances']>(
+          `${this.config.backendUrl}/portfolio/account`
+        )
+      );
+    } catch (error) {
+      if (error instanceof HttpErrorResponse) {
+        throw new AppError(ErrorChart.BAD_RESPONSE, '500', 'API');
+      }
+      throw new AppError('not found balances', '500', 'ApiService');
     }
   }
 }

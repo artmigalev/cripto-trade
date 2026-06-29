@@ -16,10 +16,11 @@ export class PortfolioService {
     private readonly serviceKey: KeyService
   ) {}
 
-  async getInfoByAccount(userId: string): Promise<BinanceAccountInfResponse> {
+  async getInfoByAccount(userId: string): Promise<BinanceAccountInfResponse['balances']> {
     const queryString = this.getQueryString({
       timestamp: Date.now(),
       recvWindow: 60000,
+      omitZeroBalances: true,
     });
     const apiKey =   this.serviceKey.getKey(userId)?.apiKey;
     const signature = await this.hmacService.sign(userId, queryString);
@@ -43,10 +44,10 @@ export class PortfolioService {
           })
         )
     );
-    return data;
+    return data.balances;
   }
 
-  getQueryString(dataOrder: Record<string, string | number>): string {
+  getQueryString(dataOrder: Record<string, string | number | boolean>): string {
     return new URLSearchParams(
       Object.entries(dataOrder).map(([k, v]) => [k, String(v)])
     ).toString();

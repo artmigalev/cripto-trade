@@ -1,8 +1,10 @@
-import { BinanceAccountInfResponse } from '@interfaces/api.interface';
+import { Balance } from '@interfaces/api.interface';
 
 export interface Portfolio {
   state: {
-    assetTableData: BinanceAccountInfResponse['balances'];
+    assetTableData: DataTable[];
     value: number | null;
   };
 }
+
+export type DataTable = Balance & { currentPrice: number; totalValue: number };

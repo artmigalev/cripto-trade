@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Balance } from '@interfaces/api.interface';
 import { MatTableModule } from '@angular/material/table';
+import { ConverterPipe } from '@pipes/converter.pipe';
 
 @Component({
   selector: 'app-asset-table',
-  imports: [MatTableModule],
+  imports: [MatTableModule, ConverterPipe],
 
   templateUrl: './asset-table.component.html',
   styleUrl: './asset-table.component.scss',
@@ -19,13 +20,14 @@ export class AssetTableComponent {
   // dataSource = ELEMENT_DATA;
 }
 
-enum AssetTableColumns {
+export enum AssetTableColumns {
   ASSET = 'Asset',
   AVAILABLE_BALANCE = 'Available Balance',
+  ORDER = 'Order',
   CURRENT_PRICE = 'Current Price',
   TOTAL_VALUE = 'Total Value',
 }
-enum DefaultPrice {
+export enum DefaultPrice {
   BTC = 'BTC',
   ETH = 'ETH',
   USDT = 'USDT',

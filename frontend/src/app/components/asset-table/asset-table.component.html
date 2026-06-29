@@ -7,15 +7,29 @@
     </ng-container>
     <ng-container matColumnDef="Available Balance">
       <th mat-header-cell *matHeaderCellDef>Available Balance</th>
-      <td mat-cell *matCellDef="let element">{{ element.free }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.free | converter: 'USDT' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="Order">
+      <th mat-header-cell *matHeaderCellDef>In Order</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.locked | converter: 'USDT' }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="Current Price">
-      <th mat-header-cell *matHeaderCellDef>Current Price</th>
-      <td mat-cell *matCellDef="let element">{{ element.free }}</td>
+      <th mat-header-cell *matHeaderCellDef>
+        Current Price {{ defaultPrice }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.currentPrice | converter: 'USDT' }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="Total Value">
-      <th mat-header-cell *matHeaderCellDef>Total Value</th>
-      <td mat-cell *matCellDef="let element">-</td>
+      <th mat-header-cell *matHeaderCellDef>Total Value {{ defaultPrice }}</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalValue | converter: 'USDT' }}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
