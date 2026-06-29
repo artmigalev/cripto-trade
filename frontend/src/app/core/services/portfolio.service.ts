@@ -1,5 +1,5 @@
 import { assetTableMapper } from '@/app/shared/mappers/asset-table.mapper';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { DefaultPrice } from '@components/asset-table/asset-table.component';
 import { Balance } from '@interfaces/api.interface';
 import { Portfolio } from '@interfaces/portfolio.interface';
@@ -13,6 +13,12 @@ export class PortfolioService {
   private _state = signal<Portfolio['state'] | null>(null);
 
   state = this._state.asReadonly();
+
+  portfolioValueUSD = computed(() => {
+    return this._state()?.assetTableData.reduce((total, asset) => {
+      return total + asset.currentPrice;
+    }, 0);
+  });
 
   setPortfolio<T extends Balance>(data: T[]) {
     const priceValue = DefaultPrice['USDT'];

@@ -1,0 +1,18 @@
+<div class="widget">
+  @switch (type()) {
+    @case ('portfolio-value') {
+      <div class="widget-header">
+        <h5 role="heading" class="widget-title font-title-lg">Total value</h5>
+      </div>
+      <div class="widget-body">
+        <mat-icon class="money" fontIcon="attach_money">icon</mat-icon>
+        <h2 role="heading" class="balance-value widget-font-display-sm">
+          {{ data()! | converter: 'USDT' }}
+        </h2>
+      </div>
+    }
+    @default {
+      <span>no data</span>
+    }
+  }
+</div>
