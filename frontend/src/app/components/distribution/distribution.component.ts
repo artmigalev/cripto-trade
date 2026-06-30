@@ -34,7 +34,7 @@ export class DistributionComponent {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'right', // 'top', 'bottom', 'left', 'right'
         align: 'center',
         labels: {
