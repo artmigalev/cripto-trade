@@ -4,16 +4,15 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { AssetTableComponent } from '@components/asset-table/asset-table.component';
 import { Balance } from '@interfaces/api.interface';
 import { PortfolioService } from '@services/portfolio.service';
-import { WidgetComponent } from '@components/widget/widget.component';
-import { DistributionComponent } from '@components/distribution/distribution.component';
 import { mapperBalanceToPieChartData } from '@/app/shared/mappers/pie-chart.mapper';
+import { OrderHistoryComponent } from '@components/order-history/order-history.component';
+import { OrderHistory } from '@interfaces/portfolio.interface';
 
 @Component({
   selector: 'app-portfolio',
-  imports: [AssetTableComponent, WidgetComponent, DistributionComponent],
+  imports: [OrderHistoryComponent],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,4 +29,24 @@ export default class PortfolioComponent {
       .state()
       ?.assetTableData.map(asset => mapperBalanceToPieChartData(asset))
   );
+
+  historyOrders: OrderHistory[] = [mock, moc2];
 }
+const mock = {
+  time: 0,
+  symbol: 'BTCUSDT',
+  side: 'Buy',
+  type: 'Market',
+  preventedQuantity: '0.2',
+  price: '0.1',
+  status: 'new',
+} satisfies OrderHistory;
+const moc2 = {
+  time: 0,
+  symbol: 'BTCUSDT',
+  side: 'Sell',
+  type: 'Market',
+  preventedQuantity: '0.2',
+  price: '0.1',
+  status: 'new',
+} satisfies OrderHistory;
