@@ -46,6 +46,40 @@ export class PortfolioService {
     return data.balances;
   }
 
+  async getHystoryAccount<T , S extends string >(userId: S, symbol: S): Promise<T[]> {
+    const queryString = this.getQueryString({
+      symbol,
+      timestamp: Date.now(),
+      recvWindow: 60000,
+    });
+    const apiKey = this.serviceKey.getKey(userId)?.apiKey;
+    const signature = await this.hmacService.sign(userId, queryString);
+    const { data } = await firstValueFrom(
+      this.httpService
+        .get<T[]>(
+          `https://testnet.binance.vision/api/v3/allOrders?${queryString}&signature=${signature}`,
+          {
+            headers: {
+              'X-MBX-APIKEY': apiKey,
+            },
+          }
+        )
+        .pipe(
+          catchError((error: AxiosError) => {
+            console.log(error, 'error');
+            throw new BadRequestException(
+              error.response?.data || 'An error happened!'
+            );
+          }) 
+        )
+    );
+
+    return data;
+
+
+
+
+  }
   getQueryString(dataOrder: Record<string, string | number | boolean>): string {
     return new URLSearchParams(
       Object.entries(dataOrder).map(([k, v]) => [k, String(v)])
