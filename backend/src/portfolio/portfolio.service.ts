@@ -24,7 +24,6 @@ export class PortfolioService {
     });
     const apiKey =   this.serviceKey.getKey(userId)?.apiKey;
     const signature = await this.hmacService.sign(userId, queryString);
-    console.log(signature, 'signature');
     const { data } = await firstValueFrom(
       this.httpService
         .get<BinanceAccountInfResponse>(

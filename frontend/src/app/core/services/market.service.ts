@@ -168,7 +168,6 @@ export class MarketService {
 
     this.tickers$
       .pipe(
-        // tap(data => console.log('WS data:', data, 'currentSymbols:', currentSymbols)),
         filter<TickerStreamsPayload[]>(tickers => {
           const currentSymbols = this._market().tickers['ALL'].map(
             card => card.symbol

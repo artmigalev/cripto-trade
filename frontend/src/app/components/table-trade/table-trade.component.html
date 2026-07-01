@@ -1,0 +1,28 @@
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    @for (key of columnsLabels(); track key) {
+      <ng-container [matColumnDef]="key">
+        @if (sortedColumns.has(key)) {
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ displayedColumns()[key] }}
+          </th>
+        } @else {
+          <th mat-header-cell *matHeaderCellDef>
+            {{ displayedColumns()[key] }}
+          </th>
+        }
+
+        <td mat-cell *matCellDef="let order">
+          @if (convertedColumns.has(key)) {
+            {{ order[key] | converter: converterValue! }}
+          } @else {
+            {{ order[key] }}
+          }
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="columnsLabels()"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsLabels()"></tr>
+  </table>
+</div>

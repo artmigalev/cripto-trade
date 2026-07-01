@@ -1,6 +1,5 @@
 import { assetTableMapper } from '@/app/shared/mappers/asset-table.mapper';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { DefaultPrice } from '@components/asset-table/asset-table.component';
 import { Balance } from '@interfaces/api.interface';
 import { Portfolio } from '@interfaces/portfolio.interface';
 import { MarketService } from '@services/market.service';
@@ -21,7 +20,7 @@ export class PortfolioService {
   });
 
   setPortfolio<T extends Balance>(data: T[]) {
-    const priceValue = DefaultPrice['USDT'];
+    const priceValue = 'USDT';
 
     const tickers = this.marketService.market().tickers[priceValue];
 

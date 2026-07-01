@@ -1,17 +1,12 @@
 :host {
-  display: flex;
-  flex-direction: column;
+  display: block;
   width: 100%;
   height: 100%;
-  background-color: var(--mat-sys-surface-container);
-  border: 1px solid var(--mat-sys-surface-variant);
-  box-shadow: var(--mat-sys-level3);
-  padding: 4px;
-  border-radius: var(--mat-sys-corner-medium);
   overflow: hidden;
 }
 .mat-mdc-table {
   width: 100%;
+  height: 100%;
 }
 .table-container {
   width: 100%;

@@ -1,8 +1,22 @@
 <section class="layout-page portfolio">
-  <!-- <app-asset-table [assets]="assets()" />
   <div class="container">
     <app-widget [data]="portfolioValue()" type="portfolio-value" />
     <app-distribution [data]="distributionData()" />
-  </div> -->
-  <app-order-history [orders]="historyOrders" />
+  </div>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Assets">
+      <app-table-trade
+        [data]="assets()!"
+        [columnsLabels]="tables.assets.labels"
+        [displayedColumns]="tables.assets.displayedColumns"
+        [options]="tables.assets.options" />
+    </mat-tab>
+    <mat-tab label="History">
+      <app-table-trade
+        [data]="historyOrders"
+        [columnsLabels]="tables.orderHistory.labels"
+        [displayedColumns]="tables.orderHistory.displayedColumns"
+        [options]="tables.orderHistory.options" />
+    </mat-tab>
+  </mat-tab-group>
 </section>

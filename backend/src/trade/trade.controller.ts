@@ -13,7 +13,6 @@ export class TradeController {
   async sendNewOrder(@Body() orderData: Record<string, string>, @Request() req) {
     const userId = req['user'].sub;
 
-    console.log('Getting keys for userId:', userId);
     return this.tradeService.sendOrder(orderData, userId);
   }
 }
