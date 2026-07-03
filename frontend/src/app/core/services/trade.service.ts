@@ -11,7 +11,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WebsocketService } from './websocket.service';
 import { CandleIntervals, ErrorChart, TradeStreams } from '@enums/trade.enum';
 import { StreamKline } from '@interfaces/chart.interface';
-import { Order } from '@interfaces/order-book.interface';
+import {
+  BookLevel,
+  Order,
+  OrderStream,
+} from '@interfaces/order-book.interface';
 import { Trade } from '@interfaces/trade.interface';
 import { ApiService } from '@services/api.service';
 import { mapCandle } from '@/app/shared/mappers/chart.mapper';
@@ -86,13 +90,7 @@ export class TradeService {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: depth => {
-          const order = {
-            lastUpdateId: depth['u'],
-            bids: depth['b'],
-            asks: depth.a,
-          } satisfies Order;
-
-          this.setOrderState(order);
+          this.applyDepthEvent(depth);
         },
       });
   }
@@ -175,5 +173,39 @@ export class TradeService {
 
   createdStreamName(): string {
     return `${this.chartSymbol().toLowerCase()}${TradeStreams.Candlestick}${this.activeInterval()}`;
+  }
+
+  applyLevel(side: BookLevel[], [price, quantity]: BookLevel, isAsk: boolean) {
+    const idx = side.findIndex(([p]) => p === price);
+
+    if (Number(quantity) === 0) {
+      if (idx !== -1) side.splice(idx, 1);
+      return;
+    }
+
+    if (idx !== -1) {
+      side[idx] = [price, quantity];
+    } else {
+      side.push([price, quantity]);
+    }
+
+    side.sort((a, b) =>
+      isAsk ? Number(a[0]) - Number(b[0]) : Number(b[0]) - Number(a[0])
+    );
+  }
+  applyDepthEvent(event: OrderStream) {
+    const orderBook = this.state().orderBook!;
+
+    for (const bid of event.b) {
+      this.applyLevel(orderBook.bids, bid, false);
+    }
+
+    for (const ask of event.a) {
+      this.applyLevel(orderBook.asks, ask, true);
+    }
+
+    orderBook.lastUpdateId = event.E;
+
+    this.setOrderState(orderBook);
   }
 }

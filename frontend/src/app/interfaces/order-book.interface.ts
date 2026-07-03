@@ -1,5 +1,7 @@
 import { OrderBookColumns, OrderBookRows } from '@enums/order-book.enum';
 
+export type BookLevel = [string, string];
+
 export interface OrderBook {
   orders: Order | null;
   columns: OrderBookColumns;
@@ -8,8 +10,8 @@ export interface OrderBook {
 
 export interface Order {
   lastUpdateId: number;
-  bids: [string, string][];
-  asks: [string, string][];
+  bids: BookLevel[];
+  asks: BookLevel[];
 }
 
 export interface OrderStream {

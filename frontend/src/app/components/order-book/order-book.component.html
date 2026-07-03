@@ -1,6 +1,6 @@
 <h2 class="book-title">{{ title }} - {{ symbol() }}</h2>
 <div class="table-container">
-  @if (!orderSignal()) {
+  @if (!order()) {
     <h2>Not Found Data</h2>
   } @else {
     @for (col of columns; track $index) {
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody class="table-body">
-          @for (item of orderSignal()![col]; track $index) {
+          @for (item of order()![col]; track $index) {
             <tr class="body-row">
               @for (value of item; track $index) {
                 <td [attr.id]="$last ? 'volume' : 'price'" class="body-row-cel">

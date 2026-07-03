@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
 } from '@angular/core';
 import {
@@ -21,8 +20,7 @@ import { Order } from '@interfaces/order-book.interface';
 export class OrderBookComponent {
   protected title = OrderBook['TITLE'];
   readonly symbol = input.required<string>();
-  order = input<Order | null>();
+  order = input<Order>();
   columns = Object.values(OrderBookColumns);
   rows = Object.values(OrderBookRows);
-  orderSignal = computed(() => this.order());
 }

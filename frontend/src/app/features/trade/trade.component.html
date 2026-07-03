@@ -2,7 +2,7 @@
   <app-price-chart [candle]="candle()" [history]="historyCandles()" />
 
   <div class="orders-container">
-    <app-order-book [order]="order()" [symbol]="symbol()" />
-    <app-order-form />
+    <app-order-book [order]="history()" [symbol]="symbol()" />
+    <!-- <app-order-form /> -->
   </div>
 </section>
