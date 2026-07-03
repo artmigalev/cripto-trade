@@ -1,10 +1,5 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-} from '@angular/core';
-import {
-  OrderBook,
   OrderBookColumns,
   OrderBookRows,
 } from '@enums/order-book.enum';
@@ -18,7 +13,6 @@ import { Order } from '@interfaces/order-book.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderBookComponent {
-  protected title = OrderBook['TITLE'];
   readonly symbol = input.required<string>();
   order = input<Order>();
   columns = Object.values(OrderBookColumns);

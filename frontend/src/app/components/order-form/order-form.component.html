@@ -1,5 +1,5 @@
 <section class="container-section order-section">
-  <h2 class="section-title">{{ title }}</h2>
+  <!-- <h2 class="section-title">{{ title }}</h2> -->
   <form [formRoot]="formOrder" class="order-form">
     <div class="side-container">
       <button
@@ -18,7 +18,9 @@
       </button>
     </div>
     <fieldset class="form-field">
+      <legend class="form-legend">Order Type</legend>
       <select
+        class="form-select-type"
         [formField]="formOrder.type"
         (change)="onTypeChange($event)"
         aria-placeholder="order-type">

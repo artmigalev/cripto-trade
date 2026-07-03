@@ -27,7 +27,6 @@ import {
   templateUrl: './price-chart.component.html',
   styleUrls: ['./price-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // imports: [SpinnerComponent],
 })
 export class PriceChartComponent implements AfterViewInit, OnDestroy {
   private readonly tradeService = inject(TradeService);
@@ -78,7 +77,7 @@ export class PriceChartComponent implements AfterViewInit, OnDestroy {
     try {
       this.chart = createChart(container, {
         layout: {
-          background: { type: ColorType.Solid, color: 'white' },
+          background: { type: ColorType.Solid, color: 'transparent' },
           textColor: 'black',
         },
 

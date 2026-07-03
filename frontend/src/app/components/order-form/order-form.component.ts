@@ -6,11 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  ErrorOrderFormMsg,
-  OrderForm,
-  OrderSide,
-} from '@enums/order-form.enum';
+import { ErrorOrderFormMsg, OrderSide } from '@enums/order-form.enum';
 import { form, FormField, required, FormRoot } from '@angular/forms/signals';
 import { OrderFormParameters } from '@interfaces/order-form.interface';
 import { ɵInternalFormsSharedModule } from '@angular/forms';
@@ -26,7 +22,7 @@ import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 })
 export class OrderFormComponent {
   private readonly tradeService = inject(TradeService);
-  protected readonly title = OrderForm['TITLE'];
+  // protected readonly title = OrderForm['TITLE'];
   private symbol = computed(() => this.tradeService.chartSymbol());
 
   protected readonly orderType = OrderType;
