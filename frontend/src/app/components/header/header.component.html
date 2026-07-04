@@ -7,7 +7,7 @@
   <div class="flex flex-row items-center">
     <mat-nav-list class="">
       <ul class="flex flex-wrap">
-        @for (item of authLinks; track $index) {
+        @for (item of authLinks(); track $index) {
           <li>
             <a
               mat-list-item
