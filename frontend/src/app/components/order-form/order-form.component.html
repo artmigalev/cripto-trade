@@ -31,10 +31,17 @@
     </fieldset>
     <fieldset class="form-field">
       <legend class="form-legend">Amount</legend>
-      <input
-        [formField]="formOrder.quantity"
-        class="field-input amount-input"
-        type="text" />
+      <div class="amount-container">
+        <input
+          [formField]="formOrder.quantity"
+          class="field-input amount-input"
+          type="text"
+          [appHintBalance]="balance()!" />
+        <span class="balance">$ {{ balance()! | converter: 'USDT' }}</span>
+      </div>
+      @for (error of formOrder.quantity().errors(); track $index) {
+        <p class="error-msg">{{ error.message }}</p>
+      }
     </fieldset>
     @if (formOrder.type().value() === orderType.LIMIT) {
       <fieldset class="form-field">

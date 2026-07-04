@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   BinanceAccountInfResponse,
   OrderResponse,
+  Params,
   ResponseKlineTypes,
 } from '@interfaces/api.interface';
 import { CandleIntervals, ErrorChart, Trade } from '@enums/trade.enum';
@@ -29,6 +30,15 @@ export class ApiService {
 
   getStatus(): Signal<boolean> {
     return computed(() => this.status());
+  }
+  getPriceTicker(params: Params['ticker']): Promise<number> {
+    return firstValueFrom(
+      this.http.get<number>(`${this.config.baseUrl}/v3/ticker/price`, {
+        params: {
+          ...params,
+        },
+      })
+    );
   }
 
   getTicker24hr = async (

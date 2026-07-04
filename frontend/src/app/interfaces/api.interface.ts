@@ -53,3 +53,12 @@ interface CommissionRates {
   buyer: string;
   seller: string;
 }
+
+export interface Params {
+  ticker: {
+    symbol?: string;
+    symbolStatus?: SymbolStatusType;
+    synbols?: string[];
+  };
+}
+type SymbolStatusType = 'TRADING' | 'HALT' | 'BREAK';

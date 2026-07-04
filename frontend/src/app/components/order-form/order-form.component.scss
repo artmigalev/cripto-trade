@@ -64,17 +64,45 @@
         font: var(--mat-sys-label-large);
         color: var(--mat-sys-secondary);
       }
-      .field-input {
+      .amount-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--mat-sys-space-small);
+        align-items: center;
         background-color: var(--mat-sys-surface-variant);
         width: 100%;
         height: 40px;
 
         padding: 4px;
         border-radius: var(--mat-sys-corner-small);
+        .balance {
+          white-space: nowrap;
+          width: max-content;
+          font: var(--mat-sys-label-large);
+          color: var(--mat-sys-secondary);
+          font-style: italic;
+        }
       }
+
       .amount-input {
+        padding: var(--mat-sys-space-small);
+        width: 100%;
+        height: 100%;
+        font: var(--mat-sys-label-large);
+        color: var(--mat-sys-secondary);
       }
       .price-input {
+        padding: var(--mat-sys-space-small);
+        font: var(--mat-sys-label-large);
+
+        color: var(--mat-sys-secondary);
+        background-color: var(--mat-sys-surface-variant);
+        width: 100%;
+        height: 40px;
+
+        padding: 4px;
+        border-radius: var(--mat-sys-corner-small);
       }
     }
   }

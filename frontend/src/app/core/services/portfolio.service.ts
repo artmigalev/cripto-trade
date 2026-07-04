@@ -15,7 +15,7 @@ export class PortfolioService {
 
   portfolioValueUSD = computed(() => {
     return this._state()?.assetTableData.reduce((total, asset) => {
-      return total + asset.currentPrice;
+      return total + asset.currentPrice * parseFloat(asset.free);
     }, 0);
   });
 

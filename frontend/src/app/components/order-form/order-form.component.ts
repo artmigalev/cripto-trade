@@ -13,18 +13,30 @@ import { ɵInternalFormsSharedModule } from '@angular/forms';
 import { TradeService } from '@services/trade.service';
 import { OrderType, TimeInForce } from '@binance/connector-typescript';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
+import { PortfolioService } from '@services/portfolio.service';
+import { ConverterPipe } from '@pipes/converter.pipe';
+import { HintBalanceDirective } from '@directives/hint-balance.directive';
+
 @Component({
   selector: 'app-order-form',
-  imports: [FormField, ɵInternalFormsSharedModule, FormRoot],
+  imports: [
+    HintBalanceDirective,
+    FormField,
+    ɵInternalFormsSharedModule,
+    FormRoot,
+    ConverterPipe,
+  ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderFormComponent {
   private readonly tradeService = inject(TradeService);
-  // protected readonly title = OrderForm['TITLE'];
+  private readonly portfolioService = inject(PortfolioService);
   private symbol = computed(() => this.tradeService.chartSymbol());
-
+  protected readonly balance = computed(() =>
+    this.portfolioService.portfolioValueUSD()
+  );
   protected readonly orderType = OrderType;
   protected readonly orderSide = OrderSide;
   protected readonly timeForce = TimeInForce;
@@ -43,8 +55,19 @@ export class OrderFormComponent {
   protected readonly formOrder = form(
     this.formModel,
     schemaPath => {
-      required(schemaPath.quantity, { message: ErrorOrderFormMsg.Required });
+      // required(schemaPath.quantity, { message: ErrorOrderFormMsg.Required });
+      required(schemaPath.quantity, {
+        message: 'Количестово  привысило баланс',
+        when: () => {
+          const balance = this.balance();
 
+          if (balance) {
+            console.log('b');
+            return Number(this.formModel().quantity) > balance;
+          }
+          return false;
+        },
+      });
       if (this.orderType$() === 'LIMIT') {
         required(schemaPath.price, { message: ErrorOrderFormMsg.Required });
       }

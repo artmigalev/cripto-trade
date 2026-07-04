@@ -41,6 +41,9 @@ export class TradeService {
   private previousStream: string | null = null;
 
   chartSymbol = computed(() => this.state().chart.chartSymbol);
+  currentPrice = computed(() =>
+    this.apiService.getPriceTicker({ symbol: this.chartSymbol() })
+  );
   activeInterval = computed(() => this.state().chart.activeCandleInterval);
   stateKlines = computed(() => this.state().chart.historyCandles);
   lastCandle = computed(() => this.state().chart.lastRealtimeCandle);
@@ -94,6 +97,7 @@ export class TradeService {
         },
       });
   }
+
   async placeOrder(order: OrderFormParameters): Promise<OrderResponse> {
     const payload = {
       ...order,
