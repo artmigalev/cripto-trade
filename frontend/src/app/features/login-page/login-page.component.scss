@@ -1,7 +1,4 @@
 :host {
-  display: block;
-}
-:host {
   display: flex;
   align-items: start;
   justify-content: center;
@@ -10,62 +7,111 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 30%;
-  width: 100%;
-  background-color: var(--mat-sys-surface-variant);
-  padding: var(--padding);
-  border-color: var(--mat-sys-secondary-container);
-  border-width: 1px;
-  border-style: solid;
-  border-radius: var(--mat-sys-corner-medium);
+  gap: 16px;
+  padding: 24px;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  border-radius: var(--mat-sys-corner-large);
+  box-shadow: var(--mat-sys-level2);
+  max-width: 400px;
+  font: var(--mat-sys-body-medium);
 
   fieldset {
-    padding: var(--padding);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    gap: 8px;
   }
   legend {
-    font: var(--mat-sys-label-large);
-    width: 100px;
-    text-transform: uppercase;
-    text-align: start;
+    font: var(--mat-sys-label-medium);
+    color: var(--mat-sys-on-surface);
+    font-weight: 500;
   }
   input {
-    width: 100%;
-    background-color: var(--mat-sys-surface-container-low);
-    padding: var(--padding);
-    border-color: var(--mat-sys-secondary-container);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: var(--mat-sys-corner-medium);
-    font: var(--mat-sys-label-large);
+    background: var(--mat-sys-surface-container-lowest);
+    color: var(--mat-sys-on-surface);
+    border: 1px solid var(--mat-sys-outline-variant);
+    border-radius: var(--mat-sys-corner-small);
+    font: var(--mat-sys-body-medium);
+    padding: 12px 16px;
+    min-height: 48px;
+
+    &:focus {
+      border-color: var(--mat-sys-primary);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--mat-sys-primary-fixed-dim);
+    }
+
+    &:focus:not(:placeholder-shown) {
+      border-color: var(--mat-sys-primary);
+    }
+
+    &:invalid {
+      border-color: var(--mat-sys-error);
+    }
+
+    &:disabled {
+      background: var(--mat-sys-neutral-variant20);
+      color: var(--mat-sys-on-surface-variant);
+      cursor: not-allowed;
+    }
   }
   button {
-    align-self: center;
-    max-width: 150px;
-    width: 100%;
-    padding: var(--padding);
-    border-radius: var(--mat-sys-corner-extra-small);
-    background-color: var(--mat-sys-secondary-container);
-    text-transform: uppercase;
-    font: var(--mat-sys-label-large);
-    line-height: var(--mat-sys-label-large-line-height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 24px;
+    border-radius: var(--mat-sys-corner-small);
+    font: var(--mat-sys-label-medium);
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      box-shadow 0.2s,
+      background-color 0.2s;
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+    box-shadow: var(--mat-sys-level1);
 
-    &:hover {
-      cursor: pointer;
-      background-color: var(--mat-sys-secondary-fixed-dim);
+    &:hover:not(:disabled) {
+      box-shadow: var(--mat-sys-level2);
+      background: var(--mat-sys-primary-container);
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: var(--mat-sys-level1);
+    }
+
+    &:disabled {
+      background: var(--mat-sys-neutral-variant20);
+      color: var(--mat-sys-on-surface-variant);
+      cursor: not-allowed;
+      box-shadow: none;
     }
   }
 }
 .alert-danger {
-  color: var(--mat-sys-error);
-  font: var(--mat-sys-label-large);
-  padding: var(--padding);
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  border-radius: var(--mat-sys-corner-small);
+  border-left: 4px solid var(--mat-sys-error);
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-error-container);
 }
 
 .link-reg-page {
-  padding: var(--padding);
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--mat-sys-primary-container);
+    text-decoration: underline;
+  }
+}
+.reg-link {
+  align-self: center;
+  margin-top: 8px;
 }

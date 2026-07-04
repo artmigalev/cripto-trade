@@ -1,5 +1,4 @@
 :host {
-  position: relative;
   height: 100%;
   width: 100%;
   display: flex;
@@ -10,9 +9,11 @@
 }
 .layout-page {
   padding: var(--padding);
-  background-color: var(--mat-sys-surface);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: var(--mat-sys-corner-large);
+  width: 100%;
+
+  background-color: var(--mat-sys-surface-container);
+  border-radius: var(--mat-sys-corner-medium);
+  box-shadow: var(--mat-sys-level2);
   overflow-y: auto;
 
   width: 100%;

@@ -4,9 +4,10 @@
 }
 header {
   width: 100%;
-  background-color: var(--mat-sys-surface-dim);
   padding: var(--padding);
+  background-color: var(--mat-sys-surface-container);
   border-radius: var(--mat-sys-corner-medium);
+  box-shadow: var(--mat-sys-level2);
 
   a {
     color: var(--mat-sys-primary);
