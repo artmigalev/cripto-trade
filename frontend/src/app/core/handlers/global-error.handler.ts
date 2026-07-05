@@ -9,5 +9,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     if (error instanceof AppError) {
       console.log(`${error.domain}  ${error.message}`);
     }
+    console.log(error);
   }
 }

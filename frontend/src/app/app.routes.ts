@@ -56,8 +56,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () =>
-      import('./features/register-page/register-page.component'),
+    loadComponent: () => import('./features/login-page/login-page.component'),
     title: AuthRotes.Register,
     canActivate: [authGuard],
   },

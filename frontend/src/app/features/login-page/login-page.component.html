@@ -1,39 +1,94 @@
-<form [formGroup]="loginForm" (ngSubmit)="handleSubmit()" class="login-form">
-  <fieldset>
-    <legend>Email</legend>
-    <input type="email" formControlName="email" />
-
-    @if (email.invalid && (email.dirty || email.touched)) {
-      <div class="alert alert-danger">
-        @if (email.hasError('email')) {
-          <div>Email is invalid.</div>
-        }
-        @if (email.hasError('required')) {
-          <div>Email is required.</div>
+<section class="login-section">
+  <div class="auth-link-container">
+    @for (link of links; track link) {
+      <a class="auth-link" [routerLink]="link.link">{{ link.label }}</a>
+    }
+  </div>
+  <form [formRoot]="authForm" class="form">
+    <div class="field">
+      <label for="email" class="feild-label">Email</label>
+      <input
+        id="email"
+        [class.is-invalid]="
+          authForm.email().touched() && authForm.email().invalid()
+        "
+        [class.is-valid]="
+          authForm.email().touched() && authForm.email().valid()
+        "
+        [formField]="authForm.email"
+        class="input"
+        type="text" />
+      @if (authForm.email().invalid() && authForm.email().touched()) {
+        <div class="error">
+          @for (error of authForm.email().errors(); track error.kind) {
+            <span class="error-msg">{{ error.message }}</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="field">
+      <label for="password" class="feild-label">Pasword</label>
+      <input
+        id="password"
+        [class.is-invalid]="
+          authForm.password().touched() && authForm.password().invalid()
+        "
+        [class.is-valid]="
+          authForm.password().touched() && authForm.password().valid()
+        "
+        [formField]="authForm.password"
+        class="input"
+        type="text" />
+      @if (authForm.password().invalid() && authForm.password().touched()) {
+        <div class="error">
+          @for (error of authForm.password().errors(); track error.kind) {
+            <span class="error-msg">{{ error.message }}</span>
+          }
+        </div>
+      }
+    </div>
+    @if (route === links[1].link) {
+      <div class="field">
+        <label for="confirm" class="feild-label">Confirm</label>
+        <input
+          id="confirm"
+          [class.is-invalid]="
+            authForm.confirm().touched() && authForm.confirm().invalid()
+          "
+          [class.is-valid]="
+            authForm.confirm().touched() && authForm.confirm().valid()
+          "
+          class="input"
+          type="text"
+          [formField]="authForm.confirm" />
+        @if (authForm.confirm().invalid() && authForm.confirm().touched()) {
+          <div class="error">
+            @for (error of authForm.confirm().errors(); track error.kind) {
+              <span class="error-msg">{{ error.message }}</span>
+            }
+          </div>
         }
       </div>
     }
-  </fieldset>
-  <fieldset>
-    <legend>Password</legend>
-    <input type="password" formControlName="password" />
-    @if (password.invalid && (password.dirty || password.touched)) {
-      <div class="alert alert-danger">
-        @if (password.hasError('required')) {
-          <div>Password is required.</div>
-        }
-        @if (password.hasError('minlength')) {
-          <div>Password must be at least 8 characters long.</div>
+    @if (authForm().errors()) {
+      <div class="error">
+        @for (error of authForm().errors(); track error.kind) {
+          <span class="error-msg">{{ error.message }}</span>
         }
       </div>
     }
-  </fieldset>
-  @if (loginForm.hasError('invalidCredentials')) {
-    <div class="alert alert-danger">{{ loginForm.getError('error') }}</div>
-  }
-  <button type="submit" [disabled]="loginForm.invalid">{{ btn_text }}</button>
-
-  <a class="link-reg-page" [routerLink]="[`/${register_link}`]">{{
-    register_link_text
-  }}</a>
-</form>
+    <button
+      class="btn-submit"
+      [disabled]="authForm().invalid() || authForm().submitting()">
+      @if (authForm().submitting()) {
+        Sending...
+      } @else {
+        @if (route === '/register') {
+          Sign Up
+        } @else {
+          Sign In
+        }
+      }
+    </button>
+  </form>
+</section>
