@@ -1,26 +1,41 @@
 <section class="layout-page">
-  <form (ngSubmit)="handleSubmit()" [formGroup]="form" class="setting-form">
-    <fieldset>
-      <legend>API Key</legend>
-      <input type="text" formControlName="apiKey" name="apiKey" />
-      @if (apiKey?.invalid && (apiKey?.dirty || apiKey?.touched)) {
-        <div class="alert alert-danger">
-          @if (apiKey?.hasError('required')) {
-            <div>Name is required.</div>
-          }
-          @if (apiKey?.hasError('minlength')) {
-            <div>Name must be at least 4 characters long.</div>
+  <form [formRoot]="settingForm" class="form">
+    <div class="field">
+      <label for="apikey" class="feild-label">ApiKey</label>
+      <input
+        id="apikey"
+        [class.is-invalid]="
+          settingForm.apiKey().touched() && settingForm.apiKey().invalid()
+        "
+        [class.is-valid]="
+          settingForm.apiKey().touched() && settingForm.apiKey().valid()
+        "
+        [formField]="settingForm.apiKey"
+        class="input"
+        type="text" />
+      @if (settingForm.apiKey().invalid() && settingForm.apiKey().touched()) {
+        <div class="error">
+          @for (error of settingForm.apiKey().errors(); track error.kind) {
+            <span class="error-msg">{{ error.message }}</span>
           }
         </div>
       }
-    </fieldset>
-    <fieldset>
-      <legend for="">Secret Key</legend>
-      <div class="secret-key">
+    </div>
+    <div class="field field-secret">
+      <label for="sekretKey" class="feild-label">SecretKey</label>
+      <div class="field-secret">
         <input
-          type="{{ inputType() }}"
-          formControlName="secretKey"
-          name="secretKey" />
+          id="apikey"
+          [class.is-invalid]="
+            settingForm.secretKey().touched() &&
+            settingForm.secretKey().invalid()
+          "
+          [class.is-valid]="
+            settingForm.secretKey().touched() && settingForm.secretKey().valid()
+          "
+          [formField]="settingForm.secretKey"
+          class="input"
+          type="{{ inputType() }}" />
         <button class="btn-icon" (click)="toggleInputType()">
           @if (inputState() === 'visible') {
             <mat-icon
@@ -35,25 +50,31 @@
           }
         </button>
       </div>
-      @if (secretKey?.invalid && (secretKey?.dirty || secretKey?.touched)) {
-        <div class="alert alert-danger">
-          @if (secretKey?.hasError('required')) {
-            <div>Name is required.</div>
-          }
-          @if (secretKey?.hasError('minlength')) {
-            <div>Name must be at least 4 characters long.</div>
+      @if (
+        settingForm.secretKey().invalid() && settingForm.secretKey().touched()
+      ) {
+        <div class="error">
+          @for (error of settingForm.secretKey().errors(); track error.kind) {
+            <span class="error-msg">{{ error.message }}</span>
           }
         </div>
       }
-    </fieldset>
-    @if (form.hasError('saveFailed')) {
-      <div class="alert alert-danger">{{ notifyMessage() }}</div>
-    } @else {
-      <div class="alert alert-success">{{ notifyMessage() }}</div>
-    }
-    <div class="form-buttons">
-      <button type="submit" [disabled]="form.invalid">submit</button>
-      <button type="reset" (click)="handleResetForm()">reset</button>
     </div>
+    @if (settingForm().errors()) {
+      <div class="error">
+        @for (error of settingForm().errors(); track error.kind) {
+          <span class="error-msg">{{ error.message }}</span>
+        }
+      </div>
+    }
+    <button
+      class="btn-submit"
+      [disabled]="settingForm().invalid() || settingForm().submitting()">
+      @if (settingForm().submitting()) {
+        Sending...
+      } @else {
+        Send
+      }
+    </button>
   </form>
 </section>

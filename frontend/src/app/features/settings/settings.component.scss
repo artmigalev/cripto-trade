@@ -1,113 +1,87 @@
 :host {
-  display: flex;
-  align-items: start;
-  justify-content: center;
+  width: 100%;
   height: 100%;
-}
-section {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-}
-
-.setting-form {
   display: flex;
   flex-direction: column;
-  max-width: 30%;
-  width: 100%;
-  background-color: var(--mat-sys-surface-variant);
-  padding: var(--padding);
-  border-color: var(--mat-sys-secondary-container);
-  border-width: 1px;
-  border-style: solid;
+  align-items: center;
+  justify-content: start;
+}
+
+.form {
+  margin: 0 auto;
+  width: 300px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 5px;
   border-radius: var(--mat-sys-corner-medium);
+  box-shadow: var(--mat-sys-level2);
+  background-color: var(--mat-sys-surface-container);
+  padding: var(--mat-sys-space-large);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+  height: 82px;
 
-  fieldset {
-    padding: var(--padding);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-  legend {
-    font: var(--mat-sys-label-large);
-    width: 100px;
-    text-transform: uppercase;
-    text-align: start;
-  }
-  input {
-    width: 100%;
+  .input {
     background-color: var(--mat-sys-surface-container-low);
-    padding: var(--padding);
-    border-color: var(--mat-sys-secondary-container);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: var(--mat-sys-corner-extra-small);
-    font: var(--mat-sys-label-large);
-  }
-  button {
-    max-width: 150px;
+    padding: var(--mat-sys-space-small);
     width: 100%;
-    padding: var(--padding);
-    border-radius: var(--mat-sys-corner-extra-small);
-    background-color: var(--mat-sys-secondary-fixed-dim);
-
-    text-transform: uppercase;
-    font: var(--mat-sys-label-large);
-    line-height: var(--mat-sys-label-large-line-height);
-
-    &:hover {
-      cursor: pointer;
-      background-color: var(--mat-sys-secondary-fixed-dim);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-secondary);
+  }
+  .field-secret {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: var(--mat-sys-surface-container-low);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    padding-right: var(--mat-sys-space-small);
+    #apikey {
+      width: 100%;
+      border: none;
+    }
+    .btn-icon {
+      position: relative;
+      z-index: 99;
     }
   }
 }
-.alert-danger {
+
+.feild-label {
+  font: var(--mat-sys-label-large);
+}
+.btn-submit {
+  cursor: pointer;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-surface);
+  border-radius: var(--mat-sys-corner-small);
+  width: 70%;
+  padding-top: var(--mat-sys-space-medium);
+  padding-bottom: var(--mat-sys-space-medium);
+  padding-right: var(--mat-sys-space-large);
+  padding-left: var(--mat-sys-space-large);
+  margin: 0 auto;
+  &:hover {
+    background-color: var(--mat-sys-on-primary-container);
+  }
+}
+.error-msg {
   color: var(--mat-sys-error);
-  font: var(--mat-sys-label-large);
-  padding: var(--padding);
 }
-.alert-success {
-  color: var(--mat-sys-tertiary-fixed-dim);
-  font: var(--mat-sys-label-large);
-  padding: var(--padding);
-}
-.form-buttons {
-  width: 100%;
+.error {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
+  background-color: var(--mat-sys-error-container);
 }
-.secret-key {
-  width: 100%;
-  padding-right: var(--padding);
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  background-color: var(--mat-sys-surface-container-low);
-  border-color: var(--mat-sys-secondary-container);
-  border-width: 1px;
-  border-style: solid;
-  border-radius: var(--mat-sys-corner-extra-small);
-  height: max-content;
-  input {
-    border: none;
-  }
-  .btn-icon {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    width: max-content;
-    text-transform: none;
-    line-height: normal;
-    mat-icon {
-      cursor: pointer;
-    }
-    &:hover {
-      background-color: none;
-    }
-  }
+.is-invalid {
+  border: 2px solid var(--mat-sys-on-error-container);
+}
+input.is-valid {
+  background: green;
 }

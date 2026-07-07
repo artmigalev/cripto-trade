@@ -6,19 +6,27 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { SettingComponent } from '@/app/interfaces/setting-component.interface';
 import { KeysService } from '@services/keys.service';
-import { SettingFormError } from '@enums/custom-error-message.enum';
-import { SettingForm } from '@enums/notify-messages.enum';
 import { RouterLinks } from '@enums/nav-link.enum';
+import { form, required, FormRoot, FormField } from '@angular/forms/signals';
+
+interface FormType {
+  model: {
+    apiKey: string;
+    secretKey: string;
+  };
+  stateInput: 'hidden' | 'visible';
+  typeInput: 'password' | 'text';
+}
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule],
+  imports: [ReactiveFormsModule, MatIconModule, FormRoot, FormField],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,16 +35,19 @@ export default class SettingsComponent {
   private readonly authService = inject(AuthService);
   private readonly keyService = inject(KeysService);
   private router = inject(Router);
-  private fb = inject(FormBuilder);
-
+  private formModel = signal<FormType['model']>({
+    apiKey: '',
+    secretKey: '',
+  });
+  isConfig = computed(() => this.authService.isApiConfigured());
   protected readonly _notifyMessage = signal('');
-
-  notifyMessage = computed(() => this._notifyMessage());
 
   private readonly _secretFieldState = signal<SettingComponent['fieldState']>({
     state: 'hidden',
     typeInput: 'password',
   });
+
+  notifyMessage = computed(() => this._notifyMessage());
 
   protected inputState = computed(() => this._secretFieldState().state);
   protected inputType = computed(() => this._secretFieldState().typeInput);
@@ -47,43 +58,45 @@ export default class SettingsComponent {
       typeInput: prev.typeInput === 'password' ? 'text' : 'password',
     }));
   }
+  settingForm = form(
+    this.formModel,
+    field => {
+      required(field['apiKey'], { message: 'This field must be  required' });
+      required(field['secretKey'], { message: 'This field must be  required' });
+    },
+    {
+      submission: {
+        action: async f => {
+          try {
+            const delay = (ms: number) =>
+              new Promise(resolve => setTimeout(resolve, ms));
+            const firstError = f().errorSummary()[0];
+            console.log(firstError);
 
-  form = this.fb.group({
-    apiKey: ['', [Validators.required, Validators.minLength(5)]],
-    secretKey: ['', [Validators.required, Validators.minLength(5)]],
-  });
-  apiKey = this.form.get('apiKey');
-  secretKey = this.form.get('secretKey');
+            if (firstError) {
+              firstError.fieldTree().focusBoundControl();
+            } else {
+              const { apiKey, secretKey } = f().value();
+              const result = await this.keyService.saveKeys({
+                apiKey,
+                secretKey,
+              });
+              this.authService.setKeysConfigured(result.configured);
 
-  handleResetForm() {
-    this.form.reset();
-  }
-  async handleSubmit() {
-    if (this.form.invalid) return;
-
-    try {
-      const { apiKey, secretKey } = this.form.value;
-
-      const { configured } = await this.keyService.saveKeys({
-        apiKey: apiKey!,
-        secretKey: secretKey!,
-      });
-      await this.authService.getAccount();
-
-      this.authService.setKeysConfigured(true);
-      if (!configured) {
-        throw new Error(SettingFormError.InvalidKeys);
-      }
-      this.form.reset();
-      this._notifyMessage.set(SettingForm.Connected);
-      setTimeout(() => {
-        this.router.navigate([RouterLinks.Dashboard]);
-      }, 3000);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.form.setErrors({ saveFailed: true });
-        this._notifyMessage.set(error.message);
-      }
+              if (this.isConfig()) {
+                await delay(2000);
+                this.router.navigate([RouterLinks.Dashboard]);
+                f().reset(this.formModel());
+                return;
+              }
+            }
+          } catch (error) {
+            console.log(error);
+            return { kind: 'keys', message: ' Keys' };
+          }
+          return;
+        },
+      },
     }
-  }
+  );
 }

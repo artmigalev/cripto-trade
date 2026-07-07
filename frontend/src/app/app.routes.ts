@@ -49,14 +49,14 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./features/login-page/login-page.component'),
+    loadComponent: () => import('./features/login-page/auth-page.component'),
     title: AuthRotes.Login,
 
     canActivate: [authGuard],
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/login-page/login-page.component'),
+    loadComponent: () => import('./features/login-page/auth-page.component'),
     title: AuthRotes.Register,
     canActivate: [authGuard],
   },

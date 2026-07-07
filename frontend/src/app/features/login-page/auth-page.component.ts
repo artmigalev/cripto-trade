@@ -26,13 +26,13 @@ interface AuthForm {
 }
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-auth-page',
   imports: [ReactiveFormsModule, RouterLink, FormField, FormRoot],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+  templateUrl: './auth-page.component.html',
+  styleUrl: './auth-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class LoginPageComponent {
+export default class AuthPageComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   route = this.router.url;
@@ -97,9 +97,9 @@ export default class LoginPageComponent {
           try {
             const delay = (ms: number) =>
               new Promise(resolve => setTimeout(resolve, ms));
-            const firstError = this.authForm().errorSummary()[0];
+            const firstError = f().errorSummary()[0];
 
-            if (firstError?.fieldTree) {
+            if (firstError) {
               firstError.fieldTree().focusBoundControl();
             } else {
               const { password, email } = f().value();

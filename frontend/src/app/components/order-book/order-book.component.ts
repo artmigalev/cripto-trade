@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import {
-  OrderBookColumns,
-  OrderBookRows,
-} from '@enums/order-book.enum';
+import { OrderBookColumns, OrderBookRows } from '@enums/order-book.enum';
 import { Order } from '@interfaces/order-book.interface';
 
 @Component({
