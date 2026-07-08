@@ -1,7 +1,7 @@
 <section class="dashboard layout-page">
   @defer {
     <app-market-overview [topCards]="topCards()" />
-    <div class="flex flex-row w-full gap-4">
+    <div class="dash-container">
       <app-watch-list [favoritePairs]="watchList()" />
       <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
     </div>

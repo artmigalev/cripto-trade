@@ -24,8 +24,8 @@ interface NavItem {
 })
 export class NavigationComponent {
   positionColumn = true;
-  isAuth = input.required<boolean>();
-  navList = computed(() => this.getLinks(this.isAuth()));
+  canLogin = input.required<boolean>();
+  navList = computed(() => this.getLinks(this.canLogin()));
 
   getLinks(status: boolean): NavItem[] {
     const links = Object.entries(NavLink).map(([title]) => ({
