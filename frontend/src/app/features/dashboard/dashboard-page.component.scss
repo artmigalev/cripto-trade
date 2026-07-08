@@ -1,3 +1,5 @@
+@use '../../../material-theme.scss' as bp;
+
 :host {
   display: block;
   width: 100%;
@@ -17,4 +19,12 @@
 }
 .title {
   font: var(--title-section);
+}
+.dash-container {
+  display: flex;
+  flex-direction: row;
+  @include bp.media(md) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
