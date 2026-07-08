@@ -1,15 +1,9 @@
-<mat-nav-list class="">
-  <ul class="flex">
-    @for (item of navList; track $index) {
-      <li>
-        <a
-          mat-list-item
-          routerLinkActive="activeLink"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [routerLink]="item.link">
-          {{ item.title.replaceAll('_', ' ') }}
-        </a>
-      </li>
-    }
-  </ul>
-</mat-nav-list>
+<ul [class.burger-active]="positionColumn" class="nav-list">
+  @for (item of navList(); track $index) {
+    <li class="nav-list-item">
+      <a class="item-link" routerLinkActive="active" [routerLink]="item.link">
+        {{ item.title.replaceAll('_', ' ') }}
+      </a>
+    </li>
+  }
+</ul>

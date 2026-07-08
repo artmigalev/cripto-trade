@@ -1,25 +1,22 @@
-<header class="flex flex-row items-center justify-between">
+<header class="flex flex-row items-center justify-between header">
   <a routerLink="{{ homeLink }}">
     <img src="cryptpad_96px_00FBFB.png" class="logo" alt="CryptoTrade Logo" />
   </a>
-  <app-navigation />
+  @if (isMobile()) {
+    <app-burger-menu [isAuth]="isAuthenticated()" [active]="open()" />
+    <div
+      class="burger-menu"
+      [class.active]="open()"
+      tabindex="0"
+      role="button"
+      (click)="onClickBurger()">
+      <div class="burger-container">
+        <div class="burger-inner"></div>
+      </div>
+    </div>
+  } @else {
+    <app-navigation [isAuth]="isAuthenticated()" />
+  }
   <app-search-bar />
-  <div class="flex flex-row items-center">
-    <mat-nav-list class="">
-      <ul class="flex flex-wrap">
-        @for (item of authLinks(); track $index) {
-          <li>
-            <a
-              mat-list-item
-              routerLinkActive="activeLink"
-              [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="item.link">
-              {{ item.title }}
-            </a>
-          </li>
-        }
-      </ul>
-    </mat-nav-list>
-    <app-status-icon />
-  </div>
+  <app-status-icon />
 </header>

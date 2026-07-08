@@ -1,5 +1,5 @@
 import { AuthService } from '@/app/core/services/auth.service';
-import { AuthRotes, RouterLinks } from '@/enums/nav-link.enum';
+import { NavLink, RouterLinks } from '@/enums/nav-link.enum';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -38,7 +38,7 @@ export default class AuthPageComponent {
   route = this.router.url;
   isAuth = computed(() => this.authService.isAuthenticated());
 
-  protected register_link_text = AuthRotes.Register;
+  protected register_link_text = NavLink.Register;
   protected register_link = RouterLinks.Register;
 
   formModel = signal<AuthForm>({
@@ -48,12 +48,12 @@ export default class AuthPageComponent {
   });
   links = [
     {
-      label: AuthRotes.Login,
-      link: `/${AuthRotes.Login.toLowerCase()}`,
+      label: NavLink.Login,
+      link: `/${NavLink.Login.toLowerCase()}`,
     },
     {
-      label: AuthRotes.Register,
-      link: `/${AuthRotes.Register.toLowerCase()}`,
+      label: NavLink.Register,
+      link: `/${NavLink.Register.toLowerCase()}`,
     },
   ];
   labelsForm = {

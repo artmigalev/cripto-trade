@@ -5,8 +5,6 @@ export enum NavLink {
   Portfolio = 'Portfolio',
   About_Us = 'About us',
   Settings = 'Settings',
-}
-export enum AuthRotes {
   Login = 'Login',
   Register = 'Register',
   Logout = 'Logout',

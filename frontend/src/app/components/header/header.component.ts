@@ -3,20 +3,18 @@ import {
   Component,
   computed,
   inject,
+  signal,
 } from '@angular/core';
 import { NavigationComponent } from '@components/navigation/navigation.component';
 import { SearchBarComponent } from '@components/search-bar/search-bar.component';
 import { StatusIconComponent } from '@components/status-icon/status-icon.component';
-import {
-  NavigationStart,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-} from '@angular/router';
-import { AuthRotes, NavLink } from '@enums/nav-link.enum';
-import { MatListItem, MatNavList } from '@angular/material/list';
+import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { NavLink, RouterLinks } from '@enums/nav-link.enum';
 import { AuthService } from '@services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs';
+import { BurgerMenuComponent } from '@components/burger-menu/burger-menu.component';
 
 @Component({
   selector: 'app-header',
@@ -26,9 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     SearchBarComponent,
     StatusIconComponent,
     RouterLink,
-    MatNavList,
-    MatListItem,
-    RouterLinkActive,
+    BurgerMenuComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -37,29 +33,36 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private breakpoint = inject(BreakpointObserver);
+
+  readonly isMobile = toSignal(
+    this.breakpoint
+      .observe('(max-width: 768px)')
+      .pipe(map(result => result.matches)),
+    { initialValue: false }
+  );
 
   isAuthenticated = computed(() => this.authService.isAuthenticated());
   homeLink = NavLink.Dashboard.toLowerCase();
 
-  authLinks = computed(() =>
-    Object.entries(AuthRotes)
-      .map(([title, link]) => ({
-        title: title,
-        link: link.toLowerCase(),
-      }))
-      .filter(({ title }) =>
-        this.isAuthenticated()
-          ? title === AuthRotes.Logout
-          : title !== AuthRotes.Logout
-      )
-  );
+  open = signal<boolean>(false);
+
   constructor() {
     this.router.events.pipe(takeUntilDestroyed()).subscribe(event => {
       if (event instanceof NavigationStart) {
-        if (event.url.slice(1) === AuthRotes.Logout.toLowerCase()) {
-          this.authService.logout();
+        if (this.open() === true) this.onClickBurger(false);
+
+        if (event.url.slice(1) === NavLink.Logout.toLowerCase()) {
+          this.logout();
         }
       }
     });
+  }
+  logout() {
+    this.authService.logout();
+    this.router.navigate([RouterLinks.Login]);
+  }
+  onClickBurger(status?: boolean) {
+    this.open.update(prev => status || !prev);
   }
 }

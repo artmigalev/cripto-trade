@@ -1,6 +1,6 @@
 import { klinesResolver } from '@/app/core/resolvers/klines.resolver';
 import { authGuard } from '@/app/shared/guards/auth-guard';
-import { AuthRotes } from '@/enums/nav-link.enum';
+import { NavLink } from '@/enums/nav-link.enum';
 import { Routes } from '@angular/router';
 import { portfolioResolver } from '@resolver/portfolio.resolver';
 
@@ -50,14 +50,15 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./features/login-page/auth-page.component'),
-    title: AuthRotes.Login,
+    title: NavLink.Login,
 
     canActivate: [authGuard],
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/login-page/auth-page.component'),
-    title: AuthRotes.Register,
+    loadComponent: () =>
+      import('./features/login-page/auth-page.component'),
+    title: NavLink.Register,
     canActivate: [authGuard],
   },
   {

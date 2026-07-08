@@ -13,3 +13,6 @@
   border-radius: 20px;
   border: none;
 }
+*::-webkit-scrollbar {
+  scrollbar-width: thin;
+}

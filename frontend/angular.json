@@ -93,6 +93,7 @@
               "src/styles/_scss-material-variables.scss",
               "src/styles/variables.scss"
             ],
+
             "security": {}
           },
           "configurations": {
