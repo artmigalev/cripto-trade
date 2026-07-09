@@ -1,33 +1,19 @@
-<table class="markets-table">
-  <thead>
-    <tr class="header-row">
-      @for (col of columns; track $index) {
-        @if ($index === 0) {
-          <th class="header-cell headercell-symbol">{{ col[1] }}</th>
-        } @else {
-          <th class="header-cell">
-            <span class="header-text">{{ col[1] }}</span>
-            <button mat-icon-button (click)="toggleSortColumn($event, col[0])">
-              <mat-icon fontIcon="swap_vert"></mat-icon>
-            </button>
-            <mat-icon></mat-icon>
-          </th>
-        }
-      }
-    </tr>
-  </thead>
-  <tbody class="table-body">
-    @for (pair of pairs(); track pair.symbol) {
-      <tr class="data-row">
-        <td
-          [routerLink]="['/trade/', `${pair.symbol}`]"
-          class="data-cell symbol-cell">
-          {{ pair.symbol }}
-        </td>
-        <td class="data-cell">{{ pair.lastPrice }}</td>
-        <td class="data-cell">{{ pair.priceChangePercent }}%</td>
-        <td class="data-cell">{{ pair.volume }}</td>
-        <td class="data-cell favorite-cell">
+<div class="table">
+  <div class="table-head">
+    @for (item of columns; track $index) {
+      <span class="col">{{ item[0] }}</span>
+    }
+  </div>
+  <div class="table-body">
+    @for (pair of pairs(); track $index) {
+      <div class="table-body__row" [routerLink]="['/trade/', `${pair.symbol}`]">
+        <span class="row__col">{{ pair.symbol }}</span>
+        <span class="row__col">{{ pair.lastPrice }}</span>
+        <span [appHighlight]="pair.priceChangePercent" class="row__col">{{
+          pair.priceChangePercent
+        }}</span>
+        <div class="table-row_container">
+          <span class="row__col">{{ pair.volume | converter: 'USDT' }}</span>
           <button
             mat-icon-button
             (click)="toggleFavorite(pair.symbol, $event)"
@@ -42,8 +28,8 @@
                 isFavorite(pair.symbol) ? 'favorite' : 'favorite_border'
               "></mat-icon>
           </button>
-        </td>
-      </tr>
+        </div>
+      </div>
     }
-  </tbody>
-</table>
+  </div>
+</div>
