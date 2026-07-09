@@ -3,6 +3,4 @@ import { OrderStream } from '@interfaces/order-book.interface';
 import { TickerStreamsPayload } from '@interfaces/ticker.interfaсe';
 
 export type BinanceWsMessage =
-  | TickerStreamsPayload[]
-  | BinanceStreamKline
-  | OrderStream;
+  TickerStreamsPayload[] | BinanceStreamKline | OrderStream;

@@ -6,12 +6,15 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ErrorOrderFormMsg, OrderSide } from '@enums/order-form.enum';
+import {
+  ErrorOrderFormMsg,
+  OrderSide,
+  OrderType,
+} from '@enums/order-form.enum';
 import { form, FormField, required, FormRoot } from '@angular/forms/signals';
 import { OrderFormParameters } from '@interfaces/order-form.interface';
 import { ɵInternalFormsSharedModule } from '@angular/forms';
 import { TradeService } from '@services/trade.service';
-import { OrderType, TimeInForce } from '@binance/connector-typescript';
 import { AppError } from '@/app/core/handlers/errors/app.error.handler';
 import { PortfolioService } from '@services/portfolio.service';
 import { ConverterPipe } from '@pipes/converter.pipe';
@@ -39,7 +42,6 @@ export class OrderFormComponent {
   );
   protected readonly orderType = OrderType;
   protected readonly orderSide = OrderSide;
-  protected readonly timeForce = TimeInForce;
 
   protected readonly activeSide = signal<OrderSide>(OrderSide.Buy);
   private readonly orderType$ = computed(() => this.formModel().type);

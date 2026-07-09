@@ -1,16 +1,16 @@
 export enum Key {
-  'CRYPTO_WATCHLIST' = 'crypto-watchlist',
+  CRYPTO_WATCHLIST = 'crypto-watchlist',
 }
 export enum FavoriteSymbol {
-  'USDT' = 'USDT',
-  'BTC' = 'BTC',
-  'ETH' = 'ETH',
+  USDT = 'USDT',
+  BTC = 'BTC',
+  ETH = 'ETH',
 }
 export enum TickedKeys {
-  'SYMBOL' = 'symbol',
-  'PRICE' = 'price',
-  'CHANGE24H' = 'change24h',
-  'VOLUME' = 'volume',
+  SYMBOL = 'symbol',
+  PRICE = 'price',
+  CHANGE24H = 'change24h',
+  VOLUME = 'volume',
 }
 
 // API Key: TcUzXrpK2Ko4eDQxRVPUdIkyYSZlYPWtz8kbOxmSpH4gyUOHMt6QAkeUHgLjjTkz

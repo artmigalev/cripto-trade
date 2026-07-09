@@ -16,10 +16,7 @@ export interface ErrorOrderForm {
 }
 
 export type ErrorTypesOrderForm =
-  | 'main'
-  | 'required'
-  | 'amount_Exceeds'
-  | 'amount_Available';
+  'main' | 'required' | 'amount_Exceeds' | 'amount_Available';
 
 export interface OrderFormParameters {
   symbol: string;

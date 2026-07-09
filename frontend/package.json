@@ -61,7 +61,7 @@
     "postcss": "^8.5.16",
     "prettier": "^3.9.4",
     "tailwindcss": "^4.3.2",
-    "typescript": "~7.0.2",
+    "typescript": "~6.0.3",
     "typescript-eslint": "8.63.0",
     "vitest": "^4.1.10",
     "vitest-localstorage-mock": "^0.1.2"
