@@ -15,7 +15,7 @@
       </div>
     </div>
   } @else {
-    <app-navigation [isAuth]="isAuthenticated()" />
+    <app-navigation [canLogin]="isAuthenticated()" />
   }
   <app-search-bar />
   <app-status-icon />

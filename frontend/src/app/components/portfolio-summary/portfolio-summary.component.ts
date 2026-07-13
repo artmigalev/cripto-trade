@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import {
+  MatHeaderCellDef,
+  MatTable,
+  MatTableModule,
+} from '@angular/material/table';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 export interface PeriodicElement {
   name: string;
@@ -16,7 +20,7 @@ const mockDataTable: PeriodicElement[] = [
 
 @Component({
   selector: 'app-portfolio-summary',
-  imports: [MatTableModule, ContentLoaderModule],
+  imports: [MatTable, MatTableModule, ContentLoaderModule, MatHeaderCellDef],
   templateUrl: './portfolio-summary.component.html',
   styleUrl: './portfolio-summary.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

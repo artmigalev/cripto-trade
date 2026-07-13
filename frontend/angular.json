@@ -71,15 +71,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder:application",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": {
-              "base": "dist/crypto-trade"
-            },
-            "index": "src/index.html",
-            "polyfills": ["zone.js"],
             "browser": "src/main.ts",
+            "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
+            "polyfills": ["zone.js"],
             "assets": [
               {
                 "glob": "**/*",
@@ -92,36 +89,19 @@
               "src/app/app.scss",
               "src/styles/_scss-material-variables.scss",
               "src/styles/variables.scss"
-            ],
-
-            "security": {}
+            ]
           },
           "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "development": {
               "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "extractLicenses": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
-          "builder": "@ngx-env/builder:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "proxyConfig": "proxy.config.json",
             "hmr": true,
@@ -130,13 +110,13 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "crypto-trade:build:production",
-              "hmr": false
+              "buildTarget": "crypto-trade:build:production"
             },
             "development": {
               "buildTarget": "crypto-trade:build:development",
               "hmr": true,
-              "liveReload": true
+              "liveReload": true,
+              "poll": 2000
             }
           },
           "defaultConfiguration": "development"

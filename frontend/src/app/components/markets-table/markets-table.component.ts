@@ -11,9 +11,18 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
+import { ConverterPipe } from '@pipes/converter.pipe';
+import { HighlightDirective } from '@directives/highlight.directive';
 @Component({
   selector: 'app-markets-table',
-  imports: [MatTableModule, MatIcon, MatButtonModule, RouterLink],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    MatButtonModule,
+    RouterLink,
+    ConverterPipe,
+    HighlightDirective,
+  ],
   templateUrl: './markets-table.component.html',
   styleUrl: './markets-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

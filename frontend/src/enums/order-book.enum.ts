@@ -6,13 +6,13 @@ export enum OrderBook {
 // Display the order book: separate columns for bids (buy) and asks (sell).
 
 export enum OrderBookColumns {
-  'Buy' = 'bids',
-  'Sell' = 'asks',
+  Buy = 'bids',
+  Sell = 'asks',
 }
 
 export enum OrderBookRows {
-  'Price' = 'Price',
-  'Volume' = 'Volume',
+  Price = 'Price',
+  Volume = 'Volume',
 }
 
 export enum ErrorOrderBookTable {
