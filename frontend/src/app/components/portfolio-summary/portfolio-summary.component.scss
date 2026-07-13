@@ -11,6 +11,10 @@
 }
 
 .portfolio-summary {
+  border: 1px solid var(--mat-sys-outline-variant);
+
+  background: var(--mat-sys-surface-variant);
+
   width: 100%;
   height: 100%;
   display: flex;

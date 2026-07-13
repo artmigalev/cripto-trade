@@ -23,6 +23,7 @@
 .dash-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   @include bp.media(md) {
     flex-direction: column;
     gap: 10px;
