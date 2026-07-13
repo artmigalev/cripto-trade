@@ -3,15 +3,16 @@
 A full-stack cryptocurrency trading platform clone built on top of the **Binance Spot Testnet**.
 The platform allows users to browse real-time market data, analyze charts, manage a watchlist, and execute test trades with virtual funds — no real money involved.
 
-> **Live Demo:** [cryptotrade.vercel.app](https://cripto-trade-e35v-lxvhxc3o4-artmigalevs-projects.vercel.app)
+> **Live Demo:** [cryptotrade.vercel.app](https://cripto-trade-git-develop-artmigalevs-projects.vercel.app/dashboard)
 > **Author:** [Artyom Migalev](https://github.com/artmigalev)
-> **Course:** [RS School — JavaScript/Frontend Developer 2024](https://rs.school)
 
 ---
 
 ## 📸 Screenshots
-
-> _Add screenshots here_
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
 
 ---
 
@@ -231,9 +232,7 @@ MIT
 ---
 
 <div align="center">
-  <a href="https://rs.school">
-    <img src="https://rs.school/images/rs_school_logo.svg" alt="RS School" height="40" />
-  </a>
+  
   <br/>
-  Built as part of RS School JavaScript/Frontend Developer Course 2024
+  Built as part  2026
 </div>
