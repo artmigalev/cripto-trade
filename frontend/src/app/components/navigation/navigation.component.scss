@@ -14,7 +14,7 @@
   font: var(--mat-sys-label-large);
   letter-spacing: var(--mat-sys-headline-small-tracking);
   .nav-list-item {
-    padding: 0 var(--mat-sys-space-small);
+    padding: var(--mat-sys-space-medium);
     &:hover {
       background-color: var(--mat-sys-surface-container);
       border-radius: var(--mat-sys-space-medium);

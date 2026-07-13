@@ -5,6 +5,10 @@
 }
 
 .overview {
+  border: 1px solid var(--mat-sys-outline-variant);
+
+  background: var(--mat-sys-surface-variant);
+
   display: flex;
   flex-direction: column;
   width: 100%;
