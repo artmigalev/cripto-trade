@@ -45,7 +45,7 @@ export const routes: Routes = [
   },
   {
     path: 'about-us',
-    loadComponent: () => import('./features/about-as/about-as.component'),
+    loadComponent: () => import('./features/about-as/about-us.component'),
   },
   {
     path: 'login',
