@@ -35,6 +35,7 @@
     "@binance/connector-typescript": "^0.3.16",
     "@ngneat/content-loader": "^7.0.0",
     "chart.js": "^4.5.1",
+    "crypto-icons": "^1.0.65",
     "eslint-plugin-unused-imports": "^4.4.1",
     "ng2-charts": "^10.0.0",
     "rxjs": "~7.8.2",

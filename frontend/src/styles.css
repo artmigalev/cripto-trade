@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import 'crypto-icons/styles.css';
+@import 'crypto-icons/font.css';
 
 *::-webkit-scrollbar {
   width: 5px;

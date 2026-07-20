@@ -73,6 +73,9 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "loader": {
+              ".svg": "text"
+            },
             "browser": "src/main.ts",
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",

@@ -46,6 +46,9 @@ importers:
       chart.js:
         specifier: ^4.5.1
         version: 4.5.1
+      crypto-icons:
+        specifier: ^1.0.65
+        version: 1.0.65
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.63.0(@typescript-eslint/parser@8.63.0(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.6.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.6.0(jiti@2.7.0))
@@ -4383,6 +4386,12 @@ packages:
     resolution:
       {
         integrity: sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA==,
+      }
+
+  crypto-icons@1.0.65:
+    resolution:
+      {
+        integrity: sha512-ioS4jw4c84ujafj4TeV196zELiMPSlVETa6uxTMDXIjNShcMyMRVa+39BZq6xpHXA+9jQMqa29p8sOosd1rwWQ==,
       }
 
   css-select@6.0.0:
@@ -10940,6 +10949,8 @@ snapshots:
   crossws@0.3.5:
     dependencies:
       uncrypto: 0.1.3
+
+  crypto-icons@1.0.65: {}
 
   css-select@6.0.0:
     dependencies:

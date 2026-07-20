@@ -1,50 +1,39 @@
-:host {
-  display: block;
-  max-width: 300px;
-  width: 250px;
-  height: 250px;
-  padding: var(--padding);
-  overflow: hidden;
-}
-.dashboard-card {
-  background: var(--mat-sys-surface-container);
-  color: var(--mat-sys-on-surface);
-  border-radius: var(--mat-sys-corner-medium);
-  box-shadow: var(--mat-sys-level2);
-  padding: 16px;
-  font: var(--mat-sys-body-medium);
-}
-.card-title {
-  font: var(--dash-card-title);
-  color: var(--dash-card-title-color);
-  font-weight: bold;
-}
-.card-item {
+.card {
+  max-width: 350px;
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.label {
-  color: var(--dash-card-label-color);
-  font: var(--dash-card-label);
-  font-weight: bold;
-}
-.value {
-  font-weight: bold;
-}
-.btn-card {
-  background: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
-  border-radius: var(--mat-sys-corner-small);
-  font: var(--mat-sys-label-medium);
-  padding: 8px 16px;
-  cursor: pointer;
-  &:hover {
-    box-shadow: var(--mat-sys-level3);
+  flex-direction: column;
+  gap: var(--mat-sys-space-medium);
+  color: var(--mat-sys-surface);
+  background: linear-gradient(135deg, #0b0f0e 0%, #111a1a 45%, #00dddd 140%);
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .card-header__container {
+      width: max-content;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      .icon {
+        font-size: 24px;
+        color: var(--mat-sys-tertiary-fixed-dim);
+      }
+    }
   }
+  .card__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, max-content);
+    align-items: center;
+    justify-items: center;
 
-  &:disabled {
-    background: var(--mat-sys-neutral-variant20);
-    color: var(--mat-sys-on-surface-variant);
+    row-gap: var(--mat-sys-space-medium);
+    font: var(--mat-sys-label-large);
+    .name__colmns {
+      color: var(--mat-sys-primary-fixed-dim);
+    }
   }
 }

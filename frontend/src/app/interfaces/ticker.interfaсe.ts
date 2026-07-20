@@ -8,6 +8,7 @@ export interface Ticker {
   lowPrice: string;
   lastPrice: string;
   volume: string;
+  prevClosePrice: string;
   quoteVolume: string;
   openTime: number;
   closeTime: number;

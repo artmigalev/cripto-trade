@@ -1,52 +1,33 @@
-@defer (on viewport) {
-  <mat-card class="dashboard-card">
-    <mat-card-header>
-      <mat-card-title class="card-title">{{ ticker().symbol }}</mat-card-title>
-    </mat-card-header>
+<mat-card class="card">
+  <mat-card-header class="card-header">
+    <div class="card-header__container">
+      @for (name of iconClasses(); track name) {
+        <span [class]="`icon  icon-${name}`"></span>
+      }
+      <mat-card-title>{{ ticker()?.symbol || 'BTCUSDT' }}</mat-card-title>
+    </div>
+    <button
+      (click)="toggleIcon()"
+      matIconButton
+      aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon
+        [svgIcon]="favorit() ? 'favorit_btn_toggle' : 'favorit_btn'"></mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content class="card__content">
+    <span class="name__colmns">Price</span>
+    <span class="name__colmns">24h</span>
+    <span class="name__colmns">Volume</span>
 
-    <mat-card-content>
-      <ul>
-        <li class="card-item">
-          <span class="label">Price:</span>
-          <span class="value"
-            >{{ ticker().currentPrice | converter: ticker().symbol }}
-          </span>
-        </li>
-        <li class="card-item">
-          <span class="label"> 24h change:</span>
-          <span class="value" [appHighlight]="ticker().change24h"
-            >{{ ticker().change24h }} %</span
-          >
-        </li>
-        <li class="card-item">
-          <span class="label">Volume:</span>
-          <span class="value">{{ ticker().volume }}</span>
-        </li>
-      </ul>
-    </mat-card-content>
-    <mat-card-actions>
-      <button
-        [disabled]="isFavorite()"
-        class="btn-card favorite-btn"
-        matButton
-        (click)="toggle()">
-        Add to favorites
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <span>{{ ticker()?.currentPrice || 26660 }}</span>
+    <span>{{ ticker()?.change24h || 26660 }}</span>
+    <span>{{ ticker()?.volume || 26660 }}</span>
+  </mat-card-content>
+  <mat-card-actions> </mat-card-actions>
+</mat-card>
+@defer (on viewport) {
 } @placeholder (minimum 500ms) {
   <facebook-content-loader></facebook-content-loader>
 }
 
 <!-- Card shows: pair symbol, current price, 24h change (percentage), volume. -->
-<!-- (node:4832) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
-(Use `node --trace-deprecation ...` to show where the warning was created)
-Application bundle generation failed. [3.870 seconds] - 2026-06-10T16:00:52.108Z
-
-X [ERROR] Could not resolve "@angular/animations/browser"
-
-    node_modules/.pnpm/@angular+platform-browser@21.2.13_@angular+common@21.2.13_@angular+core@21.2.13_@angular+comp_unrgdppykmcm3kijdkpgsfutha/node_modules/@angular/platform-browser/fesm2022/animations-async.mjs:37:53:
-      37 │ ....moduleImpl ?? import('@angular/animations/browser').then(m => m);
-         ╵                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  You can mark the path "@angular/animations/browser" as external to exclude it from the bundle, which will removethis error and leave the unresolved path in the bundle. You can also add ".catch()" here to handle this failure atrun-time instead of bundle-time. -->
