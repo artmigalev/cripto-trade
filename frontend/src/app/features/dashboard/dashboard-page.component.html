@@ -1,3 +1,13 @@
 <section class="dashboard layout-page">
-  <app-market-overview [topCards]="topCards()" />
+  @defer {
+    <app-market-overview [topCards]="topCards()" />
+    <div class="dash-container">
+      <app-watch-list [favoritePairs]="watchList()" />
+      <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
+    </div>
+  } @placeholder (minimum 800ms) {
+    <app-spinner />
+  } @error {
+    <span>{{ error() }}</span>
+  }
 </section>

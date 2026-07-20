@@ -1,31 +1,39 @@
-<mat-card class="card">
-  <mat-card-header class="card-header">
-    <div class="card-header__container">
-      @for (name of iconClasses(); track name) {
-        <span [class]="`icon  icon-${name}`"></span>
-      }
-      <mat-card-title>{{ ticker()?.symbol || 'BTCUSDT' }}</mat-card-title>
-    </div>
-    <button
-      (click)="toggleIcon()"
-      matIconButton
-      aria-label="Example icon button with a vertical three dot icon">
-      <mat-icon
-        [svgIcon]="favorit() ? 'favorit_btn_toggle' : 'favorit_btn'"></mat-icon>
-    </button>
-  </mat-card-header>
-  <mat-card-content class="card__content">
-    <span class="name__colmns">Price</span>
-    <span class="name__colmns">24h</span>
-    <span class="name__colmns">Volume</span>
-
-    <span>{{ ticker()?.currentPrice || 26660 }}</span>
-    <span>{{ ticker()?.change24h || 26660 }}</span>
-    <span>{{ ticker()?.volume || 26660 }}</span>
-  </mat-card-content>
-  <mat-card-actions> </mat-card-actions>
-</mat-card>
 @defer (on viewport) {
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <div class="card-header__container">
+        @for (name of iconClasses(); track name) {
+          <span [class]="`icon  icon-${name}`"></span>
+        }
+        <mat-card-title>{{ ticker()?.symbol || 'BTCUSDT' }}</mat-card-title>
+      </div>
+      <button
+        (click)="toggleCard(ticker()?.symbol!)"
+        matIconButton
+        aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon
+          [svgIcon]="
+            isFavorite() ? 'favorit_btn_toggle' : 'favorit_btn'
+          "></mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="card__content">
+      <span class="name__colmns">Price</span>
+      <span class="name__colmns">24h</span>
+      <span class="name__colmns">Volume</span>
+
+      <span>{{
+        ticker()?.currentPrice || 26660 | converter: ticker()?.symbol!
+      }}</span>
+      <span [appHighlight]="ticker()?.change24h!">{{
+        ticker()?.change24h || 26660
+      }}</span>
+      <span>{{
+        ticker()?.volume || 26660 | converter: ticker()?.symbol!
+      }}</span>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
 } @placeholder (minimum 500ms) {
   <facebook-content-loader></facebook-content-loader>
 }

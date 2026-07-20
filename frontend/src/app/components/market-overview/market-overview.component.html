@@ -6,7 +6,7 @@
     <ul class="card-list">
       @for (card of topCards(); track card.currentPrice) {
         <li class="list-item">
-          <app-market-card />
+          <app-market-card [ticker]="card" />
         </li>
       }
     </ul>

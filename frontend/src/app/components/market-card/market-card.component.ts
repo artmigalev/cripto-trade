@@ -11,16 +11,23 @@ import { Card } from '@interfaces/card.interface';
 import { DashboardService } from '@services/dashboard.service';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import favorit_icon from '../../../../public/favorit_card.svg';
-import favorit_icon_toggle from '../../../../public/favorite_toggle.svg';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { FavoriteSymbol } from '@enums/keys.enum';
+import { ConverterPipe } from '@pipes/converter.pipe';
+import { HighlightDirective } from '@directives/highlight.directive';
 
 @Component({
   selector: 'app-market-card',
   standalone: true,
-  imports: [MatCardModule, ContentLoaderModule, MatIconModule, MatButtonModule],
+  imports: [
+    MatCardModule,
+    ContentLoaderModule,
+    MatIconModule,
+    MatButtonModule,
+    ConverterPipe,
+    HighlightDirective,
+  ],
   templateUrl: './market-card.component.html',
   styleUrl: './market-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +36,9 @@ export class MarketCardComponent<T extends Card> {
   iconRegistry = inject(MatIconRegistry);
   sanitizer = inject(DomSanitizer);
   dashboardService = inject(DashboardService);
+  protected readonly isFavorite = computed(() =>
+    this.dashboardService.isFavorite(this.ticker()?.symbol as string)
+  );
 
   favorit = signal<boolean>(false);
 
@@ -39,23 +49,18 @@ export class MarketCardComponent<T extends Card> {
   );
 
   constructor() {
-    this.iconRegistry.addSvgIconLiteral(
+    this.iconRegistry.addSvgIcon(
       'favorit_btn',
-      this.sanitizer.bypassSecurityTrustHtml(favorit_icon)
+      this.sanitizer.bypassSecurityTrustResourceUrl('/favorit_card.svg')
     );
-    this.iconRegistry.addSvgIconLiteral(
+    this.iconRegistry.addSvgIcon(
       'favorit_btn_toggle',
-      this.sanitizer.bypassSecurityTrustHtml(favorit_icon_toggle)
+      this.sanitizer.bypassSecurityTrustResourceUrl('/favorite_toggle.svg')
     );
   }
 
   toggleCard(symbol: Card['symbol']) {
-    this.toggleIcon();
     this.dashboardService.toggleFavorite(symbol);
-  }
-
-  toggleIcon() {
-    this.favorit.set(!this.favorit());
   }
 
   createdIconNameWithSymbol(symbol: T['symbol']) {
@@ -81,10 +86,6 @@ export class MarketCardComponent<T extends Card> {
   }
 }
 // ticker = input.required<Card>();
-
-// protected readonly isFavorite = computed(() =>
-//   this.dashboardService.isFavorite(this.ticker()?.symbol as string)
-// );
 
 // toggle() {
 //   this.dashboardService.toggleFavorite(this.ticker()?.symbol as string);
