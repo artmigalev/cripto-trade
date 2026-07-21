@@ -23,8 +23,28 @@ import { MarketService } from '@services/market.service';
 import { WebsocketService } from '@services/websocket.service';
 import { GlobalErrorHandler } from '@/app/core/handlers/global-error.handler';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+
+const ICONS = ['favorit_card', 'favorit_toggle'] as const;
+
+const parserIcon = () => {
+  return provideAppInitializer(() => {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+
+    ICONS.forEach(name => {
+      iconRegistry.addSvgIcon(
+        name,
+        sanitizer.bypassSecurityTrustResourceUrl(`/icons/${name}.svg`)
+      );
+    });
+  });
+};
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    parserIcon(),
     provideAppInitializer(async () => {
       try {
         const webSocketService = inject(WebsocketService);

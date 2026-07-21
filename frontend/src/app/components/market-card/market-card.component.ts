@@ -48,17 +48,6 @@ export class MarketCardComponent<T extends Card> {
     this.createdIconNameWithSymbol(this.ticker()?.symbol || 'BTCUSDT')
   );
 
-  constructor() {
-    this.iconRegistry.addSvgIcon(
-      'favorit_btn',
-      this.sanitizer.bypassSecurityTrustResourceUrl('/favorit_card.svg')
-    );
-    this.iconRegistry.addSvgIcon(
-      'favorit_btn_toggle',
-      this.sanitizer.bypassSecurityTrustResourceUrl('/favorite_toggle.svg')
-    );
-  }
-
   toggleCard(symbol: Card['symbol']) {
     this.dashboardService.toggleFavorite(symbol);
   }
