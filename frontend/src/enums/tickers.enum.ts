@@ -1,0 +1,17 @@
+export enum TickerObj {
+  symbol = 'symbol',
+  priceChange = 'priceChange',
+  priceChangePercent = 'priceChangePercent',
+  weightedAvgPrice = 'weightedAvgPrice',
+  openPrice = 'openPrice',
+  highPrice = 'highPrice',
+  lowPrice = 'lowPrice',
+  lastPrice = 'lastPrice',
+  volume = 'volume',
+  quoteVolume = 'quoteVolume',
+  openTime = 'openTime',
+  closeTime = 'closeTime',
+  firstId = 'firstId',
+  lastId = 'lastId',
+  count = 'count',
+}

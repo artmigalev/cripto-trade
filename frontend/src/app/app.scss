@@ -1,5 +1,4 @@
 :host {
-  position: relative;
   height: 100%;
   width: 100%;
   display: flex;
@@ -7,4 +6,15 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
+}
+.layout-page {
+  padding: var(--padding);
+  width: 100%;
+
+  background-color: var(--mat-sys-surface-container);
+  border-radius: var(--mat-sys-corner-medium);
+  box-shadow: var(--mat-sys-level5);
+  overflow-y: auto;
+
+  height: 100%;
 }

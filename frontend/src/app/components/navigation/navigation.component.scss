@@ -1,14 +1,43 @@
-@use '@angular/material' as mat;
+@use '../../../material-theme.scss' as bp;
 :host {
-  display: block;
+  width: 100%;
 }
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-  @include mat.list-overrides(
-    (
-      active-indicator-color: orange,
-      active-indicator-shape: 16px,
-    )
-  );
+.nav-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 100%;
+
+  font: var(--mat-sys-label-large);
+  letter-spacing: var(--mat-sys-headline-small-tracking);
+  .nav-list-item {
+    padding: var(--mat-sys-space-medium);
+    &:hover {
+      background-color: var(--mat-sys-surface-container);
+      border-radius: var(--mat-sys-space-medium);
+    }
+  }
+
+  @include bp.media(md) {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--mat-sys-space-medium);
+    font: var(--mat-sys-headline-large);
+    letter-spacing: var(--mat-sys-display-small-tracking);
+    color: var(--mat-sys-primary);
+
+    .nav-list-item {
+      width: max-content;
+      text-align: center;
+    }
+  }
+}
+
+.active {
+  background-color: var(--mat-sys-surface-container);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--mat-sys-primary);
 }

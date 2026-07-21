@@ -1,25 +1,55 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NavLink } from '../../../enums/nav-link.enum';
-import { MatListItem, MatListModule } from '@angular/material/list';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core';
+import { NavLink, RouterLinks } from '@enums/nav-link.enum';
+import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 interface NavItem {
-  title: NavLink;
-  link: string;
+  title: string;
+  link: RouterLinks;
 }
 
-type NavListType = NavItem[];
+// type NavListType = NavItem[];
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatListModule, RouterLink, MatListItem, RouterLinkActive],
+  imports: [MatListModule, RouterLink, RouterLinkActive],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-  navList: NavListType = Object.values(NavLink).map(value => ({
-    title: value,
-    link: value.toLowerCase().replaceAll(' ', '-'),
-  }));
+  positionColumn = true;
+  canLogin = input.required<boolean>();
+  navList = computed(() => this.getLinks(this.canLogin()));
+
+  getLinks(status: boolean): NavItem[] {
+    const links = Object.entries(NavLink).map(([title]) => ({
+      title,
+      link: RouterLinks[title as keyof typeof RouterLinks],
+    })) as NavItem[];
+
+    if (!status) {
+      return links.filter(
+        ({ title }) =>
+          title !== 'Logout' && {
+            title,
+            link: RouterLinks[title as keyof typeof RouterLinks],
+          }
+      );
+    } else {
+      return links.filter(
+        ({ title }) =>
+          title !== NavLink.Login &&
+          title !== NavLink.Register && {
+            title,
+            link: RouterLinks[title as keyof typeof RouterLinks],
+          }
+      );
+    }
+  }
 }

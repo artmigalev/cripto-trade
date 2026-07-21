@@ -1,22 +1,44 @@
-import { MarketService } from '@services/market.service';
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
-import { MarketCardComponent } from '@components/market-card/market-card.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
+import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
+import { DashboardService } from '@services/dashboard.service';
+import { PortfolioValue } from '@enums/dashboard.enum';
+import { WatchListComponent } from '@components/watch-list/watch-list.component';
+import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
+import { SpinnerComponent } from '@components/spinner/spinner.component';
 
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
+
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MarketCardComponent],
+  imports: [
+    MarketOverviewComponent,
+    WatchListComponent,
+    PortfolioSummaryComponent,
+    SpinnerComponent,
+  ],
 })
-export default class DashboardPageComponent implements OnInit {
-  private markedService = inject(MarketService);
+export default class DashboardPageComponent {
+  private dashboardService = inject(DashboardService);
+  protected readonly topCards = computed(
+    () => this.dashboardService.state().cards
+  );
 
-  tickers = computed(() => this.markedService.market().tickers);
+  protected readonly watchList = computed(() =>
+    this.dashboardService.getFavoriteTickers()
+  );
+  protected readonly portfolioSummary = `1000 ${PortfolioValue.USDT}`;
 
-  ngOnInit(): void {
-    this.markedService.loadedData().catch(error => {
-      console.error('Failed to load market data', error);
-    });
-  }
+  protected readonly isLoad = computed(
+    () => this.dashboardService.state().isLoad
+  );
+  protected readonly error = computed(
+    () => this.dashboardService.state().error
+  );
 }

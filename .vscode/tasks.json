@@ -37,6 +37,15 @@
           }
         }
       }
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "backend",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build - backend",
+      "detail": "nest build"
     }
   ]
 }

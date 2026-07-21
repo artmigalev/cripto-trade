@@ -1,2 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+@import 'crypto-icons/styles.css';
+@import 'crypto-icons/font.css';
+
+*::-webkit-scrollbar {
+  width: 5px;
+  margin: 1px 2px 1px 2px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--mat-sys-outline);
+  border-radius: 20px;
+  border: none;
+}
+*::-webkit-scrollbar {
+  scrollbar-width: thin;
+}

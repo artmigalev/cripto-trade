@@ -3,7 +3,11 @@
   "version": 1,
   "cli": {
     "packageManager": "pnpm",
-    "schematicCollections": ["angular-eslint"]
+    "schematicCollections": ["angular-eslint"],
+    "cache": {
+      "enabled": true
+    },
+    "analytics": false
   },
 
   "newProjectRoot": "projects",
@@ -16,7 +20,7 @@
           "standalone": true,
           "displayBlock": true,
           "changeDetection": "OnPush",
-          "skipTests": true,
+          "skipTests": false,
           "inlineTemplate": false,
           "inlineStyle": false,
           "style": "scss",
@@ -50,6 +54,15 @@
           "type": "directive",
           "skipTests": true,
           "standalone": true
+        },
+        "@schematics/angular:interceptor": {
+          "path": "src/app/shared/interceptors",
+          "functional": true,
+          "typeSeparator": "."
+        },
+        "@schematics/angular:resolver": {
+          "path": "src/app/core/resolvers",
+          "typeSeparator": "."
         }
       },
 
@@ -58,65 +71,67 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder:application",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": {
-              "base": "dist/crypto-trade"
+            "loader": {
+              ".svg": "text"
             },
-            "index": "src/index.html",
-            "polyfills": ["zone.js"],
             "browser": "src/main.ts",
+            "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
+            "polyfills": ["zone.js"],
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css", "src/app/app.scss"],
-            "security": {}
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css",
+              "src/app/app.scss",
+              "src/styles/_scss-material-variables.scss",
+              "src/styles/variables.scss"
+            ]
           },
           "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "development": {
               "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "extractLicenses": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
-          "builder": "@ngx-env/builder:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
-            "proxyConfig": "proxy.config.json"
+            "proxyConfig": "proxy.config.json",
+            "hmr": true,
+            "liveReload": true,
+            "poll": 2000
           },
           "configurations": {
             "production": {
               "buildTarget": "crypto-trade:build:production"
             },
             "development": {
-              "buildTarget": "crypto-trade:build:development"
+              "buildTarget": "crypto-trade:build:development",
+              "hmr": true,
+              "liveReload": true,
+              "poll": 2000
             }
           },
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "setupFiles": [
+              "./test-setup.ts",
+              "./node_modules/vitest-localstorage-mock"
+            ]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

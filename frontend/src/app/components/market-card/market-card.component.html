@@ -1,17 +1,41 @@
-@if (ticker()) {
-  <h3 class="title">{{ ticker()?.symbol }}</h3>
-  <ul class="flex-nowrap flex flex-col">
-    <li class="flex flex-row gap-2">
-      <span class="key">Price</span>
-      <span>{{ ticker()?.price! | converter: ticker()?.symbol || '' }}</span>
-    </li>
-    <li class="flex flex-row gap-2">
-      <span class="key">Change 24h:</span>
-      <span [appHighlight]="ticker()?.change24h || 0">{{ ticker()?.change24h }}</span>
-    </li>
-    <li class="flex flex-row gap-2">
-      <span class="key">Volume</span>
-      <span>{{ ticker()?.volume! | converter: ticker()?.symbol || '' }}</span>
-    </li>
-  </ul>
+@defer (on viewport) {
+  <mat-card class="card">
+    <mat-card-header class="card-header">
+      <div class="card-header__container">
+        @for (name of iconClasses(); track name) {
+          <span [class]="`icon  icon-${name}`"></span>
+        }
+        <mat-card-title>{{ ticker()?.symbol || 'BTCUSDT' }}</mat-card-title>
+      </div>
+      <button
+        (click)="toggleCard(ticker()?.symbol!)"
+        matIconButton
+        aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon
+          [svgIcon]="
+            isFavorite() ? 'favorit_btn_toggle' : 'favorit_btn'
+          "></mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content class="card__content">
+      <span class="name__colmns">Price</span>
+      <span class="name__colmns">24h</span>
+      <span class="name__colmns">Volume</span>
+
+      <span>{{
+        ticker()?.currentPrice || 26660 | converter: ticker()?.symbol!
+      }}</span>
+      <span [appHighlight]="ticker()?.change24h!">{{
+        ticker()?.change24h || 26660
+      }}</span>
+      <span>{{
+        ticker()?.volume || 26660 | converter: ticker()?.symbol!
+      }}</span>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+} @placeholder (minimum 500ms) {
+  <facebook-content-loader></facebook-content-loader>
 }
+
+<!-- Card shows: pair symbol, current price, 24h change (percentage), volume. -->

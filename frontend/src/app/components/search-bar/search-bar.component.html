@@ -1,5 +1,7 @@
-<form action="" class="search-bar">
-  <fieldset>
-    <input class="search-input" type="text" placeholder="Search..." />
-  </fieldset>
+<form (submit)="$event.preventDefault()" class="search-bar">
+  <input
+    class="search-input"
+    type="text"
+    (input)="onSearch($event)"
+    placeholder="Search..." />
 </form>

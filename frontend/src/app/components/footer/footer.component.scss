@@ -5,9 +5,10 @@
 }
 
 .footer {
-  padding: var(--padding);
+  padding: var(--footer-padding);
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 10px;
 }

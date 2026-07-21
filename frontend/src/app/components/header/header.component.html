@@ -1,8 +1,22 @@
-<header class="flex flex-row items-center justify-between">
+<header class="flex flex-row items-center justify-between header">
   <a routerLink="{{ homeLink }}">
     <img src="cryptpad_96px_00FBFB.png" class="logo" alt="CryptoTrade Logo" />
   </a>
-  <app-navigation />
+  @if (isMobile()) {
+    <app-burger-menu [isAuth]="isAuthenticated()" [active]="open()" />
+    <div
+      class="burger-menu"
+      [class.active]="open()"
+      tabindex="0"
+      role="button"
+      (click)="onClickBurger()">
+      <div class="burger-container">
+        <div class="burger-inner"></div>
+      </div>
+    </div>
+  } @else {
+    <app-navigation [canLogin]="isAuthenticated()" />
+  }
   <app-search-bar />
   <app-status-icon />
 </header>

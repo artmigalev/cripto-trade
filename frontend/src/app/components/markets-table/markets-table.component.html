@@ -1,0 +1,35 @@
+<div class="table">
+  <div class="table-head">
+    @for (item of columns; track $index) {
+      <span class="col">{{ item[0] }}</span>
+    }
+  </div>
+  <div class="table-body">
+    @for (pair of pairs(); track $index) {
+      <div class="table-body__row" [routerLink]="['/trade/', `${pair.symbol}`]">
+        <span class="row__col">{{ pair.symbol }}</span>
+        <span class="row__col">{{ pair.lastPrice }}</span>
+        <span [appHighlight]="pair.priceChangePercent" class="row__col">{{
+          pair.priceChangePercent
+        }}</span>
+        <div class="table-row_container">
+          <span class="row__col">{{ pair.volume | converter: 'USDT' }}</span>
+          <button
+            mat-icon-button
+            (click)="toggleFavorite(pair.symbol, $event)"
+            [attr.aria-label]="
+              isFavorite(pair.symbol)
+                ? 'Remove from favorites'
+                : 'Add to favorites'
+            "
+            class="favorite-button">
+            <mat-icon
+              [fontIcon]="
+                isFavorite(pair.symbol) ? 'favorite' : 'favorite_border'
+              "></mat-icon>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

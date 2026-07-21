@@ -1,15 +1,13 @@
-<section class="dashboard">
-  <h1 class="text-2xl font-bold">Dashboard</h1>
-
-  @if (tickers().length === 0) {
-    <h2>Tickers not found</h2>
-  } @else {
-    <ul class="card-list">
-      @for (ticker of tickers(); track ticker.symbol) {
-        <li class="list-item">
-          <app-market-card [ticker]="ticker" />
-        </li>
-      }
-    </ul>
+<section class="dashboard layout-page">
+  @defer {
+    <app-market-overview [topCards]="topCards()" />
+    <div class="dash-container">
+      <app-watch-list [favoritePairs]="watchList()" />
+      <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
+    </div>
+  } @placeholder (minimum 800ms) {
+    <app-spinner />
+  } @error {
+    <span>{{ error() }}</span>
   }
 </section>

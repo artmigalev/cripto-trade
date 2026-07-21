@@ -1,1 +1,8 @@
-<p>trade works!</p>
+<section class="trade layout-page">
+  <app-price-chart [candle]="candle()" [history]="historyCandles()" />
+
+  <div class="orders-container">
+    <app-order-book [order]="history()" [symbol]="symbol()" />
+    <app-order-form />
+  </div>
+</section>

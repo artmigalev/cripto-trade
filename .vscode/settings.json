@@ -1,5 +1,21 @@
 {
   "prettier.experimentalTernaries": true,
-
+  "prettier.configPath": "frontend/.prettierrc",
+  "prettier.prettierPath": "./node_modules/prettier",
   "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "vsicons.presets.angular": true,
+  "postman.settings.dotenv-detection-notification-visibility": false,
+  "cSpell.words": ["analogjs", "APIKEY", "BTCUSDT", "Klines", "ngneat"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+
 }
+

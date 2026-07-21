@@ -1,0 +1,28 @@
+<h3>{{ symbol() }}</h3>
+<div class="table-container">
+  @if (!order()) {
+    <h2>Not Found Data</h2>
+  } @else {
+    @for (col of columns; track $index) {
+      <table [attr.id]="col" class="table-book">
+        <thead class="table-head">
+          <tr class="head-row">
+            <th class="head-row-cel">Price</th>
+            <th class="head-row-cel">Volume</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          @for (item of order()![col]; track $index) {
+            <tr class="body-row">
+              @for (value of item; track $index) {
+                <td [attr.id]="$last ? 'volume' : 'price'" class="body-row-cel">
+                  {{ value }}
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+</div>

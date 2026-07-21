@@ -1,25 +1,26 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
-import { MarketService } from '@/app/core/services/market.service';
+import { LoaderService } from '@services/loader.service';
+import { SpinnerComponent } from '@components/spinner/spinner.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, SpinnerComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App implements OnInit {
-  private marketService = inject(MarketService);
-
+export class App {
   protected readonly title = signal('crypto-trade');
-
-  ngOnInit(): void {
-    void this.marketService.loadedData().catch(error => {
-      console.log(error);
-    });
-  }
+  private readonly loadingService = inject(LoaderService);
+  protected isLoading = computed(() => this.loadingService.loading());
 }
