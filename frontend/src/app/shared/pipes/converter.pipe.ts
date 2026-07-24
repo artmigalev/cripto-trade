@@ -10,8 +10,6 @@ export class ConverterPipe implements PipeTransform {
   private readonly decimalPipe = new DecimalPipe('en-US');
   transform(value: number | string, symbol: string) {
     if (symbol.endsWith(FavoriteSymbol.BTC)) {
-      console.log(value, '=>', this.decimalPipe.transform(value, '1.2-8'));
-
       const digit = Number(value) < 1 ? '1.2-8' : '1.2-2';
 
       return this.decimalPipe.transform(value, digit);

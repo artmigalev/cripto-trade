@@ -38,3 +38,8 @@ interface PortfolioTabelsType {
     };
   };
 }
+
+export type BriefTableItem = Pick<
+  DataTable,
+  'asset' | 'currentPrice' | 'totalValue'
+>;
