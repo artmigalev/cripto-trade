@@ -23,7 +23,7 @@ export default class DashboardPageComponent {
   private dashboardService = inject(DashboardService);
   private readonly portfolioService = inject(PortfolioService);
   portfolioAssets = computed(() =>
-    this.briefAssets(
+    this.briefAssetsMapper(
       this.portfolioService.state()?.assetTableData.slice(0, 3) || []
     )
   );
@@ -56,7 +56,7 @@ export default class DashboardPageComponent {
         type: 'BriefTable',
       }) satisfies TableSchema<BriefTableItem>
   );
-  briefAssets(assetsData: DataTable[]): BriefTableItem[] {
+  private briefAssetsMapper(assetsData: DataTable[]): BriefTableItem[] {
     if (assetsData.length === 0) return [];
     return assetsData.map(asset => ({
       asset: asset.asset,

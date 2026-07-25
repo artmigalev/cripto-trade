@@ -1,13 +1,13 @@
 export interface Table<T = Record<string, string | number>> {
   columnsLabels: ColumnKey<T>[];
   displayedColumns: Record<ColumnKey<T>, string>;
-  options?:
-    | TradeTable
-    | BriefTable
-    | MarketsTable
-    | OrderBookTable
-    | OrderHistory
-    | AssetTable;
+  // options?:
+  //   | TradeTable
+  //   | BriefTable
+  //   | MarketsTable
+  //   | OrderBookTable
+  //   | OrderHistory
+  //   | AssetTable;
 }
 export type ColumnKey<T> = keyof T & string;
 
