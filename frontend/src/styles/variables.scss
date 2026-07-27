@@ -4,76 +4,11 @@
 @forward './material-tokens.effects';
 
 :root {
-  --padding: 8px;
-  --padding-top: 12px;
-  --padding-bottom: 20px;
-  --padding-lr: 24px;
-
   --mat-sys-space-small: 4px;
 
   --mat-sys-space-medium: 8px;
 
   --mat-sys-space-large: 16px;
-
-  --title-section: var(--mat-sys-body-large);
-  --subtitle: var(--mat-sys-title-medium);
-  --text-body: var(--mat-sys-body-large);
-  --label: var(--mat-sys-label-large);
-  --display: var(--mat-sys-display-large);
-
-  //Footer
-
-  --footer-bg: var(--mat-sys-surface-dim);
-  --footer-padding: 20px;
-  //dashboard card
-
-  --dash-card-color-bg: var(--mat-sys-surface-container);
-
-  --dash-card-title: var(--mat-sys-body-large);
-  --dash-card-title-color: var(--mat-sys-primary);
-
-  --dash-card-label: var(--mat-sys-label-large);
-  --dash-card-label-color: var(--mat-sys-on-secondary-fixed-variant);
-
-  --dash-card-body: var(--mat-sys-body-medium);
-
-  --dash-card-btn-color: var(--mat-sys-on-secondary-fixed-variant);
-  --dash-card-btn-bg-color: var(--mat-sys-secondary-container);
-  --dash-card-btn-text: var(--mat-sys-label-large);
-
-  //dashboard
-
-  --section-bg-color: var(--mat-sys-surface-container-highest);
-  --section-color-text: var(--mat-sys-on-surface);
-  --section-color-title: var(--mat-sys-on-surface);
-  --section-text-title: var(--mat-sys-title-large);
-  --ticker-symbol-color: var(--mat-sys-primary);
-  --ticker-symbol-text: var(--mat-sys-label-large);
-  --ticker-price-text: var(--mat-sys-body-large);
-  --ticker-percent-text: var(--mat-sys-body-large);
-
-  //market overview
-  --market-table-bg: var(--mat-sys-surface-container);
-  --market-table-border-color: var(--mat-sys-on-primary-fixed-variant);
-  //price chart
-  --chart-section-bg-color: var(--mat-sys-background);
-  --chart-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
-  --chart-button-bg: var(--mat-sys-surface-container-low);
-  //order-book
-  --order-book-section-bg-color: var(--mat-sys-background);
-  --order-book-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
-  //order-form
-  --order-form-section-bg-color: var(--mat-sys-background);
-  --order-form-section-border: 1px solid var(--mat-sys-on-primary-fixed-variant);
-  --order-form-padding: 4px;
-  --order-form-legend-font: var(--mat-sys-body-large);
-  --order-form-legend-font-color: var(--mat-sys-on-surface);
-  --order-form-bg-color: var(--mat-sys-surface-container-high);
-  --order-form-side-btn-bg: var(--mat-sys-surface-container);
-  --order-form-side-btn-hover-bg: var(--mat-sys-surface-container-high);
-  --order-form-btn-side-border-radius: var(--mat-sys-corner-small);
-  --order-form-btn-color: var(--mat-sys-surface-container-high);
-  --order-form-input-bg: var(--mat-sys-surface);
 }
 
 // Surface  – фона и больших, малозаметных областей экрана.
