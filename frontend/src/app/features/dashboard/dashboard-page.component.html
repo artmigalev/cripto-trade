@@ -1,14 +1,16 @@
 <section class="dashboard layout-page">
-  <app-table [schema]="schemaTable()" />
-  <!-- @defer {
+  <!-- <app-table [schema]="schemaTable()" /> -->
+  @defer {
     <app-market-overview [topCards]="topCards()" />
     <div class="dash-container">
       <app-watch-list [favoritePairs]="watchList()" />
-      <app-portfolio-summary [totalPortfolioValue]="portfolioSummary" />
+      <app-portfolio-summary
+        [tableSchema]="schemaTable()"
+        [balance]="balance()" />
     </div>
   } @placeholder (minimum 800ms) {
     <app-spinner />
   } @error {
     <span>{{ error() }}</span>
-  } -->
+  }
 </section>

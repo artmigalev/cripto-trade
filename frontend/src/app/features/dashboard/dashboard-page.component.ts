@@ -5,11 +5,13 @@ import {
   inject,
 } from '@angular/core';
 import { DashboardService } from '@services/dashboard.service';
-import { PortfolioValue } from '@enums/dashboard.enum';
-import { TableComponent } from '@components/table/table.component';
 import { TableSchema } from '@interfaces/table.interface';
 import { BriefTableItem, DataTable } from '@interfaces/portfolio.interface';
 import { PortfolioService } from '@services/portfolio.service';
+import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
+import { WatchListComponent } from '@components/watch-list/watch-list.component';
+import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
+import { SpinnerComponent } from '@components/spinner/spinner.component';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -17,16 +19,25 @@ import { PortfolioService } from '@services/portfolio.service';
   styleUrl: './dashboard-page.component.scss',
 
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TableComponent],
+  imports: [
+    MarketOverviewComponent,
+    WatchListComponent,
+    PortfolioSummaryComponent,
+    SpinnerComponent,
+  ],
 })
 export default class DashboardPageComponent {
   private dashboardService = inject(DashboardService);
   private readonly portfolioService = inject(PortfolioService);
-  portfolioAssets = computed(() =>
+  protected readonly portfolioAssets = computed(() =>
     this.briefAssetsMapper(
       this.portfolioService.state()?.assetTableData.slice(0, 3) || []
     )
   );
+  protected readonly balance = computed(() =>
+    this.portfolioService.portfolioValueUSD()
+  );
+
   protected readonly topCards = computed(
     () => this.dashboardService.state().cards
   );
@@ -34,7 +45,6 @@ export default class DashboardPageComponent {
   protected readonly watchList = computed(() =>
     this.dashboardService.getFavoriteTickers()
   );
-  protected readonly portfolioSummary = `1000 ${PortfolioValue.USDT}`;
 
   protected readonly isLoad = computed(
     () => this.dashboardService.state().isLoad
