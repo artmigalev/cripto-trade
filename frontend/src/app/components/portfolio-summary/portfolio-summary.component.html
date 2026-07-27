@@ -1,6 +1,6 @@
 <section class="portfolio-summary">
   @defer (on viewport) {
-    <app-widget type="portfolio-value" data="balance()" />
+    <app-widget type="portfolio-value" [data]="balance()" />
     <h2 class="text-2xl font-bold">Main Assets</h2>
 
     <app-table [schema]="tableSchema()" />
