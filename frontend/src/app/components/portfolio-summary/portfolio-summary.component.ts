@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import {
-  MatHeaderCellDef,
-  MatTable,
-  MatTableModule,
-} from '@angular/material/table';
+
+import { BriefTableItem } from '@interfaces/portfolio.interface';
+import { TableSchema } from '@interfaces/table.interface';
 import { ContentLoaderModule } from '@ngneat/content-loader';
+import { TableComponent } from '@components/table/table.component';
+import { WidgetComponent } from '@components/widget/widget.component';
 export interface PeriodicElement {
   name: string;
   symbol: string;
@@ -12,23 +12,17 @@ export interface PeriodicElement {
   value: number; //current value
 }
 
-const mockDataTable: PeriodicElement[] = [
-  { name: 'BTC', quantity: 1.0079, symbol: 'H', value: 100 },
-  { name: 'USDT', quantity: 1.0079, symbol: 'H', value: 100 },
-  { name: 'EIFR', quantity: 1.0079, symbol: 'H', value: 100 },
-]; //mockDataTable
-
 @Component({
   selector: 'app-portfolio-summary',
-  imports: [MatTable, MatTableModule, ContentLoaderModule, MatHeaderCellDef],
+  imports: [ContentLoaderModule, TableComponent, WidgetComponent],
   templateUrl: './portfolio-summary.component.html',
   styleUrl: './portfolio-summary.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortfolioSummaryComponent {
-  totalPortfolioValue = input<string>();
-  displayedColumns: string[] = ['name', 'quantity', 'symbol', 'value'];
-  protected dataSource = mockDataTable;
+  balance = input<number>();
+
+  tableSchema = input.required<TableSchema<BriefTableItem>>();
 }
 
 // Portfolio Summary

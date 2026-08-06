@@ -12,14 +12,13 @@
   box-shadow: var(--mat-sys-level3);
 }
 .widget {
-  background-color: var(--mat-sys-surface-container);
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  padding: var(--widget-padding);
+  padding: var(--mat-sys-space-medium);
 
   .widget-header {
     padding: var(--widget-padding);

@@ -4,9 +4,11 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
 import { DashboardService } from '@services/dashboard.service';
-import { PortfolioValue } from '@enums/dashboard.enum';
+import { TableSchema } from '@interfaces/table.interface';
+import { BriefTableItem, DataTable } from '@interfaces/portfolio.interface';
+import { PortfolioService } from '@services/portfolio.service';
+import { MarketOverviewComponent } from '@components/market-overview/market-overview.component';
 import { WatchListComponent } from '@components/watch-list/watch-list.component';
 import { PortfolioSummaryComponent } from '@components/portfolio-summary/portfolio-summary.component';
 import { SpinnerComponent } from '@components/spinner/spinner.component';
@@ -26,6 +28,16 @@ import { SpinnerComponent } from '@components/spinner/spinner.component';
 })
 export default class DashboardPageComponent {
   private dashboardService = inject(DashboardService);
+  private readonly portfolioService = inject(PortfolioService);
+  protected readonly portfolioAssets = computed(() =>
+    this.briefAssetsMapper(
+      this.portfolioService.state()?.assetTableData.slice(0, 3) || []
+    )
+  );
+  protected readonly balance = computed(() =>
+    this.portfolioService.portfolioValueUSD()
+  );
+
   protected readonly topCards = computed(
     () => this.dashboardService.state().cards
   );
@@ -33,7 +45,6 @@ export default class DashboardPageComponent {
   protected readonly watchList = computed(() =>
     this.dashboardService.getFavoriteTickers()
   );
-  protected readonly portfolioSummary = `1000 ${PortfolioValue.USDT}`;
 
   protected readonly isLoad = computed(
     () => this.dashboardService.state().isLoad
@@ -41,4 +52,26 @@ export default class DashboardPageComponent {
   protected readonly error = computed(
     () => this.dashboardService.state().error
   );
+
+  schemaTable = computed(
+    () =>
+      ({
+        columnsLabels: ['asset', 'currentPrice', 'totalValue'],
+        displayedColumns: {
+          asset: 'Asset',
+          currentPrice: 'Price',
+          totalValue: 'Total',
+        },
+        dataTable: this.portfolioAssets() || [],
+        type: 'BriefTable',
+      }) satisfies TableSchema<BriefTableItem>
+  );
+  private briefAssetsMapper(assetsData: DataTable[]): BriefTableItem[] {
+    if (assetsData.length === 0) return [];
+    return assetsData.map(asset => ({
+      asset: asset.asset,
+      currentPrice: asset.currentPrice,
+      totalValue: asset.totalValue,
+    }));
+  }
 }

@@ -71,7 +71,7 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         baseUrl: '/api',
         wsUrl: 'wss://ws-api.testnet.binance.vision/ws-api/v3',
-        backendUrl: 'http://localhost:3000',
+        backendUrl: 'https://cripto-trade.onrender.com',
       },
     },
     {

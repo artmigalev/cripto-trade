@@ -16,13 +16,11 @@ export const errorInterceptor: HttpInterceptorFn = (
   const router = inject(Router);
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      const isAuthRequest = req.url.includes('/auth');
       switch (error.status) {
         case 401:
-          if (isAuthRequest) {
-            localStorage.removeItem('access_token');
-            router.navigate([RouterLinks.Login]);
-          }
+          localStorage.removeItem('access_token');
+          router.navigate([RouterLinks.Login]);
+
           break;
         case 403:
           router.navigate([RouterLinks.Dashboard]);

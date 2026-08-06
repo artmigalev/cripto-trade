@@ -7,14 +7,11 @@
 .overview {
   border: 1px solid var(--mat-sys-outline-variant);
 
-  background: var(--mat-sys-surface-variant);
-
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   border-radius: var(--mat-sys-corner-medium);
-  background-color: var(--mat-sys-surface-container-highest);
   padding: var(--padding);
 }
 .title {
