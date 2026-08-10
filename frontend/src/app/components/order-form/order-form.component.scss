@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+section {
+  backdrop-filter: blur(2px);
+  box-shadow: var(--mat-sys-level2);
+  background-color: var(--mat-sys-inverse-on-surface);
+  padding: var(--mat-sys-space-medium);
+  width: 300px;
+  border-radius: var(--mat-sys-corner-medium);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 10px;
+}
+select {
+  width: max-content;
+  background-color: var(--mat-sys-primary);
+  border-radius: var(--mat-sys-corner-small);
+
+  padding: var(--mat-sys-space-medium);
+  color: var(--mat-sys-surface);
+  option {
+    padding: var(--mat-sys-space-medium);
+    font: var(--mat-sys-label-medium);
+  }
+}
+
+.field {
+  padding: var(--mat-sys-space-small);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 82px;
+
+  .field-label {
+    font: var(--mat-sys-label-large);
+  }
+  .field-input {
+    background-color: var(--mat-sys-surface-container-low);
+    padding: var(--mat-sys-space-small);
+    width: 100%;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    font: var(--mat-sys-body-large);
+    color: var(--mat-sys-secondary);
+  }
+}
+.side_btns {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+}
+.order-btn {
+  cursor: pointer;
+  width: 30%;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-surface);
+  border-radius: var(--mat-sys-corner-small);
+  font: var(--mat-sys-body-medium);
+  padding: var(--mat-sys-space-medium);
+  &:hover {
+    background-color: var(--mat-sys-on-primary-container);
+  }
+}
+.form-btn {
+  cursor: pointer;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-surface);
+  border-radius: var(--mat-sys-corner-small);
+  width: 70%;
+  padding-top: var(--mat-sys-space-medium);
+  padding-bottom: var(--mat-sys-space-medium);
+  padding-right: var(--mat-sys-space-large);
+  padding-left: var(--mat-sys-space-large);
+  margin: 0 auto;
+  &:hover {
+    background-color: var(--mat-sys-on-primary-container);
+  }
+}

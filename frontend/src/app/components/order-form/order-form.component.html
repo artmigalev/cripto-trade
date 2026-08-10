@@ -1,0 +1,29 @@
+<section class="order-section">
+  <div class="flex flex-row items-center gap-0.5">
+    <span class="material-symbols-outlined">draft_orders</span>
+    <h3>Created Order</h3>
+  </div>
+  <div class="side_btns">
+    @for (btn of orderFormShema.side.data; track $index) {
+      <button class="order-btn">{{ btn }}</button>
+    }
+  </div>
+  <select class="order-type" name="" id="">
+    @for (type of orderFormShema.type.data; track $index) {
+      <option value="type">{{ type }}</option>
+    }
+  </select>
+  <form>
+    <div class="field">
+      <label class="field-label" for="amount">{{
+        orderFormShema.amount
+      }}</label>
+      <input class="field-input" type="text" id="amount" />
+    </div>
+    <div class="field">
+      <label class="field-label" for="price">{{ orderFormShema.price }}</label>
+      <input class="field-input" type="text" id="amount" />
+    </div>
+  </form>
+  <button class="order-btn form-btn">Create</button>
+</section>
