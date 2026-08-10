@@ -18,6 +18,8 @@ import {
   validate,
   FormRoot,
 } from '@angular/forms/signals';
+import { isByPass } from '@/app/app.config';
+import { mockDataUser } from '@/app/mockdata/mockUser';
 
 interface AuthForm {
   email: string;
@@ -64,32 +66,34 @@ export default class AuthPageComponent {
   protected readonly authForm = form(
     this.formModel,
     fieldPath => {
-      required(fieldPath.email, {
-        message: `${this.labelsForm.email} ${AuthFormMsg['Required']}`,
-      });
-      email(fieldPath.email, { message: AuthFormMsg.Email });
-      required(fieldPath.password, {
-        message: `${this.labelsForm.password} ${AuthFormMsg['Required']}`,
-      });
-      applyWhen(
-        fieldPath,
-        () => this.route === '/register',
+      if (!isByPass) {
+        required(fieldPath.email, {
+          message: `${this.labelsForm.email} ${AuthFormMsg['Required']}`,
+        });
+        email(fieldPath.email, { message: AuthFormMsg.Email });
+        required(fieldPath.password, {
+          message: `${this.labelsForm.password} ${AuthFormMsg['Required']}`,
+        });
+        applyWhen(
+          fieldPath,
+          () => this.route === '/register',
 
-        fieldPath => {
-          required(fieldPath.confirm, {
-            message: `${this.labelsForm.confirm} ${AuthFormMsg['Required']}`,
-          });
-          validate(fieldPath.confirm, ({ value, valueOf }) => {
-            if (value() !== valueOf(fieldPath.password)) {
-              return {
-                kind: 'confirm',
-                message: AuthFormMsg.Confirm,
-              };
-            }
-            return null;
-          });
-        }
-      );
+          fieldPath => {
+            required(fieldPath.confirm, {
+              message: `${this.labelsForm.confirm} ${AuthFormMsg['Required']}`,
+            });
+            validate(fieldPath.confirm, ({ value, valueOf }) => {
+              if (value() !== valueOf(fieldPath.password)) {
+                return {
+                  kind: 'confirm',
+                  message: AuthFormMsg.Confirm,
+                };
+              }
+              return null;
+            });
+          }
+        );
+      }
     },
     {
       submission: {
@@ -102,7 +106,8 @@ export default class AuthPageComponent {
             if (firstError) {
               firstError.fieldTree().focusBoundControl();
             } else {
-              const { password, email } = f().value();
+              const { password, email } = isByPass ? mockDataUser : f().value(); ///dev mode
+              console.log('Logging in with:', email);
               console.log('Logging in with:', f().value());
 
               if (this.route === '/register') {
