@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { RouterLinks } from '@enums/nav-link.enum';
+import { environment } from '@/environments/environment';
 
 const publicPath = [RouterLinks.Login, RouterLinks.Register];
 
@@ -15,6 +16,13 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
 
   const isAuth: boolean = authService.isAuthenticated();
   const isConfig: boolean = authService.isApiConfigured();
+
+  const isByPassAuth = !environment.production && environment.devModeSkipAuth;
+  console.log(isByPassAuth);
+
+  if (isByPassAuth) {
+    return true;
+  }
 
   if (privatePaths.includes(path as RouterLinks)) {
     if (!isAuth) {

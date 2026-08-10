@@ -17,6 +17,7 @@
       "@guards/*": ["app/shared/guards/*"],
       "@features/*": ["app/features/*"],
       "@resolver/*": ["app/core/resolvers/*"],
+      "@enviroments/*": ["src/environments/*"],
       "@/*": ["./*"]
     }
   },
