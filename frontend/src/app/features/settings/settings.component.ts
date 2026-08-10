@@ -13,6 +13,8 @@ import { SettingComponent } from '@/app/interfaces/setting-component.interface';
 import { KeysService } from '@services/keys.service';
 import { RouterLinks } from '@enums/nav-link.enum';
 import { form, required, FormRoot, FormField } from '@angular/forms/signals';
+import { isByPass } from '@/app/app.config';
+import { mockKeys } from '@/app/mockdata/mockUser';
 
 interface FormType {
   model: {
@@ -61,8 +63,12 @@ export default class SettingsComponent {
   settingForm = form(
     this.formModel,
     field => {
-      required(field['apiKey'], { message: 'This field must be  required' });
-      required(field['secretKey'], { message: 'This field must be  required' });
+      if (!isByPass) {
+        required(field['apiKey'], { message: 'This field must be  required' });
+        required(field['secretKey'], {
+          message: 'This field must be  required',
+        });
+      }
     },
     {
       submission: {
@@ -76,7 +82,7 @@ export default class SettingsComponent {
             if (firstError) {
               firstError.fieldTree().focusBoundControl();
             } else {
-              const { apiKey, secretKey } = f().value();
+              const { apiKey, secretKey } = isByPass ? mockKeys : f().value();
               const result = await this.keyService.saveKeys({
                 apiKey,
                 secretKey,
