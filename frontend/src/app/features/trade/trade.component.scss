@@ -5,22 +5,18 @@
   overflow: hidden;
 }
 .trade {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  min-height: 0;
+  min-width: 0;
+  grid-template-rows: 350px 1fr;
+  gap: var(--mat-sys-space-small);
   overflow-y: auto;
 }
 .orders-container {
   width: 100%;
-  padding: var(--mat-sys-space-medium);
-  background-color: var(--mat-sys-surface-container);
-  border-radius: var(--mat-sys-corner-medium);
-  border: 1px solid var(--mat-sys-surface-variant);
-  box-shadow: var(--mat-sys-level3);
-
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  gap: 10px;
+  justify-content: space-start;
+  align-items: start;
+  gap: var(--mat-sys-space-medium);
 }

@@ -1,23 +1,23 @@
 :host {
   display: block;
-  height: 100%;
+  width: 100%;
+
   overflow: hidden;
 }
 
 section {
-  backdrop-filter: blur(2px);
-  box-shadow: var(--mat-sys-level2);
-  background-color: var(--mat-sys-inverse-on-surface);
+  background-color: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
   padding: var(--mat-sys-space-medium);
-  width: 300px;
-  border-radius: var(--mat-sys-corner-medium);
+  border-radius: var(--mat-sys-corner-small);
+
   display: flex;
   flex-direction: column;
   justify-content: start;
-  gap: 10px;
+  gap: var(--mat-sys-space-medium);
 }
 select {
-  width: max-content;
+  width: 100px;
   background-color: var(--mat-sys-primary);
   border-radius: var(--mat-sys-corner-small);
 
@@ -28,7 +28,9 @@ select {
     font: var(--mat-sys-label-medium);
   }
 }
-
+form {
+  width: 350px;
+}
 .field {
   padding: var(--mat-sys-space-small);
   width: 100%;
@@ -73,6 +75,7 @@ select {
   color: var(--mat-sys-surface);
   border-radius: var(--mat-sys-corner-small);
   width: 70%;
+  max-width: 250px;
   padding-top: var(--mat-sys-space-medium);
   padding-bottom: var(--mat-sys-space-medium);
   padding-right: var(--mat-sys-space-large);
