@@ -4,11 +4,20 @@ import {
   computed,
   signal,
 } from '@angular/core';
+import {
+  applyWhen,
+  form,
+  FormField,
+  FormRoot,
+  hidden,
+  required,
+  validate,
+} from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
 
-interface State {
-  side: string;
-  type: string;
+interface OrderFormModel {
+  side: ('Buy' | 'Sell') & string;
+  type: ('Limit' | 'Market') & string;
   price: string;
   amount: string;
 }
@@ -17,30 +26,82 @@ interface State {
 
 @Component({
   selector: 'app-order-form',
-  imports: [MatIconModule],
+  imports: [MatIconModule, FormField, FormRoot],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderFormComponent {
-  private orderState = signal<State>({
-    side: 'Buy',
-    type: 'Market',
-    price: '',
-    amount: '',
-  });
-  ifPrice = computed(() => this.orderState().type === 'Limit');
-  protected readonly orderFormShema = {
-    side: { data: ['Buy', 'Sell'], label: 'Side' }, //'Side',
-    type: { data: ['Market', 'Limit'], label: 'Order Type' }, // 'Order Type',
-    amount: 'Amount',
-    price: 'Price',
+  SCHEMA_CONFIG = {
+    keys: [],
+    side: ['Buy', 'Sell'],
+    type: ['Limit', 'Market'],
+    amount: {
+      label: 'Amount',
+      placholder: orderFormMsg.amount.placeholder,
+      value: '',
+    },
+    price: {
+      label: 'Price',
+      placholder: orderFormMsg.price.placeholder,
+      value: '',
+    },
   } as const;
 
-  protected readonly schemaKeys: (keyof typeof this.orderFormShema)[] = [
-    'type',
-    'side',
-    'amount',
-    'price',
-  ];
+  private DEFAULT_SCHEMA: OrderFormModel = {
+    side: 'Buy',
+    type: 'Limit',
+    amount: '',
+    price: '',
+  };
+
+  private formModel = signal<OrderFormModel>({
+    ...this.DEFAULT_SCHEMA,
+  });
+  typeForm = computed(() => this.formModel().type);
+
+  orderForm = form(
+    this.formModel,
+    formField => {
+      required(formField.amount, { message: orderFormMsg.amount.required });
+      validate(formField.amount, ({ value }) => {
+        if (Number(value()) > 10000) {
+          return {
+            kind: 'confirm',
+            message: orderFormMsg.amount.limit,
+          };
+        }
+        return null;
+      });
+      hidden(formField.price, {
+        when: ({ valueOf }) => valueOf(formField.type) === 'Market',
+      });
+      applyWhen(
+        formField,
+        () => this.typeForm() === 'Limit',
+        formField => {
+          required(formField.price, { message: orderFormMsg.price.required });
+        }
+      );
+    },
+    {
+      submission: {
+        action: async () => {
+          console.log(this.orderForm);
+        },
+      },
+    }
+  );
 }
+
+const orderFormMsg = {
+  amount: {
+    required: `Required field`,
+    limit: 'You have exceeded the limit',
+    placeholder: 'Please indicate the quantity ...',
+  },
+  price: {
+    required: `Required field`,
+    placeholder: 'Please indicate the price ...',
+  },
+};
