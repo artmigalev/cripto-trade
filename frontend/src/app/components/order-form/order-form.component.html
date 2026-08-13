@@ -1,60 +1,58 @@
-<section class="order-section">
-  <!-- <h2 class="section-title">{{ title }}</h2> -->
-  <form [formRoot]="formOrder" class="order-form">
-    <div class="side-container">
-      <button
-        type="button"
-        class="btn-side buy"
-        [class.active]="activeSide() === orderSide.Buy"
-        (click)="setSide(orderSide.Buy)">
-        Buy
-      </button>
-      <button
-        type="button"
-        class="btn-side sell"
-        [class.active]="activeSide() === orderSide.Sell"
-        (click)="setSide(orderSide.Sell)">
-        Sell
-      </button>
+<section class="section-component">
+  <div class="flex flex-row items-center gap-1.5">
+    <span class="material-symbols-outlined">draft_orders</span>
+    <h3 class="order-title">Created Order</h3>
+  </div>
+  <form [formRoot]="orderForm" class="form-order">
+    <div class="side-btns">
+      <label>
+        <input
+          [formField]="orderForm.side"
+          [value]="`${SCHEMA_CONFIG.side[0]}`"
+          id="value-1"
+          type="radio" />
+        <span>{{ SCHEMA_CONFIG.side[0] }}</span>
+      </label>
+      <label>
+        <input
+          [formField]="orderForm.side"
+          [value]="`${SCHEMA_CONFIG.side[1]}`"
+          id="value-2"
+          type="radio" />
+        <span>{{ SCHEMA_CONFIG.side[1] }}</span>
+      </label>
+
+      <span class="selection"></span>
     </div>
-    <fieldset class="form-field">
-      <legend class="form-legend">Order Type</legend>
-      <select
-        class="form-select-type"
-        [formField]="formOrder.type"
-        (change)="onTypeChange($event)"
-        aria-placeholder="order-type">
-        <option selected disabled>Order Type</option>
-        <option value="{{ orderType.MARKET }}">Market</option>
-        <option value="{{ orderType.LIMIT }}">Limit</option>
-      </select>
-    </fieldset>
-    <fieldset class="form-field">
-      <legend class="form-legend">Amount</legend>
-      <div class="amount-container">
-        <input
-          [formField]="formOrder.quantity"
-          class="field-input amount-input"
-          type="text"
-          [appHintBalance]="balance()!" />
-        <span class="balance">$ {{ balance()! | converter: 'USDT' }}</span>
+    <select
+      class="type-selection"
+      [formField]="orderForm.type"
+      id="selected-type">
+      <option value="Limit">{{ SCHEMA_CONFIG.type[0] }}</option>
+      <option value="Market">{{ SCHEMA_CONFIG.type[1] }}</option>
+    </select>
+    <div class="form-field">
+      <label for="amount">{{ SCHEMA_CONFIG.amount.label }}</label>
+      <div class="container-hint">
+        <input type="text" id="amount" />
+        <span class="hint-amount">{{
+          `$ ${(balance()! | converter: 'USDT')}`
+        }}</span>
       </div>
-      @for (error of formOrder.quantity().errors(); track $index) {
-        <p class="error-msg">{{ error.message }}</p>
-      }
-    </fieldset>
-    @if (formOrder.type().value() === orderType.LIMIT) {
-      <fieldset class="form-field">
-        <legend class="form-legend">Price</legend>
-        <input
-          [formField]="formOrder.price"
-          class="field-input price-input"
-          type="text" />
-        @for (error of formOrder.price().errors(); track $index) {
-          <p class="error-msg">{{ error.message }}</p>
-        }
-      </fieldset>
+    </div>
+    @if (orderForm.price().hidden()) {
+      <div class="form-field">
+        <label for="price">{{ SCHEMA_CONFIG.price.label }}</label>
+        <div class="container-hint">
+          <input type="text" [formField]="orderForm.price" id="price" />
+        </div>
+      </div>
     }
-    <button class="btn-form btn-send" type="submit">Send</button>
+    <button
+      [disabled]="orderForm().invalid() || orderForm().submitting()"
+      class="btn-submit"
+      type="submit">
+      Submit
+    </button>
   </form>
 </section>

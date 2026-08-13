@@ -25,8 +25,11 @@ import { GlobalErrorHandler } from '@/app/core/handlers/global-error.handler';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '@/environments/environment';
 
 const ICONS = ['favorit_card', 'favorit_toggle'] as const;
+
+export const isByPass = !environment.production && environment.devModeSkipAuth;
 
 const parserIcon = () => {
   return provideAppInitializer(() => {
@@ -71,7 +74,9 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         baseUrl: '/api',
         wsUrl: 'wss://ws-api.testnet.binance.vision/ws-api/v3',
-        backendUrl: 'https://cripto-trade.onrender.com',
+        backendUrl: isByPass
+          ? 'http://localhost:3000'
+          : 'https://cripto-trade.onrender.com',
       },
     },
     {
