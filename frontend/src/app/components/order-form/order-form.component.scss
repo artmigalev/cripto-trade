@@ -142,9 +142,10 @@
 }
 /* field amount */
 .hint-amount {
-  color: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-surface-container-highest);
   font-style: italic;
   padding-right: var(--mat-sys-space-medium);
+  white-space: nowrap;
 }
 
 /* field price */

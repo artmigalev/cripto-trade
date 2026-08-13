@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   signal,
 } from '@angular/core';
 import {
@@ -14,6 +15,8 @@ import {
   validate,
 } from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
+import { PortfolioService } from '@services/portfolio.service';
+import { ConverterPipe } from '../../shared/pipes/converter.pipe';
 
 interface OrderFormModel {
   side: ('Buy' | 'Sell') & string;
@@ -26,14 +29,14 @@ interface OrderFormModel {
 
 @Component({
   selector: 'app-order-form',
-  imports: [MatIconModule, FormField, FormRoot],
+  imports: [MatIconModule, FormField, FormRoot, ConverterPipe],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderFormComponent {
-  SCHEMA_CONFIG = {
-    keys: [],
+  private readonly portfolioService = inject(PortfolioService);
+  protected SCHEMA_CONFIG = {
     side: ['Buy', 'Sell'],
     type: ['Limit', 'Market'],
     amount: {
@@ -59,7 +62,9 @@ export class OrderFormComponent {
     ...this.DEFAULT_SCHEMA,
   });
   typeForm = computed(() => this.formModel().type);
-
+  protected readonly balance = computed(() =>
+    this.portfolioService.portfolioValueUSD()
+  );
   orderForm = form(
     this.formModel,
     formField => {

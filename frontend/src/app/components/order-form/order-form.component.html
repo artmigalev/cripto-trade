@@ -35,7 +35,9 @@
       <label for="amount">{{ SCHEMA_CONFIG.amount.label }}</label>
       <div class="container-hint">
         <input type="text" id="amount" />
-        <span class="hint-amount">$10000</span>
+        <span class="hint-amount">{{
+          `$ ${(balance()! | converter: 'USDT')}`
+        }}</span>
       </div>
     </div>
     @if (orderForm.price().hidden()) {
