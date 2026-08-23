@@ -9,10 +9,22 @@
 }
 .layout-page {
   width: 100%;
+  padding: var(--mat-sys-space-small);
+  border: var(--border-componnet);
+  border-radius: var(--border-radius-component);
 
-  border-radius: var(--mat-sys-corner-medium);
   box-shadow: var(--mat-sys-level5);
   overflow-y: auto;
 
   height: 100%;
+}
+.title {
+  font: var(--mat-sys-display-medium);
+  color: var(--mat-sys-tertiary);
+}
+.placeholder {
+  font: var(--mat-sys-headline-large);
+  color: var(--mat-sys-surface-container-high);
+  width: 100%;
+  text-align: center;
 }

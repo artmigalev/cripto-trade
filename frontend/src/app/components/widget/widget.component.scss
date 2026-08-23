@@ -7,8 +7,6 @@
   max-width: 350px;
   max-height: 200px;
   overflow: hidden;
-  border-radius: var(--mat-sys-corner-medium);
-  border: 1px solid var(--mat-sys-surface-variant);
   box-shadow: var(--mat-sys-level3);
 }
 .widget {
@@ -19,6 +17,7 @@
   flex-direction: column;
   align-items: center;
   padding: var(--mat-sys-space-medium);
+  background-color: var(--mat-sys-surface-bright);
 
   .widget-header {
     padding: var(--widget-padding);
