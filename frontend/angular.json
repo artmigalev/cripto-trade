@@ -105,6 +105,14 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "production":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.development.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "development"
