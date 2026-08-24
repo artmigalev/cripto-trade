@@ -1,8 +1,10 @@
 <section class="trade ">
   <app-price-chart [candle]="candle()" [history]="historyCandles()" />
+@if (isAuth()) {
 
   <div class="orders-container">
-    <app-order-book [authStatus]="isAuth" [order]="history()" [symbol]="symbol()" />
+    <app-order-book  [order]="history()" [symbol]="symbol()" />
     <app-order-form />
   </div>
+}
 </section>

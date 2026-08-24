@@ -2,12 +2,8 @@
   <h3 class="book-title">{{ symbol() }}</h3>
   <div class="table-container">
     @if (!order()) {
-      @if (!authStatus()) {
-        <h2  class="placeholder">You must login</h2>
-      }@else {
 
         <h2  class="placeholder">Not found Data</h2>
-      }
     } @else {
       @for (col of columns; track $index) {
         <table [attr.id]="col" class="table-book">

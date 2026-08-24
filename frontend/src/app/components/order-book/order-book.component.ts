@@ -12,7 +12,7 @@ import { Order } from '@interfaces/order-book.interface';
 export class OrderBookComponent {
 
   readonly symbol = input.required<string>();
-  readonly authStatus = input.required<boolean>()
+
 
   order = input<Order>();
   columns = Object.values(OrderBookColumns);

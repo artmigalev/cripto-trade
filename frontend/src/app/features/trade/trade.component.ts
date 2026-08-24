@@ -21,8 +21,10 @@ export default class TradeComponent {
   private readonly tradeService = inject(TradeService);
   private readonly authService = inject(AuthService);
 
-
-  isAuth: boolean = this.authService.isAuthenticated() && this.authService.isApiConfigured()
+  isAuth = computed(
+    () =>
+      this.authService.isAuthenticated() && this.authService.isApiConfigured()
+  );
 
   symbol = computed(() => this.tradeService.chartSymbol());
   historyCandles = computed(

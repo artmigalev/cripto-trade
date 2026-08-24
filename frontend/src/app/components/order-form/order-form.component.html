@@ -35,6 +35,7 @@
       <label for="amount">{{ SCHEMA_CONFIG.amount.label }}</label>
       <div class="container-hint">
         <input type="text" id="amount" />
+
         <span class="hint-amount">{{
           `$ ${(balance()! | converter: 'USDT')}`
         }}</span>
