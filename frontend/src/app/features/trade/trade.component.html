@@ -1,8 +1,8 @@
-<section class="trade layout-page">
+<section class="trade ">
   <app-price-chart [candle]="candle()" [history]="historyCandles()" />
 
   <div class="orders-container">
-    <app-order-book [order]="history()" [symbol]="symbol()" />
+    <app-order-book [authStatus]="isAuth" [order]="history()" [symbol]="symbol()" />
     <app-order-form />
   </div>
 </section>
