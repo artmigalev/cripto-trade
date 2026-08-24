@@ -2,22 +2,17 @@
   --widget-padding: -4px;
 }
 :host {
-  width: 100%;
-  height: 100%;
-  max-width: 350px;
-  max-height: 200px;
+  display: block;
   overflow: hidden;
-  box-shadow: var(--mat-sys-level3);
 }
 .widget {
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  padding: var(--mat-sys-space-medium);
-  background-color: var(--mat-sys-surface-bright);
+  padding: var(--mat-sys-space-large);
+  // background-color: var(--mat-sys-surface-container);
+  border-radius: var(--border-radius-component);
 
   .widget-header {
     padding: var(--widget-padding);

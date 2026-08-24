@@ -1,7 +1,11 @@
-<section class="layout-page portfolio">
-  <div class="container">
-    <app-widget [data]="portfolioValue()" type="portfolio-value" />
+<section class="portfolio">
+  <div class="header-portfolio">
+
     <app-distribution [data]="distributionData()" />
+    <div class="widget-container">
+      <app-widget [data]="portfolioValue()" type="portfolio-value" />
+
+    </div>
   </div>
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Assets">
