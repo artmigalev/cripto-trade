@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 
 import { BriefTableItem } from '@interfaces/portfolio.interface';
 import { TableSchema } from '@interfaces/table.interface';
 import { ContentLoaderModule } from '@ngneat/content-loader';
 import { TableComponent } from '@components/table/table.component';
 import { WidgetComponent } from '@components/widget/widget.component';
+import { AuthService } from '@services/auth.service';
 export interface PeriodicElement {
   name: string;
   symbol: string;
@@ -20,6 +21,11 @@ export interface PeriodicElement {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PortfolioSummaryComponent {
+  private readonly authService = inject(AuthService)
+
+  isLOgin = this.authService.isAuthenticated()
+
+
   balance = input<number>();
 
   tableSchema = input.required<TableSchema<BriefTableItem>>();
