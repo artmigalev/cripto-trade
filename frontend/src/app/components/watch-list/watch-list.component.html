@@ -1,6 +1,6 @@
-<section class="watch-list">
+<section class="watch-list layout-page">
   @defer (on viewport) {
-    <h4 class="watch-list-title">Favorite List</h4>
+    <h4 class="title">Favorite List</h4>
     <div class="scroll-container">
       <mat-list role="list" class="favorite-list">
         @for (pair of favoritePairs(); track $index) {
@@ -20,7 +20,7 @@
             </div>
           </mat-list-item>
         } @empty {
-          <span>List Empty</span>
+          <span class="placeholder">List Empty</span>
         }
       </mat-list>
     </div>

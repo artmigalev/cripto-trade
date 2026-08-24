@@ -1,32 +1,26 @@
 @use '../../../material-theme.scss' as bp;
 :host {
   display: flex;
-  width: 50%;
-  height: 100%;
-  max-width: 890px;
+  flex-direction: column;
+  align-items: center;
 
-  @include bp.media(md) {
-    width: 100%;
-  }
+  width: 50%;
+  height: 300px;
+  max-width: 890px;
 }
 
 .portfolio-summary {
-  border: 1px solid var(--mat-sys-outline-variant);
-
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 10px;
-  border-radius: 20px;
-  padding: var(--padding-top) var(--padding-lr) var(--padding-bottom)
-    var(--padding-lr);
+  justify-content: center;
   .portfolio-value {
     display: flex;
     flex-direction: row;
     align-items: start;
-    gap: 5px;
+    gap: var(--gap);
   }
   .mat-elevation-z8 {
     width: 100%;

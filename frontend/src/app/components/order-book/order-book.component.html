@@ -2,7 +2,8 @@
   <h3 class="book-title">{{ symbol() }}</h3>
   <div class="table-container">
     @if (!order()) {
-      <h2>Not Found Data</h2>
+
+        <h2  class="placeholder">Not found Data</h2>
     } @else {
       @for (col of columns; track $index) {
         <table [attr.id]="col" class="table-book">

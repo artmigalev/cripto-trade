@@ -9,6 +9,13 @@
   --mat-sys-space-medium: 8px;
 
   --mat-sys-space-large: 16px;
+
+  --gap: var(--mat-sys-space-small);
+
+  --border-radius-component: var(--mat-sys-corner-small);
+
+  --border-color-componnet: var(--mat-sys-outline-variant);
+  --border-componnet: 1px solid var(--border-color-componnet);
 }
 
 // Surface  – фона и больших, малозаметных областей экрана.

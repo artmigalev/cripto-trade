@@ -10,7 +10,10 @@ import { Order } from '@interfaces/order-book.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderBookComponent {
+
   readonly symbol = input.required<string>();
+
+
   order = input<Order>();
   columns = Object.values(OrderBookColumns);
   rows = Object.values(OrderBookRows);

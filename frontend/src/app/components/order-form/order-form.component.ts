@@ -17,6 +17,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { PortfolioService } from '@services/portfolio.service';
 import { ConverterPipe } from '../../shared/pipes/converter.pipe';
+import { AuthService } from '@services/auth.service';
 
 interface OrderFormModel {
   side: ('Buy' | 'Sell') & string;
@@ -36,6 +37,7 @@ interface OrderFormModel {
 })
 export class OrderFormComponent {
   private readonly portfolioService = inject(PortfolioService);
+  ;
   protected SCHEMA_CONFIG = {
     side: ['Buy', 'Sell'],
     type: ['Limit', 'Market'],

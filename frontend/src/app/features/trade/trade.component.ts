@@ -8,6 +8,7 @@ import { PriceChartComponent } from '@components/price-chart/price-chart.compone
 import { TradeService } from '@services/trade.service';
 import { OrderBookComponent } from '@components/order-book/order-book.component';
 import { OrderFormComponent } from '@components/order-form/order-form.component';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-trade',
@@ -18,6 +19,13 @@ import { OrderFormComponent } from '@components/order-form/order-form.component'
 })
 export default class TradeComponent {
   private readonly tradeService = inject(TradeService);
+  private readonly authService = inject(AuthService);
+
+  isAuth = computed(
+    () =>
+      this.authService.isAuthenticated() && this.authService.isApiConfigured()
+  );
+
   symbol = computed(() => this.tradeService.chartSymbol());
   historyCandles = computed(
     () => this.tradeService.state().chart.historyCandles

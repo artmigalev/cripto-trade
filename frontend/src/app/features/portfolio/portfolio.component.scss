@@ -8,16 +8,20 @@
 }
 
 .portfolio {
+  position: relative;
+
   display: flex;
   flex-direction: column;
-  gap: 10px;
+
+  gap: var(--gap);
+  height: 100%;
 }
-.container {
+.header-portfolio {
   display: flex;
   flex-direction: row;
   height: 40%;
   width: 100%;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .mat-mdc-tab-group {
@@ -28,4 +32,13 @@
   border: 1px solid var(--mat-sys-surface-variant);
   box-shadow: var(--mat-sys-level3);
   overflow: hidden;
+
+}
+.mdc-tab__text-label{
+  color:red;
+}
+.widget-container {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

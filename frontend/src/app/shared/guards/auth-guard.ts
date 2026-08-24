@@ -6,7 +6,7 @@ import { environment } from '@/environments/environment';
 
 const publicPath = [RouterLinks.Login, RouterLinks.Register];
 
-const privatePaths = [RouterLinks.Trade, RouterLinks.Portfolio];
+const privatePaths = [, RouterLinks.Portfolio];
 
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const authService = inject(AuthService);
@@ -21,6 +21,7 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   console.log(isByPassAuth);
 
   if (isByPassAuth) {
+
     return true;
   }
 

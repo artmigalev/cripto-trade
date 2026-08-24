@@ -2,23 +2,17 @@
   --widget-padding: -4px;
 }
 :host {
-  width: 100%;
-  height: 100%;
-  max-width: 350px;
-  max-height: 200px;
+  display: block;
   overflow: hidden;
-  border-radius: var(--mat-sys-corner-medium);
-  border: 1px solid var(--mat-sys-surface-variant);
-  box-shadow: var(--mat-sys-level3);
 }
 .widget {
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  padding: var(--mat-sys-space-medium);
+  padding: var(--mat-sys-space-large);
+  // background-color: var(--mat-sys-surface-container);
+  border-radius: var(--border-radius-component);
 
   .widget-header {
     padding: var(--widget-padding);

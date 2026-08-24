@@ -2,12 +2,8 @@
 :host {
   display: flex;
   width: 50%;
-  height: 100%;
+  height: 300px;
   max-width: 590px;
-  @include bp.media(md) {
-    width: 100%;
-    min-height: 300px;
-  }
 }
 
 .favorite-list,
@@ -17,23 +13,13 @@
   width: 100%;
 }
 .watch-list {
-  border: 1px solid var(--mat-sys-outline-variant);
-
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   // align-items: start;
   gap: 10px;
-  border-radius: 20px;
   color: var(--section-color-text);
-  padding: var(--padding-top) var(--padding-lr) var(--padding-bottom)
-    var(--padding-lr);
-  .watch-list-title {
-    font: var(--title-section);
-    color: var(--section-color-title);
-    font-weight: bold;
-  }
 }
 .favorite-list {
   display: flex;
